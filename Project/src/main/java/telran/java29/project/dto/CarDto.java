@@ -2,7 +2,7 @@ package telran.java29.project.dto;
 
 import java.util.Set;
 
-public class OwnCar {
+public class CarDto {
 	String serial_number;
     String make;
     String model;
@@ -18,9 +18,9 @@ public class OwnCar {
     String car_class;
     Double price_per_day;
     Double distance_included;
-    PickUpPlace pick_up_place;
+    PickUpPlaceDto pick_up_place;
     Set<String> image_url;
-    Set<BookedPeriods> booked_periods;
+    Set<BookedPeriodDto> booked_periods;
    
 
 }

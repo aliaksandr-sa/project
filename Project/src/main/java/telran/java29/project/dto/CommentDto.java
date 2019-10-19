@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Comment {
+public class CommentDto {
 	String first_name;
 	String second_name;
 	LocalDate post_date;
