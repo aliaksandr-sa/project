@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BookedCarDto {
 	String serial_number;
-    BookedPeriod bookes_period;
+    BookedPeriodDto bookes_period;
 }
