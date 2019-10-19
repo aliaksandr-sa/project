@@ -17,7 +17,7 @@ public class UserDto {
 	String second_name;
 	LocalDate registration_date;
 	Set<CommentDto> comments;
-	Set<CarDto> own_cars;
+	Set<OwnCarDto> own_cars;
 	Set<BookedCarDto> booked_cars;
 	Set<BookedCarDto> history;
 }

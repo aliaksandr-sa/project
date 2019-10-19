@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
-public class CarDto {
+public class OwnCarDto {
 	String serial_number;
     String make;
     String model;
