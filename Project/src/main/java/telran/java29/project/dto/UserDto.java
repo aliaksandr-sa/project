@@ -20,5 +20,4 @@ public class UserDto {
 	Set<CarDto> own_cars;
 	Set<BookedCarDto> booked_cars;
 	Set<BookedCarDto> history;
-
 }
