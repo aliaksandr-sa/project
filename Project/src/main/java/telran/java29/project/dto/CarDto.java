@@ -30,6 +30,4 @@ public class CarDto {
     PickUpPlaceDto pick_up_place;
     Set<String> image_url;
     Set<BookedPeriodDto> booked_periods;
-   
-
 }
