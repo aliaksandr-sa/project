@@ -18,5 +18,5 @@ public class BookedPeriodDto {
     Boolean paid;
     Double amount;
     LocalDate booking_date;
-    UserDto person_who_booked;
+    UserWhoBookedDto person_who_booked;
 }
