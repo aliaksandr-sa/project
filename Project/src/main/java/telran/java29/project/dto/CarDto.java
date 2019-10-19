@@ -2,6 +2,15 @@ package telran.java29.project.dto;
 
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Builder
 public class CarDto {
 	String serial_number;
     String make;
