@@ -21,7 +21,7 @@ public class User {
 	String phone;
 	LocalDate registration_date;
 	Set<Comment> comments;
-	Set<OwnCar> own_cars;
+	Set<Car> own_cars;
 	Set<BookedCar> booked_cars;
 	Set<BookedCar> history;
 	
