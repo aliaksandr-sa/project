@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import telran.java29.project.dto.NewUserDto;
+import telran.java29.project.dto.UpdateUserDto;
 import telran.java29.project.dto.UserDto;
 import telran.java29.project.service.UserService;
 
@@ -29,9 +30,9 @@ public class UserManegmentController {
 		return service.userLogin(login);
 	}
 
-	@PutMapping("/user")
-	public UserDto UpdateUser(@RequestBody NewUserDto updateUser) {
-		return service.userUpdate(updateUser);
+	@PutMapping("/user/{id}")
+	public UserDto UpdateUser(@RequestBody UpdateUserDto updateUser, @PathVariable String id) {
+		return service.userUpdate(updateUser, id);
 	}
 
 	@DeleteMapping("/user")
