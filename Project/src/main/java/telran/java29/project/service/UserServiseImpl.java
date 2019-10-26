@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import telran.java29.project.dao.CarRepository;
 import telran.java29.project.dao.UserRepository;
 import telran.java29.project.domain.BookedCar;
 import telran.java29.project.domain.BookedPeriod;
@@ -24,9 +25,11 @@ import telran.java29.project.dto.UserWhoBookedDto;
 import telran.java29.project.exceptions.UserConflictException;
 
 public class UserServiseImpl implements UserService {
-
+//S
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	CarRepository carRepository;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
@@ -61,8 +64,9 @@ public class UserServiseImpl implements UserService {
 	}
 
 	@Override
-	public void userDelete() {
-		// TODO Auto-generated method stub
+	public void userDelete(String id) {
+		User user = userRepository.findById(id).get();
+		userRepository.delete(user);
 
 	}
 

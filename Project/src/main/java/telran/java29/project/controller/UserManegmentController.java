@@ -35,9 +35,9 @@ public class UserManegmentController {
 		return service.userUpdate(updateUser, id);
 	}
 
-	@DeleteMapping("/user")
-	public void DeleteUser() {
-		service.userDelete();
+	@DeleteMapping("/user/{id}")
+	public void DeleteUser(@PathVariable String id) {
+		service.userDelete(id);
 	}
 
 }
