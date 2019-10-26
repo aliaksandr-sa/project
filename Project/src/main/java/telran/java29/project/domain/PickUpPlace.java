@@ -1,5 +1,7 @@
 package telran.java29.project.domain;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,14 +12,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"latitude", "longitude"})
+@EqualsAndHashCode(of = {"place_id"})
 public class PickUpPlace {
-	String country;
-	String region;
-	String city;
-	String street;
-	int apartment;
-	long zip;
+	@Id
+	String place_id;
+//	String country;
+//	String region;
+//	String city;
+//	String street;
+//	int apartment;
+//	long zip;
 	double latitude;
 	double longitude;
 }
