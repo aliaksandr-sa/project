@@ -2,10 +2,18 @@ package telran.java29.project.domain;
 
 import java.util.Set;
 
-import telran.java29.project.dto.BookedPeriodDto;
-import telran.java29.project.dto.OwnerDto;
-import telran.java29.project.dto.PickUpPlaceDto;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(of = {"serial_number"})
+//m
 public class Car {
 	String serial_number;
     String make;
@@ -22,8 +30,9 @@ public class Car {
     String car_class;
     Double price_per_day;
     Double distance_included;
-    PickUpPlaceDto pick_up_place;
+    String about;
+    PickUpPlace pick_up_place;
     Set<String> image_url;
-    OwnerDto owner;
-    Set<BookedPeriodDto> booked_periods;
+    User owner;
+    Set<BookedPeriod> booked_periods;
 }
