@@ -22,7 +22,6 @@ public class UserServiseImpl implements UserService {
 		return null;
 	}
  
-	
 	@Override
 	public UserDto userLogin(String login) {
 		// TODO Auto-generated method stub
