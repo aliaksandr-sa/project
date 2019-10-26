@@ -1,24 +1,42 @@
 package telran.java29.project.controller;
 
-import telran.java29.project.dto.CarDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import telran.java29.project.dto.NewUserDto;
 import telran.java29.project.dto.UserDto;
-import telran.java29.project.service.RentCarService;
+import telran.java29.project.service.UserService;
+
+@RestController
 
 public class UserManegmentController {
-	RentCarService service;
-	
-	public UserDto RegisterNewUser(NewUserDto newUser) {
+	@Autowired
+	UserService service;
+
+	@PostMapping("/registration")
+	public UserDto RegisterNewUser(@RequestBody NewUserDto newUser) {
 		return service.addNewUser(newUser);
 	}
-	public UserDto LoginUser() {
-		return service.userLogin();
+
+	@GetMapping("/user/{login}")
+	public UserDto LoginUser(@PathVariable String login) {
+		return service.userLogin(login);
 	}
-	public UserDto UpdateUser(NewUserDto updateUser) {
+
+	@PutMapping("/user")
+	public UserDto UpdateUser(@RequestBody NewUserDto updateUser) {
 		return service.userUpdate(updateUser);
 	}
+
+	@DeleteMapping("/user")
 	public void DeleteUser() {
-		return service.userDelete();
+		service.userDelete();
 	}
-	
+
 }
