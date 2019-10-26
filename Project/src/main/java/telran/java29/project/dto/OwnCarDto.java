@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
+//S
 public class OwnCarDto {
 	String serial_number;
     String make;
@@ -22,7 +23,7 @@ public class OwnCarDto {
     String wheels_drive;
     int doors;
     int seats;
-    double fuel_consumption;
+    Double fuel_consumption;
     Set<String> features;
     String car_class;
     Double price_per_day;

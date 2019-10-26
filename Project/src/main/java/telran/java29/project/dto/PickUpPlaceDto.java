@@ -9,13 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
+//S
 public class PickUpPlaceDto {
-	String country;
-	String region;
-	String city;
-	String street;
-	int apartment;
-	long zip;
+	String place_id;
+//	String country;
+//	String region;
+//	String city;
+//	String street;
+//	int apartment;
+//	long zip;
 	double latitude;
 	double longitude;
 }
