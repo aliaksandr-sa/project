@@ -5,7 +5,7 @@ import telran.java29.project.dto.NewUserDto;
 import telran.java29.project.dto.UserDto;
 import telran.java29.project.service.RentCarService;
 
-public class ProjectController {
+public class UserManegmentController {
 	RentCarService service;
 	
 	public UserDto RegisterNewUser(NewUserDto newUser) {
@@ -19,9 +19,6 @@ public class ProjectController {
 	}
 	public void DeleteUser() {
 		return service.userDelete();
-	}
-	public CarDto AddCar(NewCarDto newCar) {
-		return service.CarAdd(newCar);
 	}
 	
 }
