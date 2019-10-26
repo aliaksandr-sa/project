@@ -13,7 +13,10 @@ public class UserServiseImpl implements UserService {
 	UserRepository userRepository;
 	@Override
 	public UserDto addNewUser(NewUserDto newUser) {
-		User user = new User(newUser.getFirst_name(), newUser.getSecond_name());
+		if (userRepository.existsById(newUser.getEmail())) {
+			throw new UserConflictException;
+		}
+		User user = new User(newUser.getFirst_name(), newUser.getSecond_name(), newUser.getEmail(), newUser.getPassword());
 		user = userRepository.save(user);
 		return null;
 	}
