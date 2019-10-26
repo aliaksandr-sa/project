@@ -2,6 +2,8 @@ package telran.java29.project.domain;
 
 import java.util.Set;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,6 +17,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = {"serial_number"})
 //m
 public class Car {
+	@Id
 	String serial_number;
     String make;
     String model;
