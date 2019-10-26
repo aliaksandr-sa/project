@@ -36,7 +36,7 @@ public class UserServiseImpl implements UserService {
 		}
 		String hashPassword = passwordEncoder.encode(newUser.getPassword());
 		User user = new User(newUser.getFirst_name(), newUser.getSecond_name(), newUser.getEmail(),
-				newUser.getPassword());
+				hashPassword);
 		user = userRepository.save(user);
 		return convertToUserDto(user);
 	}
@@ -62,14 +62,15 @@ public class UserServiseImpl implements UserService {
 	}
 	
 	private UserDto convertToUserDto(User user) {
-		return UserDto.builder().first_name(user.getFirst_name())
+		return UserDto.builder()
+				.first_name(user.getFirst_name())
 				.second_name(user.getSecond_name())
 				.registration_date(user.getRegistration_date())
 				.history(user.getHistory().stream().map(this::convertToBookedCarDto).collect(Collectors.toSet()))
 				.booked_cars(user.getBooked_cars().stream().map(this::convertToBookedCarDto).collect(Collectors.toSet()))
 				.own_cars(user.getOwn_cars().stream().map(this::convertToOwnCarDto).collect(Collectors.toSet()))
 				.comments(user.getComments().stream().map(this::convertToCommentDto).collect(Collectors.toSet()))
-				.buid();
+				.build();
 	}
 	private BookedCarDto convertToBookedCarDto(BookedCar bookedCar) {
 		return new BookedCarDto(bookedCar.getSerial_number(), bookedCar.getBookes_period());
