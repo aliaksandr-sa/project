@@ -17,7 +17,8 @@ public class UserServiseImpl implements UserService {
 		user = userRepository.save(user);
 		return null;
 	}
-
+ 
+	
 	@Override
 	public UserDto userLogin(String login) {
 		// TODO Auto-generated method stub
