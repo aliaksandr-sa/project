@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Builder
+//m
 public class CarDto {
 	String serial_number;
     String make;
@@ -22,12 +23,11 @@ public class CarDto {
     int doors;
     int seats;
     Double fuel_consumption; 
-    //TODO
-    //in class OwnCarDto change from primitive double to wrapper
     Set<String> features;
     String car_class;
     Double price_per_day;
     Double distance_included;
+    String about;
     PickUpPlaceDto pick_up_place;
     Set<String> image_url;
     OwnerDto owner;
