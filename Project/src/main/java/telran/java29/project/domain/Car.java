@@ -30,6 +30,7 @@ public class Car {
     String car_class;
     Double price_per_day;
     Double distance_included;
+    String about;
     PickUpPlace pick_up_place;
     Set<String> image_url;
     User owner;
