@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,9 @@ public class User {
 	String first_name;
 	@Setter
 	String second_name;
+	@Id
 	String email;
+	String password;
 	String phone;
 	LocalDate registration_date;
 	Set<Comment> comments;
@@ -25,12 +29,11 @@ public class User {
 	Set<BookedCar> booked_cars;
 	Set<BookedCar> history;
 	
-	public User(String first_name, String second_name) {
-		super();
+	public User(String first_name, String second_name, String email, String password) {
 		this.first_name = first_name;
 		this.second_name = second_name;
-		this.email = null;
-		this.phone = null;
+		this.email = email;
+		this.phone = password;
 		registration_date = LocalDate.now();
 		comments = new HashSet<>();
 		own_cars = new HashSet<>();
