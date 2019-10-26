@@ -25,12 +25,12 @@ public class User {
 	Set<BookedCar> booked_cars;
 	Set<BookedCar> history;
 	
-	public User(String first_name, String second_name, String email, String phone) {
+	public User(String first_name, String second_name) {
 		super();
 		this.first_name = first_name;
 		this.second_name = second_name;
-		this.email = email;
-		this.phone = phone;
+		this.email = null;
+		this.phone = null;
 		registration_date = LocalDate.now();
 		comments = new HashSet<>();
 		own_cars = new HashSet<>();
