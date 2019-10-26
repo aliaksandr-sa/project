@@ -36,6 +36,4 @@ public interface CarService {
 
 	void addAComment();
 
-	
-
 }
