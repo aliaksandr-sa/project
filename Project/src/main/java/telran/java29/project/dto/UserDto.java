@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
+//S
+
 public class UserDto {
 	String first_name;
 	String second_name;
