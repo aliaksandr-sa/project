@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Getter
-
+//S
 public class OwnerDto {
 	 String first_name;
 	 String second_name;
 	 LocalDate registration_date;
-
 }
