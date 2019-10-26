@@ -10,4 +10,6 @@ public interface CarService {
 
 	CarDto updateCar(UpdateCarDto updateCar, String serial_number);
 
+	CarDto findCarById(String serial_number);
+
 }

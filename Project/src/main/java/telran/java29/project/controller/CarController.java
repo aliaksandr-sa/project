@@ -2,6 +2,7 @@ package telran.java29.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,7 +17,6 @@ import telran.java29.project.service.CarService;
 //m
 public class CarController {
 	@Autowired
-	
 	CarService carService;
 	
 	@PostMapping("/car")
@@ -32,5 +32,23 @@ public class CarController {
 	@DeleteMapping("/car/{serial_number}")
 	public void deleteCar(String serial_number) {
 	}
+	
+	@GetMapping("/car/{serial_number}")
+	public CarDto getCarById(@PathVariable String serial_number) {
+		return carService.findCarById(serial_number);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
