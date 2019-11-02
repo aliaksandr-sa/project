@@ -14,8 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Getter
+//m
 public class ReservationResponseDto {
-	int order_number;
+	String order_number;
 	Double amount;
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	LocalDate booking_date;

@@ -1,10 +1,11 @@
 package telran.java29.project.service;
 
 import java.time.LocalDate;
-import java.util.Iterator;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import telran.java29.project.convertor.Convertor;
 import telran.java29.project.dao.CarRepository;
 import telran.java29.project.domain.BookedPeriod;
 import telran.java29.project.domain.Car;
@@ -12,21 +13,26 @@ import telran.java29.project.dto.ConfirmPaymentDto;
 import telran.java29.project.dto.ReservationDto;
 import telran.java29.project.dto.ReservationResponseDto;
 import telran.java29.project.exceptions.ConflictException;
-
+//m
 public class ReservationServiceImpl implements ReservationService {
 	@Autowired
 	CarRepository carRepository;
+	Convertor convertor;
 	@Override
 	public ReservationResponseDto makeAReservation(ReservationDto reservationDto, String serial_number) {
 		Car car = carRepository.findById(serial_number).get();
-	    Iterator<BookedPeriod> iterator = car.getBooked_periods().iterator();
-	    BookedPeriod lastElement = iterator.next();
-	    while(iterator.hasNext()) {
-	        lastElement = iterator.next();
-	    }
-	    if (!lastElement.getPaid()||lastElement.getEnd_date_time().isAfter(LocalDate.now())) {
-			throw new ConflictException();
+		Set<BookedPeriod> bookedPeriods = car.getBooked_periods();
+	    for (BookedPeriod bookedPeriod : bookedPeriods) {
+			if (reservationDto.getStart_date_time().isBefore(bookedPeriod.getEnd_date_time())&&
+				reservationDto.getEnd_date_time().isAfter(bookedPeriod.getStart_date_time())){
+				throw new ConflictException();
+			}
 		}
+	    ReservationResponseDto reservationResponseDto = new ReservationResponseDto(order_number, amount, booking_date);
+	    BookedPeriod bookedPeriod = new BookedPeriod(reservationResponseDto.getOrder_number(),
+	    		reservationDto.getStart_date_time(), reservationDto.getEnd_date_time(), false,
+	    		reservationResponseDto.getAmount(), LocalDate.now(),
+	    		convertor.convertToUser(reservationDto.getPerson_who_booked());
 	    
 		return null;
 	}
