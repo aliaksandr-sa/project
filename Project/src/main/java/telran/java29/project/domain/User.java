@@ -43,5 +43,7 @@ public class User {
 		history = new HashSet<>();
 	}
 	
-	
+	public boolean addComment(Comment comment) {
+		return comments.add(comment);
+	}
 }
