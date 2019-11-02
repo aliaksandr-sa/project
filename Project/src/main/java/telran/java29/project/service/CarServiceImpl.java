@@ -60,11 +60,20 @@ public class CarServiceImpl implements CarService {
 		if (updateCar.getDistance_included()!=null) {
 			car.setDistance_included(updateCar.getDistance_included());
 		}
-		if (updateCar.getS) {
-			
+		if (updateCar.getPick_up_place()!=null) {
+			car.setPick_up_place(convertPickupPlaceDtoToPickupPlace(updateCar.getPick_up_place()));
 		}
 		return null;
 	}
+
+	public PickUpPlace convertPickupPlaceDtoToPickupPlace(PickUpPlaceDto pick_up_place) {
+		return PickUpPlace.builder()
+				.place_id(pick_up_place.getPlace_id())
+				.latitude(pick_up_place.getLatitude())
+				.longitude(pick_up_place.getLongitude())
+				.build();
+	}
+
 
 	@Override
 	public CarDto findCarById(String serial_number) {
