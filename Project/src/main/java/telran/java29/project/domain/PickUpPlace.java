@@ -3,6 +3,7 @@ package telran.java29.project.domain;
 import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode(of = {"place_id"})
 public class PickUpPlace {
 	@Id
