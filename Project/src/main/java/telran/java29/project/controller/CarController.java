@@ -19,6 +19,7 @@ import telran.java29.project.dto.CommentDto;
 import telran.java29.project.dto.ConfirmPaymentDto;
 import telran.java29.project.dto.NewCarDto;
 import telran.java29.project.dto.NewCommentDto;
+import telran.java29.project.dto.OwnCarDto;
 import telran.java29.project.dto.ReservationDto;
 import telran.java29.project.dto.ReservationResponseDto;
 import telran.java29.project.dto.UpdateCarDto;
