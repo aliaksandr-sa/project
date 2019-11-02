@@ -3,7 +3,7 @@ package telran.java29.project.service;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import telran.java29.project.dao.CarRepository;
@@ -32,16 +32,16 @@ public class UserServiseImpl implements UserService {
 	UserRepository userRepository;
 	@Autowired
 	CarRepository carRepository;
-	@Autowired
-	PasswordEncoder passwordEncoder;
+//	@Autowired
+//	PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDto addNewUser(NewUserDto newUser) {
 		if (userRepository.existsById(newUser.getEmail())) {
 			throw new UserConflictException();
 		}
-		String hashPassword = passwordEncoder.encode(newUser.getPassword());
-		User user = new User(newUser.getFirst_name(), newUser.getSecond_name(), newUser.getEmail(), hashPassword);
+//		String hashPassword = passwordEncoder.encode(newUser.getPassword());
+		User user = new User(newUser.getFirst_name(), newUser.getSecond_name(), newUser.getEmail(), newUser.getPassword());
 		user = userRepository.save(user);
 		return convertToUserDto(user);
 	}
