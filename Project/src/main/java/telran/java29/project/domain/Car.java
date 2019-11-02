@@ -74,4 +74,9 @@ public class Car {
 	public boolean addFeature(String feature) {
 		return features.add(feature);
 	}
+
+	public boolean addBookedPeriod(BookedPeriod bookedPeriod) {
+		return booked_periods.add(bookedPeriod);
+		
+	}
 }

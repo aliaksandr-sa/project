@@ -28,13 +28,13 @@ public class ReservationServiceImpl implements ReservationService {
 				throw new ConflictException();
 			}
 		}
-	    ReservationResponseDto reservationResponseDto = new ReservationResponseDto(order_number, amount, booking_date);
+	    ReservationResponseDto reservationResponseDto = new ReservationResponseDto(order_number, amount, LocalDate.now());
 	    BookedPeriod bookedPeriod = new BookedPeriod(reservationResponseDto.getOrder_number(),
 	    		reservationDto.getStart_date_time(), reservationDto.getEnd_date_time(), false,
-	    		reservationResponseDto.getAmount(), LocalDate.now(),
+	    		reservationResponseDto.getAmount(), reservationResponseDto.getBooking_date(),
 	    		convertor.convertToUser(reservationDto.getPerson_who_booked());
-	    
-		return null;
+	    car.addBookedPeriod(bookedPeriod);
+		return reservationResponseDto;
 	}
 
 	@Override
