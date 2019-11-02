@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import telran.java29.project.dao.CarRepository;
 import telran.java29.project.dao.UserRepository;
@@ -22,7 +23,7 @@ import telran.java29.project.dto.PickUpPlaceDto;
 import telran.java29.project.dto.ReservationDto;
 import telran.java29.project.dto.ReservationResponseDto;
 import telran.java29.project.dto.UpdateCarDto;
-
+@Service
 public class CarServiceImpl implements CarService {
 	@Autowired
 	UserRepository userRepository;
