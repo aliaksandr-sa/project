@@ -60,7 +60,7 @@ public class CarServiceImpl implements CarService {
 		if (updateCar.getDistance_included()!=null) {
 			car.setDistance_included(updateCar.getDistance_included());
 		}
-		if (updateCar.get) {
+		if (updateCar.getS) {
 			
 		}
 		return null;
