@@ -47,7 +47,22 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public CarDto updateCar(UpdateCarDto updateCar, String serial_number) {
-		// TODO Auto-generated method stub
+		Car car = carRepository.findById(serial_number).get();
+		if(!updateCar.getFeatures().isEmpty()) {
+			car.setFeatures(updateCar.getFeatures().stream().collect(Collectors.toSet()));
+		}
+		if (updateCar.getCar_class()!=null) {
+			car.setCar_class(updateCar.getCar_class());
+		}
+		if (updateCar.getPrice_per_day()!=null) {
+			car.setPrice_per_day(updateCar.getPrice_per_day());
+		}
+		if (updateCar.getDistance_included()!=null) {
+			car.setDistance_included(updateCar.getDistance_included());
+		}
+		if (updateCar.get) {
+			
+		}
 		return null;
 	}
 
@@ -105,7 +120,7 @@ public class CarServiceImpl implements CarService {
 
 	}
 
-	private CarDto convertToCarDto(Car car) {
+	public CarDto convertToCarDto(Car car) {
 		return CarDto.builder()
 				.serial_number(car.getSerial_number())
 				.make(car.getMake())
@@ -130,7 +145,7 @@ public class CarServiceImpl implements CarService {
 				.build();
 	}
 
-	private BookedPeriodDto convertBookedPeriodsToBookedPeriodDto(BookedPeriod booked_period) {
+	public BookedPeriodDto convertBookedPeriodsToBookedPeriodDto(BookedPeriod booked_period) {
 		return BookedPeriodDto.builder()
 				.order_id(booked_period.getOrder_id())
 				.start_date_time(booked_period.getStart_date_time())
@@ -142,7 +157,7 @@ public class CarServiceImpl implements CarService {
 				.build();
 	}
 
-	private UserWhoBookedDto convertUserToUserWhoBookedDto(User person_who_booked) {
+	public UserWhoBookedDto convertUserToUserWhoBookedDto(User person_who_booked) {
 		return UserWhoBookedDto.builder()
 				.email(person_who_booked.getEmail())
 				.first_name(person_who_booked.getFirst_name())
@@ -151,7 +166,7 @@ public class CarServiceImpl implements CarService {
 				.build();
 	}
 
-	private OwnerDto convertOwnerToOwnerDto(User owner) {
+	public OwnerDto convertOwnerToOwnerDto(User owner) {
 		return OwnerDto.builder()
 			.first_name(owner.getFirst_name())
 			.second_name(owner.getSecond_name())
@@ -159,7 +174,7 @@ public class CarServiceImpl implements CarService {
 			.build();
 	}
 
-	private PickUpPlaceDto convertPickUpPlaceToPickupPlaceDto(PickUpPlace pick_up_place) {
+	public PickUpPlaceDto convertPickUpPlaceToPickupPlaceDto(PickUpPlace pick_up_place) {
 		return PickUpPlaceDto.builder()
 				.place_id(pick_up_place.getPlace_id())
 				.latitude(pick_up_place.getLatitude())
@@ -167,7 +182,7 @@ public class CarServiceImpl implements CarService {
 				.build();
 	}
 
-	private PickUpPlace convertToPickUpPlace(PickUpPlaceDto pick_up_place) {
+	public PickUpPlace convertToPickUpPlace(PickUpPlaceDto pick_up_place) {
 		return new PickUpPlace(pick_up_place.getPlace_id(), pick_up_place.getLatitude(), pick_up_place.getLongitude());
 	}
 }

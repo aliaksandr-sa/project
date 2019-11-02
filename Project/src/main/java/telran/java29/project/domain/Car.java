@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,8 +14,9 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
-
+@Document(collection = "cars")
 @EqualsAndHashCode(of = {"serial_number"})
+@Setter
 //m
 public class Car {
 	@Id
@@ -36,9 +38,7 @@ public class Car {
     String about;
     PickUpPlace pick_up_place;
     Set<String> image_url;
-    @Setter
     User owner;
-    @Setter
     Set<BookedPeriod> booked_periods;
     
 	public Car(String serial_number, String make, String model, int year, String engine, String fuel, String gear,
