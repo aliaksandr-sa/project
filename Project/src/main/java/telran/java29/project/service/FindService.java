@@ -8,4 +8,6 @@ public interface FindService {
 	CarDto getCarById(String serial_number);
 
 	Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(String serial_number);
+
+	CarDto ownerGetCarById(String serial_number);
 }
