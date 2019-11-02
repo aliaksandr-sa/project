@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import telran.java29.project.domain.BookedPeriod;
+import telran.java29.project.dto.BookedPeriodDto;
 import telran.java29.project.dto.CarDto;
 import telran.java29.project.dto.CommentDto;
 import telran.java29.project.dto.ConfirmPaymentDto;
@@ -22,12 +23,15 @@ import telran.java29.project.dto.ReservationDto;
 import telran.java29.project.dto.ReservationResponseDto;
 import telran.java29.project.dto.UpdateCarDto;
 import telran.java29.project.service.CarService;
+import telran.java29.project.service.FindService;
 
 @RestController
 //m
 public class CarController {
 	@Autowired
 	CarService carService;
+	@Autowired
+	FindService findService;
 
 	@PostMapping("/car")
 	public CarDto addCar(@RequestBody NewCarDto newCar) {
@@ -41,23 +45,23 @@ public class CarController {
 
 	@DeleteMapping("/car/{serial_number}")
 	public void deleteCar(String serial_number) {
-		carService.deleteCar();
+		carService.deleteCar(serial_number);
 	}
 
 	@GetMapping("/car/{serial_number}")
 	public CarDto getCarById(@PathVariable String serial_number) {
-		return carService.findCarById(serial_number);
+		return findService.getCarById(serial_number);
 		// TODO in implementation not to give full view of bookedPeriodDto!
 	}
 
 	@GetMapping("/user/cars/{serial_number}")
 	public CarDto ownerGetCarById(@PathVariable String serial_number) {
-		return carService.findOwnerCarById(serial_number);
+		return findService.findOwnerCarById(serial_number);
 	}
 
 	@GetMapping("/user/cars/{serial_number}/periods")
-	public List<BookedPeriod> ownerGetBookedPeriodsByCarId(@PathVariable String serial_number) {
-		return carService.findOwnerBookedPeriodsByCarId(serial_number);
+	public Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(@PathVariable String serial_number) {
+		return findService.ownerGetBookedPeriodsByCarId(serial_number);
 	}
 
 //	@GetMapping("/search?country=string&city=string&start_date="YYYY-MM-dd HH:mm"&end_date="YYYY-MM-dd HH:mm"&ascending=true&min_amount=20.5&max_amount=35.5")
