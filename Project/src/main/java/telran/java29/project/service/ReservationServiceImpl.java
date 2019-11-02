@@ -28,13 +28,23 @@ public class ReservationServiceImpl implements ReservationService {
 				throw new ConflictException();
 			}
 		}
-	    ReservationResponseDto reservationResponseDto = new ReservationResponseDto(order_number, amount, LocalDate.now());
+	    ReservationResponseDto reservationResponseDto = new ReservationResponseDto(order_number(), amount(), LocalDate.now());
 	    BookedPeriod bookedPeriod = new BookedPeriod(reservationResponseDto.getOrder_number(),
 	    		reservationDto.getStart_date_time(), reservationDto.getEnd_date_time(), false,
 	    		reservationResponseDto.getAmount(), reservationResponseDto.getBooking_date(),
-	    		convertor.convertToUser(reservationDto.getPerson_who_booked());
+	    		convertor.convertToUser(reservationDto.getPerson_who_booked()));
 	    car.addBookedPeriod(bookedPeriod);
 		return reservationResponseDto;
+	}
+
+	private String order_number() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Double amount() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
