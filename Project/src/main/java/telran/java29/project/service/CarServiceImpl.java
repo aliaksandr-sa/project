@@ -23,6 +23,7 @@ import telran.java29.project.dto.PickUpPlaceDto;
 import telran.java29.project.dto.ReservationDto;
 import telran.java29.project.dto.ReservationResponseDto;
 import telran.java29.project.dto.UpdateCarDto;
+import telran.java29.project.dto.UserWhoBookedDto;
 @Service
 public class CarServiceImpl implements CarService {
 	@Autowired
@@ -43,51 +44,6 @@ public class CarServiceImpl implements CarService {
 		
 	}
 
-	private CarDto convertToCarDto(Car car) {
-		return CarDto.builder()
-				.serial_number(car.getSerial_number())
-				.make(car.getMake())
-				.model(car.getModel())
-				.year(car.getYear())
-				.engine(car.getEngine())
-				.fuel(car.getFuel())
-				.gear(car.getGear())
-				.wheels_drive(car.getWheels_drive())
-				.doors(car.getDoors())
-				.seats(car.getSeats())
-				.fuel_consumption(car.getFuel_consumption())
-				.features(car.getFeatures().stream().collect(Collectors.toSet()))
-				.car_class(car.getCar_class())
-				.price_per_day(car.getPrice_per_day())
-				.distance_included(car.getDistance_included())
-				.about(car.getAbout())
-				.pick_up_place(convertPickUpPlaceToPickupPlaceDto(car.getPick_up_place()))
-				.image_url(car.getImage_url().stream().collect(Collectors.toSet()))
-				.owner(convertOwnerToOwnerDto(car.getOwner()))
-				.booked_periods(car.getBooked_periods().stream().map(this::convertBookedPeriodsToBookedPeriodDto).collect(Collectors.toSet()))
-				.build();
-	}
-
-	private BookedPeriodDto convertBookedPeriodsToBookedPeriodDto(BookedPeriod booked_periods) {
-		return null;
-	}
-
-	private OwnerDto convertOwnerToOwnerDto(User owner) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private PickUpPlaceDto convertPickUpPlaceToPickupPlaceDto(PickUpPlace pick_up_place) {
-		return PickUpPlaceDto.builder()
-				.place_id(pick_up_place.getPlace_id())
-				.latitude(pick_up_place.getLatitude())
-				.longitude(pick_up_place.getLatitude())
-				.build();
-	}
-
-	private PickUpPlace convertToPickUpPlace(PickUpPlaceDto pick_up_place) {
-		return new PickUpPlace(pick_up_place.getPlace_id(), pick_up_place.getLatitude(), pick_up_place.getLongitude());
-	}
 
 	@Override
 	public CarDto updateCar(UpdateCarDto updateCar, String serial_number) {
@@ -149,4 +105,69 @@ public class CarServiceImpl implements CarService {
 
 	}
 
+	private CarDto convertToCarDto(Car car) {
+		return CarDto.builder()
+				.serial_number(car.getSerial_number())
+				.make(car.getMake())
+				.model(car.getModel())
+				.year(car.getYear())
+				.engine(car.getEngine())
+				.fuel(car.getFuel())
+				.gear(car.getGear())
+				.wheels_drive(car.getWheels_drive())
+				.doors(car.getDoors())
+				.seats(car.getSeats())
+				.fuel_consumption(car.getFuel_consumption())
+				.features(car.getFeatures().stream().collect(Collectors.toSet()))
+				.car_class(car.getCar_class())
+				.price_per_day(car.getPrice_per_day())
+				.distance_included(car.getDistance_included())
+				.about(car.getAbout())
+				.pick_up_place(convertPickUpPlaceToPickupPlaceDto(car.getPick_up_place()))
+				.image_url(car.getImage_url().stream().collect(Collectors.toSet()))
+				.owner(convertOwnerToOwnerDto(car.getOwner()))
+				.booked_periods(car.getBooked_periods().stream().map(this::convertBookedPeriodsToBookedPeriodDto).collect(Collectors.toSet()))
+				.build();
+	}
+
+	private BookedPeriodDto convertBookedPeriodsToBookedPeriodDto(BookedPeriod booked_period) {
+		return BookedPeriodDto.builder()
+				.order_id(booked_period.getOrder_id())
+				.start_date_time(booked_period.getStart_date_time())
+				.end_date_time(booked_period.getEnd_date_time())
+				.paid(booked_period.getPaid())
+				.amount(booked_period.getAmount())
+				.booking_date(booked_period.getBooking_date())
+				.person_who_booked(convertUserToUserWhoBookedDto(booked_period.getPerson_who_booked()))
+				.build();
+	}
+
+	private UserWhoBookedDto convertUserToUserWhoBookedDto(User person_who_booked) {
+		return UserWhoBookedDto.builder()
+				.email(person_who_booked.getEmail())
+				.first_name(person_who_booked.getFirst_name())
+				.second_name(person_who_booked.getSecond_name())
+				.phone(person_who_booked.getPhone())
+				.build();
+	}
+
+	private OwnerDto convertOwnerToOwnerDto(User owner) {
+		return OwnerDto.builder()
+			.first_name(owner.getFirst_name())
+			.second_name(owner.getSecond_name())
+			.registration_date(owner.getRegistration_date())
+			.build();
+	}
+
+	private PickUpPlaceDto convertPickUpPlaceToPickupPlaceDto(PickUpPlace pick_up_place) {
+		return PickUpPlaceDto.builder()
+				.place_id(pick_up_place.getPlace_id())
+				.latitude(pick_up_place.getLatitude())
+				.longitude(pick_up_place.getLatitude())
+				.build();
+	}
+
+	private PickUpPlace convertToPickUpPlace(PickUpPlaceDto pick_up_place) {
+		return new PickUpPlace(pick_up_place.getPlace_id(), pick_up_place.getLatitude(), pick_up_place.getLongitude());
+	}
 }
