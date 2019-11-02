@@ -105,4 +105,9 @@ public class Convertor {
 				.longitude(pick_up_place.getLongitude())
 				.build();
 	}
+
+	public User convertToUser(UserWhoBookedDto person_who_booked) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
