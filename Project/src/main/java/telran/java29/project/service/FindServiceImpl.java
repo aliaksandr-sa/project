@@ -31,8 +31,8 @@ public class FindServiceImpl implements FindService {
 
 	@Override
 	public Iterable<OwnCarDto> ownerGetCars(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Car> cars = userRepository.findById(id).get().getOwn_cars();
+		return cars.stream().map(c -> convertor.convertToOwnCarDto(c)).collect(Collectors.toSet());
 	}
 
 	@Override
