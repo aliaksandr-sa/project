@@ -24,6 +24,8 @@ import telran.java29.project.dto.ReservationResponseDto;
 import telran.java29.project.dto.UpdateCarDto;
 import telran.java29.project.service.CarService;
 import telran.java29.project.service.FindService;
+import telran.java29.project.service.ReservationService;
+import telran.java29.project.service.UserService;
 
 @RestController
 //m
@@ -32,6 +34,9 @@ public class CarController {
 	CarService carService;
 	@Autowired
 	FindService findService;
+	@Autowired
+	ReservationService reservationService;
+
 
 	@PostMapping("/car")
 	public CarDto addCar(@RequestBody NewCarDto newCar) {
@@ -54,6 +59,10 @@ public class CarController {
 		// TODO in implementation not to give full view of bookedPeriodDto!
 	}
 
+	@GetMapping("/user/cars")
+	public Iterable<CarDto>ownerGetCars(String id){
+		return findService.ownerGetCars(id);
+	}
 	@GetMapping("/user/cars/{serial_number}")
 	public CarDto ownerGetCarById(@PathVariable String serial_number) {
 		return findService.ownerGetCarById(serial_number);
@@ -74,13 +83,13 @@ public class CarController {
 //		return carService.searctWithFilters(???);
 	
 	@PostMapping("/car/{serial_number}/reservation")
-	public ReservationResponseDto makeAReservation(ReservationDto reservationDto) {
-		return carService.makeAReservation(reservationDto);
+	public ReservationResponseDto makeAReservation(ReservationDto reservationDto, String serial_number) {
+		return reservationService.makeAReservation(reservationDto, serial_number);
 	}
 	
 	@PostMapping("/reservation/confirm")
 	public void makeAReservation(ConfirmPaymentDto confirmPaymentDto) {
-		carService.makeAReservation(confirmPaymentDto);
+		reservationService.makeAReservation(confirmPaymentDto);
 	}
 	
 	@GetMapping("/car/best")

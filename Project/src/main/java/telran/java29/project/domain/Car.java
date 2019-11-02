@@ -1,6 +1,7 @@
 package telran.java29.project.domain;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
@@ -64,7 +65,7 @@ public class Car {
 		this.pick_up_place = pick_up_place;
 		this.image_url = new HashSet<>();
 		this.owner = null;
-		this.booked_periods = new HashSet<>();
+		this.booked_periods = new LinkedHashSet<>();
 	}
 	
 	public boolean addImageUrl(String ImageUrl) {
