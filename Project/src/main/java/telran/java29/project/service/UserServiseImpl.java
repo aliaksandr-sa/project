@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import telran.java29.project.dao.CarRepository;
 import telran.java29.project.dao.UserRepository;
@@ -24,6 +25,7 @@ import telran.java29.project.dto.UserDto;
 import telran.java29.project.dto.UserWhoBookedDto;
 import telran.java29.project.exceptions.UserConflictException;
 
+@Service
 public class UserServiseImpl implements UserService {
 //S
 	@Autowired
