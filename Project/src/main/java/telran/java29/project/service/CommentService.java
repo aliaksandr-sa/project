@@ -7,4 +7,5 @@ public interface CommentService {
 	Iterable<CommentDto> getLatestComments();
 
 	void addAComment(String serial_number, String post);
+
 }
