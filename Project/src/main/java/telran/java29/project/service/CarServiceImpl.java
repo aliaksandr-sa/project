@@ -48,8 +48,9 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public CarDto updateCar(UpdateCarDto updateCar, String serial_number) {
 		Car car = carRepository.findById(serial_number).get();
-		if(!updateCar.getFeatures().isEmpty()) {
-			car.setFeatures(updateCar.getFeatures().stream().collect(Collectors.toSet()));
+		Set<String>featurs = updateCar.getFeatures();
+		if (featurs!=null) {
+			featurs.forEach(car::addFeature);
 		}
 		if (updateCar.getCar_class()!=null) {
 			car.setCar_class(updateCar.getCar_class());
@@ -63,7 +64,12 @@ public class CarServiceImpl implements CarService {
 		if (updateCar.getPick_up_place()!=null) {
 			car.setPick_up_place(convertPickupPlaceDtoToPickupPlace(updateCar.getPick_up_place()));
 		}
-		return null;
+		Set<String> image_url = updateCar.getImage_url();
+		if (image_url!=null) {
+			image_url.forEach(car::addImageUrl);
+		}
+		carRepository.save(car);
+		return convertToCarDto(car);
 	}
 
 	public PickUpPlace convertPickupPlaceDtoToPickupPlace(PickUpPlaceDto pick_up_place) {

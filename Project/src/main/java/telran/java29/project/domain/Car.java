@@ -56,7 +56,7 @@ public class Car {
 		this.doors = doors;
 		this.seats = seats;
 		this.fuel_consumption = fuel_consumption;
-		this.features = features;
+		this.features = new HashSet<>();
 		this.car_class = car_class;
 		this.price_per_day = price_per_day;
 		this.distance_included = distance_included;
@@ -65,5 +65,13 @@ public class Car {
 		this.image_url = new HashSet<>();
 		this.owner = null;
 		this.booked_periods = new HashSet<>();
+	}
+	
+	public boolean addImageUrl(String ImageUrl) {
+		return image_url.add(ImageUrl);
+	}
+	
+	public boolean addFeature(String feature) {
+		return features.add(feature);
 	}
 }
