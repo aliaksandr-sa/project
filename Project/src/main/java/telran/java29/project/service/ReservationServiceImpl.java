@@ -1,5 +1,6 @@
 package telran.java29.project.service;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import telran.java29.project.domain.Car;
 import telran.java29.project.dto.ConfirmPaymentDto;
 import telran.java29.project.dto.ReservationDto;
 import telran.java29.project.dto.ReservationResponseDto;
+import telran.java29.project.exceptions.CarIsPaidException;
 
 public class ReservationServiceImpl implements ReservationService {
 	@Autowired
@@ -17,7 +19,14 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public ReservationResponseDto makeAReservation(ReservationDto reservationDto, String serial_number) {
 		Car car = carRepository.findById(serial_number).get();
-		
+	    Iterator<BookedPeriod> iterator = car.getBooked_periods().iterator();
+	    BookedPeriod lastElement = iterator.next();
+	    while(iterator.hasNext()) {
+	        lastElement = iterator.next();
+	    }
+	    if (!lastElement.getPaid()) {
+			return new CarIsPaidException();
+		}
 		return null;
 	}
 

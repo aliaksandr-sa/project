@@ -60,11 +60,11 @@ public class CarController {
 	}
 
 	@GetMapping("/user/cars")
-	public Iterable<CarDto>ownerGetCars(String id){
+	public Iterable<OwnCarDto>ownerGetCars(@PathVariable String id){
 		return findService.ownerGetCars(id);
 	}
 	@GetMapping("/user/cars/{serial_number}")
-	public CarDto ownerGetCarById(@PathVariable String serial_number) {
+	public OwnCarDto ownerGetCarById(@PathVariable String serial_number) {
 		return findService.ownerGetCarById(serial_number);
 	}
 
