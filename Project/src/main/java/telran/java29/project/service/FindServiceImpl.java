@@ -13,6 +13,7 @@ import telran.java29.project.domain.BookedPeriod;
 import telran.java29.project.domain.Car;
 import telran.java29.project.dto.BookedPeriodDto;
 import telran.java29.project.dto.CarDto;
+import telran.java29.project.dto.OwnCarDto;
 
 @Service
 public class FindServiceImpl implements FindService {
@@ -29,15 +30,21 @@ public class FindServiceImpl implements FindService {
 	}
 
 	@Override
-	public Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(String serial_number) {
-		Set<BookedPeriod> bookedPeriods = carRepository.findById(serial_number).get().getBooked_periods();
-		return bookedPeriods.stream().map(bp -> convertor.convertToBookedPeriodDto(bp)).collect(Collectors.toSet());
+	public Iterable<OwnCarDto> ownerGetCars(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public CarDto ownerGetCarById(String serial_number) {
+	public OwnCarDto ownerGetCarById(String serial_number) {
 		Car car = carRepository.findById(serial_number).get();
-		return convertor.convertToCarDto(car);
+		return convertor.convertToOwnCarDto(car);
+	}
+
+	@Override
+	public Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(String serial_number) {
+		Set<BookedPeriod> bookedPeriods = carRepository.findById(serial_number).get().getBooked_periods();
+		return bookedPeriods.stream().map(bp -> convertor.convertToBookedPeriodDto(bp)).collect(Collectors.toSet());
 	}
 
 }
