@@ -1,7 +1,7 @@
 package telran.java29.project.service;
 
+import java.time.LocalDate;
 import java.util.Iterator;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,7 +11,7 @@ import telran.java29.project.domain.Car;
 import telran.java29.project.dto.ConfirmPaymentDto;
 import telran.java29.project.dto.ReservationDto;
 import telran.java29.project.dto.ReservationResponseDto;
-import telran.java29.project.exceptions.CarIsPaidException;
+import telran.java29.project.exceptions.ConflictException;
 
 public class ReservationServiceImpl implements ReservationService {
 	@Autowired
@@ -24,9 +24,10 @@ public class ReservationServiceImpl implements ReservationService {
 	    while(iterator.hasNext()) {
 	        lastElement = iterator.next();
 	    }
-	    if (!lastElement.getPaid()) {
-			return new CarIsPaidException();
+	    if (!lastElement.getPaid()||lastElement.getEnd_date_time().isAfter(LocalDate.now())) {
+			throw new ConflictException();
 		}
+	    
 		return null;
 	}
 
