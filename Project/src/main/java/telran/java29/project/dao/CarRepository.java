@@ -7,5 +7,5 @@ import telran.java29.project.dto.CarDto;
 
 public interface CarRepository extends MongoRepository<Car, String> {
 	
-	CarDto findCarById(String serial_number);
+//	CarDto findCarById(String serial_number);
 }
