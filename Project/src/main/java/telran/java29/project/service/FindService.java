@@ -9,5 +9,5 @@ public interface FindService {
 	
 	CarDto getCarById(String serial_number);
 
-	List<BookedPeriod> findOwnerBookedPeriodsByCarId(String serial_number);
+	List<BookedPeriod> ownerGetBookedPeriodsByCarId(String serial_number);
 }
