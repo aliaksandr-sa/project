@@ -39,6 +39,7 @@ public class CarServiceImpl implements CarService {
 				convertToPickUpPlace(carDto.getPick_up_place()), carDto.getImage_url());
 		car = carRepository.save(car);
 		return convertToCarDto(car);
+		
 	}
 
 	private CarDto convertToCarDto(Car car) {
