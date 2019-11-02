@@ -56,7 +56,7 @@ public class CarController {
 
 	@GetMapping("/user/cars/{serial_number}")
 	public CarDto ownerGetCarById(@PathVariable String serial_number) {
-		return findService.findOwnerCarById(serial_number);
+		return findService.ownerGetCarById(serial_number);
 	}
 
 	@GetMapping("/user/cars/{serial_number}/periods")
