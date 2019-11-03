@@ -26,6 +26,7 @@ public class ReservationServiceImpl implements ReservationService {
 	public ReservationResponseDto makeAReservation(ReservationDto reservationDto, String serial_number) {
 		Car car = carRepository.findById(serial_number).get();
 		Set<BookedPeriod> bookedPeriods = car.getBooked_periods();
+		
 		for (BookedPeriod bookedPeriod : bookedPeriods) {
 			if ((reservationDto.getStart_date_time().isBefore(bookedPeriod.getEnd_date_time())
 					&& reservationDto.getEnd_date_time().isAfter(bookedPeriod.getStart_date_time()))
