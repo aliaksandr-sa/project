@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 public class ConfirmPaymentDto {
-	int order_number;
+	String order_number;
 	String confirmation_code;
 
 }

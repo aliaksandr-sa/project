@@ -79,4 +79,14 @@ public class Car {
 		return booked_periods.add(bookedPeriod);
 		
 	}
+
+	public boolean updateBookPeriod(BookedPeriod bookedPeriod, BookedPeriod bookedPeriodPaid) {
+		if (booked_periods.contains(bookedPeriod)) {
+			booked_periods.remove(bookedPeriod);
+			booked_periods.add(bookedPeriodPaid);
+			return true;
+		}
+		return false;
+		
+	}
 }
