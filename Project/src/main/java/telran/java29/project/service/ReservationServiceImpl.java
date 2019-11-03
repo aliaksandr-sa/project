@@ -53,8 +53,7 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	private String order_number() {
-		// TODO Auto-generated method stub
-		return null;
+		return Long.toString(System.currentTimeMillis());
 	}
 
 	private Double amount(Double pricePerDay, int days) {
