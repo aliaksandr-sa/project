@@ -23,6 +23,7 @@ public class User {
 	String second_name;
 	@Id
 	String email;
+	@Setter
 	String password;
 	String phone;
 	LocalDate registration_date;

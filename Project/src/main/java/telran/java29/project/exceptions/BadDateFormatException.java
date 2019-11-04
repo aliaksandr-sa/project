@@ -3,8 +3,8 @@ package telran.java29.project.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(code = HttpStatus.CONFLICT)
-public class UserConflictException extends RuntimeException {
+@ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY, reason = "bad date format")
+public class BadDateFormatException extends RuntimeException {
 
 	/**
 	 * 
