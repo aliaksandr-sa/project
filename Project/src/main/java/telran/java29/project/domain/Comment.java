@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(of = {"first_name", "second_name", "post_date"})
+//S
 public class Comment {
 	String first_name;
 	String second_name;

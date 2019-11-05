@@ -11,8 +11,8 @@ import telran.java29.project.domain.User;
 import telran.java29.project.dto.NewUserDto;
 import telran.java29.project.dto.UpdateUserDto;
 import telran.java29.project.dto.UserDto;
-import telran.java29.project.exceptions.UserConflictException;
-
+import telran.java29.project.exceptions.ConflictException;
+//S
 @Service
 public class UserServiseImpl implements UserService {
 //S
@@ -27,7 +27,7 @@ public class UserServiseImpl implements UserService {
 	@Override
 	public UserDto addNewUser(NewUserDto newUser) {
 		if (userRepository.existsById(newUser.getEmail())) {
-			throw new UserConflictException();
+			throw new ConflictException();
 		}
 //		String hashPassword = passwordEncoder.encode(newUser.getPassword());
 		User user = new User(newUser.getFirst_name(), newUser.getSecond_name(), newUser.getEmail(), newUser.getPassword());
@@ -42,13 +42,17 @@ public class UserServiseImpl implements UserService {
 	}
 
 	@Override
-	public UserDto userUpdate(UpdateUserDto updateUser, String id) {
+	public UserDto userUpdate(UpdateUserDto updateUser, String id, String password) {
 		User user = userRepository.findById(id).get();
 		if (updateUser.getFirst_name() != null) {
 			user.setFirst_name(updateUser.getFirst_name());
 		}
 		if (updateUser.getSecond_name() != null) {
 			user.setSecond_name(updateUser.getSecond_name());
+		}
+		if (password != null) {
+//			String hashPassword = passwordEncoder.encode(password);
+			user.setPassword(password);
 		}
 		userRepository.save(user);
 		return convertor.convertToUserDto(user);

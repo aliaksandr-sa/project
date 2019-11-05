@@ -15,6 +15,7 @@ import lombok.Setter;
 @Setter
 @Builder
 @EqualsAndHashCode(of = {"place_id"})
+//S
 public class PickUpPlace {
 	@Id
 	String place_id;

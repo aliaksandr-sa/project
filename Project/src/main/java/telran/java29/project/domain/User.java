@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.Setter;
 @Getter
 @EqualsAndHashCode(of = {"email"})
 @Document(collection = "users")
+//S
 public class User {
 	@Setter
 	String first_name;
@@ -23,6 +25,7 @@ public class User {
 	String second_name;
 	@Id
 	String email;
+	@Setter
 	String password;
 	String phone;
 	LocalDate registration_date;
