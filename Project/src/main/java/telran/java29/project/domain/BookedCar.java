@@ -12,6 +12,7 @@ import telran.java29.project.dto.BookedPeriodDto;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"serial_number", "bookes_period"})
+//S
 public class BookedCar {
 	String serial_number;
     BookedPeriodDto bookes_period;

@@ -17,7 +17,7 @@ import telran.java29.project.dto.OwnerDto;
 import telran.java29.project.dto.PickUpPlaceDto;
 import telran.java29.project.dto.UserDto;
 import telran.java29.project.dto.UserWhoBookedDto;
-
+//S
 public class Convertor {
 	public CarDto convertToCarDto(Car car) {
 		return CarDto.builder().serial_number(car.getSerial_number()).make(car.getMake()).model(car.getModel())
@@ -107,7 +107,6 @@ public class Convertor {
 	}
 
 	public User convertToUser(UserWhoBookedDto person_who_booked) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
