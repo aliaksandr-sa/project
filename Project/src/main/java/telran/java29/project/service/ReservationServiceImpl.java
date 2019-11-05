@@ -83,6 +83,7 @@ public class ReservationServiceImpl implements ReservationService {
 			for (BookedPeriod bookedPeriod : bookedPeriods) {
 				if (bookedPeriod.getOrder_id().equals(order_number)) {
 					neededCar = car; 
+					
 				}
 			}
 		}
