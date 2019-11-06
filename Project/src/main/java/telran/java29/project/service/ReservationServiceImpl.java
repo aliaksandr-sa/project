@@ -1,6 +1,7 @@
 package telran.java29.project.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 import java.util.Set;
@@ -28,15 +29,19 @@ public class ReservationServiceImpl implements ReservationService {
 		Set<BookedPeriod> bookedPeriods = car.getBooked_periods();
 		
 		for (BookedPeriod bookedPeriod : bookedPeriods) {
-			if ((reservationDto.getStart_date_time().isBefore(bookedPeriod.getEnd_date_time())
-					&& reservationDto.getEnd_date_time().isAfter(bookedPeriod.getStart_date_time()))
-					&& bookedPeriod.getPaid()) {
+			//(reservationDto.getStart_date_time().isBefore(bookedPeriod.getEnd_date_time())
+			//&& reservationDto.getEnd_date_time().isAfter(bookedPeriod.getStart_date_time())
+			if (!(checkFreePeriod(reservationDto.getStart_date_time(),reservationDto.getEnd_date_time(),
+					bookedPeriod.getStart_date_time(),bookedPeriod.getEnd_date_time())
+					&& !bookedPeriod.getPaid())) {
 				throw new ConflictException();
 			}
+			//if proveryaet dostypni li dati dlya rezerva, i oplachen li bookedPeriod
+			
 		}
 
-		Period period = Period.between(reservationDto.getStart_date_time(),
-				reservationDto.getEnd_date_time().plusDays(1));
+		Period period = Period.between(reservationDto.getStart_date_time().toLocalDate(),
+				reservationDto.getEnd_date_time().toLocalDate().plusDays(1));
 		int days = period.getDays();
 
 		ReservationResponseDto reservationResponseDto = new ReservationResponseDto(order_number(),
@@ -50,6 +55,16 @@ public class ReservationServiceImpl implements ReservationService {
 		car.addBookedPeriod(bookedPeriod);
 
 		return reservationResponseDto;
+	}
+//maybe here we need to stop multithreading...
+	private boolean checkFreePeriod(LocalDateTime reserveStart, LocalDateTime reverveEnd, LocalDateTime bookedStart,
+			LocalDateTime bookedEnd) {
+		bookedEnd = bookedEnd.plusSeconds(1); //may check to minutes/days/years whatever if need
+		bookedStart = bookedStart.plusSeconds(1);
+		if (reserveStart.isBefore(bookedEnd)&&reverveEnd.isAfter(bookedStart)) {
+			return false;
+		}
+		return true;
 	}
 
 	private String order_number() {

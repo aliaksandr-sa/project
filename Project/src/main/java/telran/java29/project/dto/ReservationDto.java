@@ -1,6 +1,6 @@
 package telran.java29.project.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ReservationDto {
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	LocalDate start_date_time; 
+	LocalDateTime start_date_time; 
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	LocalDate end_date_time;
+	LocalDateTime end_date_time;
 	UserWhoBookedDto person_who_booked;
 }
