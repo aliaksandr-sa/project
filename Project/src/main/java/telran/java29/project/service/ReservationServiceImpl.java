@@ -45,7 +45,7 @@ public class ReservationServiceImpl implements ReservationService {
 		int days = period.getDays();
 
 		ReservationResponseDto reservationResponseDto = new ReservationResponseDto(order_number(),
-				amount(car.getPrice_per_day(), days), LocalDate.now());
+				amount(car.getPrice_per_day(), days), LocalDateTime.now());
 
 		BookedPeriod bookedPeriod = new BookedPeriod(reservationResponseDto.getOrder_number(),
 				reservationDto.getStart_date_time(), reservationDto.getEnd_date_time(), false,
