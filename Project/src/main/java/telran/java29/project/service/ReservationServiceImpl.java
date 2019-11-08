@@ -3,6 +3,7 @@ package telran.java29.project.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
@@ -44,7 +45,7 @@ public class ReservationServiceImpl implements ReservationService {
 				reservationDto.getEnd_date_time().toLocalDate().plusDays(1));
 		int days = period.getDays();
 
-		ReservationResponseDto reservationResponseDto = new ReservationResponseDto(order_number(),
+		ReservationResponseDto reservationResponseDto = new ReservationResponseDto(order_number(car),
 				amount(car.getPrice_per_day(), days), LocalDateTime.now());
 
 		BookedPeriod bookedPeriod = new BookedPeriod(reservationResponseDto.getOrder_number(),
@@ -67,10 +68,35 @@ public class ReservationServiceImpl implements ReservationService {
 		return true;
 	}
 
-	private String order_number() {
-		return Long.toString(System.currentTimeMillis());
+	private String order_number(Car car) {
+		int number = 0;
+		Set<BookedPeriod> bookedPeriods = car.getBooked_periods();
+		String serialNumber = car.getSerial_number();
+		String order_number="";
+		for (BookedPeriod bookedPeriod : bookedPeriods) {
+			if (bookedPeriod.getOrder_id()==generateNumber(serialNumber, number)) {
+				number++;
+				order_number = generateNumber(serialNumber, number);
+			}
+		}
+		return order_number;
 	}
 
+	private String generateNumber(String serialNumber, int number) {
+		String orderNumber= "";
+		if (serialNumber!=null&&serialNumber.length()>1) {
+			char [] twoLetters = serialNumber.toCharArray();
+			for (int i = 0; i <= 1; i++) {
+				orderNumber += twoLetters[i];
+				DateTimeFormatter formatter = DateTimeFormatter.ISO_ORDINAL_DATE;
+				orderNumber+="-"+LocalDate.now().format(formatter);
+				orderNumber+="-"+number;
+			}
+		}else {
+			throw new ConflictException();
+		}
+		return orderNumber;
+	}
 	private Double amount(Double pricePerDay, int days) {
 		return pricePerDay * days;
 	}
