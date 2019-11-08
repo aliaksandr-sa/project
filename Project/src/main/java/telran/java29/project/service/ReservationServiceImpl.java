@@ -72,9 +72,9 @@ public class ReservationServiceImpl implements ReservationService {
 		int number = 0;
 		Set<BookedPeriod> bookedPeriods = car.getBooked_periods();
 		String serialNumber = car.getSerial_number();
-		String order_number="";
+		String order_number=generateNumber(serialNumber, number);
 		for (BookedPeriod bookedPeriod : bookedPeriods) {
-			if (bookedPeriod.getOrder_id()==generateNumber(serialNumber, number)) {
+			if (bookedPeriod.getOrder_id().equals(order_number)) {
 				number++;
 				order_number = generateNumber(serialNumber, number);
 			}
