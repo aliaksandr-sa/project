@@ -18,6 +18,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = {"serial_number"})
 @Setter
 //m
+
 public class Car {
 	@Id
 	String serial_number;
