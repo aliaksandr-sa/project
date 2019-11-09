@@ -24,6 +24,7 @@ import telran.java29.project.exceptions.ConflictException;
 public class ReservationServiceImpl implements ReservationService {
 	@Autowired
 	CarRepository carRepository;
+	@Autowired
 	Convertor convertor;
 
 	@Override

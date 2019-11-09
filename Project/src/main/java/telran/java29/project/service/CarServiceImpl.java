@@ -24,6 +24,7 @@ import telran.java29.project.dto.UpdateCarDto;
 public class CarServiceImpl implements CarService {
 	@Autowired
 	CarRepository carRepository;
+	@Autowired
 	Convertor convertor;
 
 	@Override
