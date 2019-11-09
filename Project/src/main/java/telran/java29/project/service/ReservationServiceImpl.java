@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import telran.java29.project.convertor.Convertor;
 import telran.java29.project.dao.CarRepository;
@@ -19,6 +20,7 @@ import telran.java29.project.dto.ReservationResponseDto;
 import telran.java29.project.exceptions.ConflictException;
 
 //m
+@Service
 public class ReservationServiceImpl implements ReservationService {
 	@Autowired
 	CarRepository carRepository;
@@ -30,11 +32,9 @@ public class ReservationServiceImpl implements ReservationService {
 		Set<BookedPeriod> bookedPeriods = car.getBooked_periods();
 		
 		for (BookedPeriod bookedPeriod : bookedPeriods) {
-			//(reservationDto.getStart_date_time().isBefore(bookedPeriod.getEnd_date_time())
-			//&& reservationDto.getEnd_date_time().isAfter(bookedPeriod.getStart_date_time())
 			if (!(checkFreePeriod(reservationDto.getStart_date_time(),reservationDto.getEnd_date_time(),
 					bookedPeriod.getStart_date_time(),bookedPeriod.getEnd_date_time())
-					&& !bookedPeriod.getPaid())) {
+					&& !bookedPeriod.getPaid())&&!bookedPeriod.getBooking_date().plusDays(1).isBefore(LocalDateTime.now())) {
 				throw new ConflictException();
 			}
 			//if proveryaet dostypni li dati dlya rezerva, i oplachen li bookedPeriod
