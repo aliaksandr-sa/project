@@ -2,6 +2,8 @@ package telran.java29.project.convertor;
 
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Component;
+
 import telran.java29.project.domain.BookedCar;
 import telran.java29.project.domain.BookedPeriod;
 import telran.java29.project.domain.Car;
@@ -18,6 +20,7 @@ import telran.java29.project.dto.PickUpPlaceDto;
 import telran.java29.project.dto.UserDto;
 import telran.java29.project.dto.UserWhoBookedDto;
 //S
+@Component
 public class Convertor {
 	public CarDto convertToCarDto(Car car) {
 		return CarDto.builder().serial_number(car.getSerial_number()).make(car.getMake()).model(car.getModel())

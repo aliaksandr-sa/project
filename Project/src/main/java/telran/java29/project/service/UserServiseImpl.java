@@ -22,6 +22,7 @@ public class UserServiseImpl implements UserService {
 	CarRepository carRepository;
 //	@Autowired
 //	PasswordEncoder passwordEncoder;
+	@Autowired
 	Convertor convertor;
 	
 	@Override
@@ -34,6 +35,7 @@ public class UserServiseImpl implements UserService {
 		user = userRepository.save(user);
 		return convertor.convertToUserDto(user);
 	}
+	
 
 	@Override
 	public UserDto userLogin(String login) {
@@ -64,5 +66,5 @@ public class UserServiseImpl implements UserService {
 		userRepository.delete(user);
 
 	}
-
+	
 }
