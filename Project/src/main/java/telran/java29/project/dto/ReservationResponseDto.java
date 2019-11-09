@@ -1,6 +1,6 @@
 package telran.java29.project.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -19,6 +19,6 @@ public class ReservationResponseDto {
 	String order_number;
 	Double amount;
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	LocalDate booking_date;
+	LocalDateTime booking_date;
 	
 }
