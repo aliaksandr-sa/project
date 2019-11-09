@@ -116,10 +116,10 @@ public class Controller {
 		reservationService.makeAReservation(confirmPaymentDto);
 	}
 	
-//	@GetMapping("/car/best")
-//	public List<CarDto> get3BestBookedCars(){
-//		return carService.get3BestBookedCars();
-//	}
+	@GetMapping("/car/best")
+	public Iterable<CarDto> get3BestBookedCars(){
+		return carService.get3BestBookedCars();
+	}
 	
 	@GetMapping("/comment")
 	public Iterable<CommentDto> getLatestComments(){
