@@ -24,6 +24,7 @@ public class CommentServiceImpl implements CommentService {
 	CarRepository carRepository;
 //	@Autowired
 //	CommentRepository commentRepository;
+	@Autowired
 	Convertor convertor;
 
 	@Override

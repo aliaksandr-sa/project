@@ -21,6 +21,7 @@ public class FindServiceImpl implements FindService {
 	UserRepository userRepository;
 	@Autowired
 	CarRepository carRepository;
+	@Autowired
 	Convertor convertor;
 
 	@Override
