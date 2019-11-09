@@ -54,6 +54,7 @@ public class ReservationServiceImpl implements ReservationService {
 				convertor.convertToUser(reservationDto.getPerson_who_booked()));
 
 		car.addBookedPeriod(bookedPeriod);
+		carRepository.save(car);
 
 		return reservationResponseDto;
 	}
@@ -80,6 +81,7 @@ public class ReservationServiceImpl implements ReservationService {
 			}
 		}
 		return order_number;
+		
 	}
 
 	private String generateNumber(String serialNumber, int number) {
@@ -113,6 +115,7 @@ public class ReservationServiceImpl implements ReservationService {
 				bookedPeriodPaid.setPaid(true);
 				car.updateBookPeriod(bookedPeriod, bookedPeriodPaid);
 			}
+			carRepository.save(car);
 		}
 	}
 
