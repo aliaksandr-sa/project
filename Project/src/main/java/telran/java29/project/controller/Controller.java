@@ -64,7 +64,7 @@ public class Controller {
 	}
 	@PostMapping("/car")
 	public CarDto addCar(@RequestBody NewCarDto newCar, @RequestParam String email) {
-		return carService.addCar(newCar);
+		return carService.addCar(newCar, email);
 	}
 
 	@PutMapping("/car/{serial_number}")
