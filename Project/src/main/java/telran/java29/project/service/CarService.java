@@ -6,7 +6,7 @@ import telran.java29.project.dto.UpdateCarDto;
 //m
 public interface CarService {
 
-	CarDto addCar(NewCarDto carDto);
+	CarDto addCar(NewCarDto carDto, String email);
 
 	CarDto updateCar(UpdateCarDto updateCar, String serial_number);
 

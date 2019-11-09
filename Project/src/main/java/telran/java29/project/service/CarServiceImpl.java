@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import telran.java29.project.convertor.Convertor;
 import telran.java29.project.dao.CarRepository;
+import telran.java29.project.dao.UserRepository;
 import telran.java29.project.domain.BookedPeriod;
 import telran.java29.project.domain.Car;
+import telran.java29.project.domain.User;
 import telran.java29.project.dto.CarDto;
 import telran.java29.project.dto.NewCarDto;
 import telran.java29.project.dto.UpdateCarDto;
@@ -27,18 +29,21 @@ public class CarServiceImpl implements CarService {
 	CarRepository carRepository;
 	@Autowired
 	Convertor convertor;
+	@Autowired
+	UserRepository userRepository;
 
 	@Override
-	public CarDto addCar(NewCarDto carDto) {
+	public CarDto addCar(NewCarDto carDto, String email) {
 		if (carRepository.existsById(carDto.getSerial_number())) {
 			throw new ConflictException();
 		}
+		User user = userRepository.findById(email).get();
 		Car car = new Car(carDto.getSerial_number(), carDto.getMake(), carDto.getModel(), carDto.getYear(),
 				carDto.getEngine(), carDto.getFuel(), carDto.getGear(), carDto.getWheels_drive(), carDto.getDoors(),
 				carDto.getSeats(), carDto.getFuel_consumption(), carDto.getFeatures(), carDto.getCar_class(),
 				carDto.getPrice_per_day(), carDto.getDistance_included(), carDto.getAbout(),
 				convertor.convertToPickUpPlace(carDto.getPick_up_place()), carDto.getImage_url());
-
+		car.setOwner(user);
 		car = carRepository.save(car);
 		return convertor.convertToCarDto(car);
 	}
