@@ -1,6 +1,7 @@
 package telran.java29.project.service;
 
-import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +9,11 @@ import org.springframework.stereotype.Service;
 
 import telran.java29.project.convertor.Convertor;
 import telran.java29.project.dao.CarRepository;
-import telran.java29.project.dao.CommentRepository;
 import telran.java29.project.dao.UserRepository;
 import telran.java29.project.domain.Car;
 import telran.java29.project.domain.Comment;
 import telran.java29.project.domain.User;
 import telran.java29.project.dto.CommentDto;
-import telran.java29.project.exceptions.BadDateFormatException;
 import telran.java29.project.exceptions.ConflictException;
 //S
 @Service
@@ -23,18 +22,20 @@ public class CommentServiceImpl implements CommentService {
 	UserRepository userRepository;
 	@Autowired
 	CarRepository carRepository;
-	@Autowired
-	CommentRepository commentRepository;
+//	@Autowired
+//	CommentRepository commentRepository;
 	Convertor convertor;
 
 	@Override
 	public Iterable<CommentDto> getLatestComments() {
-		try {
-			return commentRepository.findByPost_dateAfter(LocalDate.now().minusDays(1)).stream()
-					.map(c -> convertor.convertToCommentDto(c)).collect(Collectors.toList());
-		} catch (Exception e) {
-			throw new BadDateFormatException();
-		}
+		Set<CommentDto> lastComments = carRepository.findAll().stream()
+				.map(c->c.getOwner())
+				.map(u->u.getComments())
+				.flatMap(Collection::stream)
+				.filter(c->c.getPost_date().isAfter(c.getPost_date().minusDays(6)))
+				.map(c-> convertor.convertToCommentDto(c))
+				.collect(Collectors.toSet());
+		return lastComments;
 		
 	}
 
@@ -45,6 +46,6 @@ public class CommentServiceImpl implements CommentService {
 		Comment comment = new Comment(user.getFirst_name(), user.getSecond_name(), post);
 		user.addComment(comment);
 		userRepository.save(user);
-		commentRepository.save(comment);
+		carRepository.save(car);
 	}
 }
