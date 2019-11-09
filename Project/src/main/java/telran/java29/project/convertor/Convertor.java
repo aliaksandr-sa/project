@@ -61,8 +61,11 @@ public class Convertor {
 	}
 
 	public OwnerDto convertToOwnerDto(User owner) {
-		return OwnerDto.builder().first_name(owner.getFirst_name()).second_name(owner.getSecond_name())
-				.registration_date(owner.getRegistration_date()).build();
+		return OwnerDto.builder()
+				.first_name(owner.getFirst_name())
+				.second_name(owner.getSecond_name())
+				.registration_date(owner.getRegistration_date())
+				.build();
 	}
 
 	public PickUpPlaceDto convertToPickupPlaceDto(PickUpPlace pick_up_place) {

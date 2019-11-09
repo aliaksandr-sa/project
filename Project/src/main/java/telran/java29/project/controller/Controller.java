@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import telran.java29.project.dto.BookedPeriodDto;
@@ -62,7 +63,7 @@ public class Controller {
 		userService.userDelete(id);
 	}
 	@PostMapping("/car")
-	public CarDto addCar(@RequestBody NewCarDto newCar) {
+	public CarDto addCar(@RequestBody NewCarDto newCar, @RequestParam String email) {
 		return carService.addCar(newCar);
 	}
 
