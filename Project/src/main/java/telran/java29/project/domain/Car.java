@@ -57,13 +57,13 @@ public class Car {
 		this.doors = doors;
 		this.seats = seats;
 		this.fuel_consumption = fuel_consumption;
-		this.features = new HashSet<>();
+		this.features = features;
 		this.car_class = car_class;
 		this.price_per_day = price_per_day;
 		this.distance_included = distance_included;
 		this.about = about;
 		this.pick_up_place = pick_up_place;
-		this.image_url = new HashSet<>();
+		this.image_url = image_url;
 		this.owner = null;
 		this.booked_periods = new HashSet<>();
 	}
