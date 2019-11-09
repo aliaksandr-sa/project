@@ -1,12 +1,19 @@
 package telran.java29.project.service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import telran.java29.project.convertor.Convertor;
 import telran.java29.project.dao.CarRepository;
+import telran.java29.project.domain.BookedPeriod;
 import telran.java29.project.domain.Car;
 import telran.java29.project.dto.CarDto;
 import telran.java29.project.dto.NewCarDto;
@@ -61,5 +68,28 @@ public class CarServiceImpl implements CarService {
 	public void deleteCar(String serial_number) {
 		Car car = carRepository.findById(serial_number).get();
 		carRepository.delete(car);
+	}
+
+	@Override
+	public Iterable<CarDto> get3BestBookedCars() {
+		List<Car> cars = carRepository.findAll();
+		Map<Integer, Car> bestCars = new HashMap<>(); 
+		for (Car car : cars) {
+			Set<BookedPeriod> bookedPeriods = car.getBooked_periods();
+			int counter = bookedPeriods.size();
+			bestCars.put(counter, car);
+		}
+		ArrayList<Car> orderedCars = new ArrayList<>();
+		bestCars.entrySet()
+		.stream()
+		.sorted(Map.Entry.comparingByKey(Comparator.reverseOrder()))
+		.forEachOrdered(x -> orderedCars.add(x.getValue()));
+		ArrayList<Car> bestBookedCars = new ArrayList<>();
+		for (int i = 0; i < 2; i++) {
+			if (orderedCars.get(i)!=null) {
+				bestBookedCars.add(orderedCars.get(i));
+			}
+		}
+		return bestBookedCars.stream().map(x->convertor.convertToCarDto(x)).collect(Collectors.toSet());
 	}
 }

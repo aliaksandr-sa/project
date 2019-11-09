@@ -22,8 +22,8 @@ public interface CarService {
 //
 //	void makeAReservation(ConfirmPaymentDto confirmPaymentDto);
 //
-//	List<CarDto> get3BestBookedCars();
-//
+	Iterable<CarDto> get3BestBookedCars();
+
 //	Set<CommentDto> getLatestComments();
 //
 //	void addAComment();
