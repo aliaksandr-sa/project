@@ -30,6 +30,14 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Override
 	public ReservationResponseDto makeAReservation(ReservationDto reservationDto, String serial_number) {
+		if (reservationDto.getStart_date_time().isAfter(reservationDto.getEnd_date_time())
+			||reservationDto.getStart_date_time().isBefore(LocalDateTime.now())
+			||(Period.between(reservationDto.getStart_date_time().toLocalDate(),
+					reservationDto.getEnd_date_time().toLocalDate()).getDays())<1){
+																	//FIXME
+			throw new ConflictException();
+		}
+		
 		Car car = carRepository.findById(serial_number).get();
 		Set<BookedPeriod> bookedPeriods = car.getBooked_periods();
 		
@@ -42,9 +50,9 @@ public class ReservationServiceImpl implements ReservationService {
 			//if proveryaet dostypni li dati dlya rezerva, i oplachen li bookedPeriod
 			
 		}
-
+		//FIXME
 		Period period = Period.between(reservationDto.getStart_date_time().toLocalDate(),
-				reservationDto.getEnd_date_time().toLocalDate().plusDays(1));
+				reservationDto.getEnd_date_time().toLocalDate());
 		int days = period.getDays();
 
 		ReservationResponseDto reservationResponseDto = new ReservationResponseDto(order_number(car),
@@ -92,10 +100,10 @@ public class ReservationServiceImpl implements ReservationService {
 			char [] twoLetters = serialNumber.toCharArray();
 			for (int i = 0; i <= 1; i++) {
 				orderNumber += twoLetters[i];
-				DateTimeFormatter formatter = DateTimeFormatter.ISO_ORDINAL_DATE;
-				orderNumber+="-"+LocalDate.now().format(formatter);
-				orderNumber+="-"+number;
 			}
+			DateTimeFormatter formatter = DateTimeFormatter.ISO_ORDINAL_DATE;
+			orderNumber+="-"+LocalDate.now().format(formatter);
+			orderNumber+="-"+number;
 		}else {
 			throw new ConflictException();
 		}
