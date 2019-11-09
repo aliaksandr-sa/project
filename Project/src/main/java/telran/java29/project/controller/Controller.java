@@ -62,8 +62,8 @@ public class Controller {
 	public void DeleteUser(@PathVariable String id) {
 		userService.userDelete(id);
 	}
-	@PostMapping("/car")
-	public CarDto addCar(@RequestBody NewCarDto newCar, @RequestParam String email) {
+	@PostMapping("/car/{email}")
+	public CarDto addCar(@RequestBody NewCarDto newCar, @PathVariable String email) {
 		return carService.addCar(newCar, email);
 	}
 
