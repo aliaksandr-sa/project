@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
-
+@Document(collection = "cars")
 @EqualsAndHashCode(of = {"serial_number"})
 @Setter
 //m
