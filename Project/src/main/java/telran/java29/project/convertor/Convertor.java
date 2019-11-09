@@ -23,16 +23,26 @@ import telran.java29.project.dto.UserWhoBookedDto;
 @Component
 public class Convertor {
 	public CarDto convertToCarDto(Car car) {
-		return CarDto.builder().serial_number(car.getSerial_number()).make(car.getMake()).model(car.getModel())
-				.year(car.getYear()).engine(car.getEngine()).fuel(car.getFuel()).gear(car.getGear())
-				.wheels_drive(car.getWheels_drive()).doors(car.getDoors()).seats(car.getSeats())
+		return CarDto.builder().serial_number(car.getSerial_number())
+				.make(car.getMake())
+				.model(car.getModel())
+				.year(car.getYear())
+				.engine(car.getEngine())
+				.fuel(car.getFuel())
+				.gear(car.getGear())
+				.wheels_drive(car.getWheels_drive())
+				.doors(car.getDoors())
+				.seats(car.getSeats())
 				.fuel_consumption(car.getFuel_consumption())
-				.features(car.getFeatures().stream().collect(Collectors.toSet())).car_class(car.getCar_class())
-				.price_per_day(car.getPrice_per_day()).distance_included(car.getDistance_included())
-				.about(car.getAbout()).pick_up_place(convertToPickupPlaceDto(car.getPick_up_place()))
-				.image_url(car.getImage_url().stream().collect(Collectors.toSet()))
-				.owner(convertToOwnerDto(car.getOwner())).booked_periods(car.getBooked_periods().stream()
-						.map(this::convertToBookedPeriodDto).collect(Collectors.toSet()))
+				.features(car.getFeatures())
+				.car_class(car.getCar_class())
+				.price_per_day(car.getPrice_per_day())
+				.distance_included(car.getDistance_included())
+				.about(car.getAbout())
+				.pick_up_place(convertToPickupPlaceDto(car.getPick_up_place()))
+				.image_url(car.getImage_url())
+				.owner(convertToOwnerDto(car.getOwner()))
+				.booked_periods(car.getBooked_periods().stream().map(this::convertToBookedPeriodDto).collect(Collectors.toSet()))
 				.build();
 	}
 
