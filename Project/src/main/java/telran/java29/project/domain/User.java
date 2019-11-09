@@ -37,7 +37,8 @@ public class User {
 		this.first_name = first_name;
 		this.second_name = second_name;
 		this.email = email;
-		this.phone = password;
+		this.password = password;
+		this.phone = null;
 		registration_date = LocalDate.now();
 		comments = new HashSet<>();
 		own_cars = new HashSet<>();

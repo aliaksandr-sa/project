@@ -72,7 +72,7 @@ public class Controller {
 	}
 
 	@DeleteMapping("/car/{serial_number}")
-	public void deleteCar(String serial_number) {
+	public void deleteCar(@PathVariable String serial_number) {
 		carService.deleteCar(serial_number);
 	}
 
@@ -107,12 +107,12 @@ public class Controller {
 //		return carService.searctWithFilters(???);
 	
 	@PostMapping("/car/{serial_number}/reservation")
-	public ReservationResponseDto makeAReservation(ReservationDto reservationDto, String serial_number) {
+	public ReservationResponseDto makeAReservation(@RequestBody ReservationDto reservationDto, @PathVariable String serial_number) {
 		return reservationService.makeAReservation(reservationDto, serial_number);
 	}
 	
 	@PostMapping("/reservation/confirm")
-	public void makeAReservation(ConfirmPaymentDto confirmPaymentDto) {
+	public void makeAReservation(@RequestBody ConfirmPaymentDto confirmPaymentDto) {
 		reservationService.makeAReservation(confirmPaymentDto);
 	}
 	
