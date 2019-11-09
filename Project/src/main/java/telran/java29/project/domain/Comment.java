@@ -2,6 +2,8 @@ package telran.java29.project.domain;
 
 import java.time.LocalDate;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.EqualsAndHashCode;
@@ -12,6 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(of = {"first_name", "second_name", "post_date"})
+@Document(collection = "comments")
 //S
 public class Comment {
 	String first_name;
