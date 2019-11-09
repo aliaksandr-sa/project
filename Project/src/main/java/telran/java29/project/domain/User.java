@@ -11,11 +11,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode(of = {"email"})
 @Document(collection = "users")
+@ToString
 //S
 public class User {
 	@Setter

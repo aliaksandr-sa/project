@@ -111,8 +111,12 @@ public class Convertor {
 	}
 
 	public CommentDto convertToCommentDto(Comment comment) {
-		return CommentDto.builder().first_name(comment.getFirst_name()).second_name(comment.getSecond_name())
-				.post(comment.getPost()).post_date(comment.getPost_date()).build();
+		return CommentDto.builder()
+				.first_name(comment.getFirst_name())
+				.second_name(comment.getSecond_name())
+				.post(comment.getPost())
+				.post_date(comment.getPost_date())
+				.build();
 	}
 	public PickUpPlace convertToPickupPlace(PickUpPlaceDto pick_up_place) {
 		return PickUpPlace.builder()

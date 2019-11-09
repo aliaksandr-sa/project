@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import telran.java29.project.dto.BookedPeriodDto;
@@ -16,6 +15,7 @@ import telran.java29.project.dto.CarDto;
 import telran.java29.project.dto.CommentDto;
 import telran.java29.project.dto.ConfirmPaymentDto;
 import telran.java29.project.dto.NewCarDto;
+import telran.java29.project.dto.NewCommentDto;
 import telran.java29.project.dto.NewUserDto;
 import telran.java29.project.dto.OwnCarDto;
 import telran.java29.project.dto.ReservationDto;
@@ -128,7 +128,7 @@ public class Controller {
 	}
 	
 	@PostMapping("/comment/{serial_number}")
-	public void AddAComment(@PathVariable String serial_number, @RequestBody String post) {
+	public void AddAComment(@PathVariable String serial_number, @RequestBody NewCommentDto post) {
 		commentService.addAComment(serial_number, post);
 	}
 	
