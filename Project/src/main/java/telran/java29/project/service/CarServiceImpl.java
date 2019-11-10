@@ -1,10 +1,8 @@
 package telran.java29.project.service;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 import telran.java29.project.convertor.Convertor;
 import telran.java29.project.dao.CarRepository;
 import telran.java29.project.dao.UserRepository;
-import telran.java29.project.domain.BookedPeriod;
 import telran.java29.project.domain.Car;
 import telran.java29.project.domain.User;
 import telran.java29.project.dto.CarDto;
@@ -47,6 +44,7 @@ public class CarServiceImpl implements CarService {
 		car = carRepository.save(car);
 		return convertor.convertToCarDto(car);
 	}
+
 //TODO UPDATE CAR!!!
 	@Override
 	public CarDto updateCar(UpdateCarDto updateCar, String serial_number) {
@@ -84,23 +82,13 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public Iterable<CarDto> get3BestBookedCars() {
 		List<Car> cars = carRepository.findAll();
-		Map<Integer, Car> bestCars = new HashMap<>(); 
-		for (Car car : cars) {
-			Set<BookedPeriod> bookedPeriods = car.getBooked_periods();
-			int counter = bookedPeriods.size();
-			bestCars.put(counter, car);
-		}
-		ArrayList<Car> orderedCars = new ArrayList<>();
-		bestCars.entrySet()
-		.stream()
-		.sorted(Map.Entry.comparingByKey(Comparator.reverseOrder()))
-		.forEachOrdered(x -> orderedCars.add(x.getValue()));
-		ArrayList<Car> bestBookedCars = new ArrayList<>();
-		for (int i = 0; i < 2; i++) {
-			if (orderedCars.get(i)!=null) {
-				bestBookedCars.add(orderedCars.get(i));
+		Collections.sort(cars, new Comparator<Car>() {
+			public int compare(Car c1, Car c2) {
+				return c2.getBooked_periods().size() - c1.getBooked_periods().size();
 			}
-		}
-		return bestBookedCars.stream().map(x->convertor.convertToCarDto(x)).collect(Collectors.toSet());
+		});
+		return cars.stream().filter(x -> cars.indexOf(x) <= 2).map(x -> convertor.convertToCarDto(x))
+				.collect(Collectors.toList());
 	}
+
 }

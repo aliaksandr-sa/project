@@ -12,11 +12,14 @@ import org.springframework.stereotype.Service;
 
 import telran.java29.project.convertor.Convertor;
 import telran.java29.project.dao.CarRepository;
+import telran.java29.project.dao.UserRepository;
 import telran.java29.project.domain.BookedPeriod;
 import telran.java29.project.domain.Car;
+import telran.java29.project.domain.User;
 import telran.java29.project.dto.ConfirmPaymentDto;
 import telran.java29.project.dto.ReservationDto;
 import telran.java29.project.dto.ReservationResponseDto;
+import telran.java29.project.dto.UserWhoBookedDto;
 import telran.java29.project.exceptions.ConflictException;
 
 //m
@@ -26,6 +29,8 @@ public class ReservationServiceImpl implements ReservationService {
 	CarRepository carRepository;
 	@Autowired
 	Convertor convertor;
+	@Autowired
+	UserRepository userRepository;
 
 	@Override
 	public ReservationResponseDto makeAReservation(ReservationDto reservationDto, String serial_number) {
@@ -56,12 +61,17 @@ public class ReservationServiceImpl implements ReservationService {
 
 		BookedPeriod bookedPeriod = new BookedPeriod(reservationResponseDto.getOrder_number(), reservationStartTime,
 				reservationEndTime, false, reservationResponseDto.getAmount(), reservationResponseDto.getBooking_date(),
-				convertor.convertToUser(reservationDto.getPerson_who_booked()));
-
+				convertToUser(reservationDto.getPerson_who_booked()));
 		car.addBookedPeriod(bookedPeriod);
 		carRepository.save(car);
 
 		return reservationResponseDto;
+	}
+
+	private User convertToUser(UserWhoBookedDto person_who_booked) {
+		User user = userRepository.findById(person_who_booked.getEmail()).get();
+		user.setPhone(person_who_booked.getPhone());
+		return user;
 	}
 
 	private int getDaysBetween(LocalDateTime reservationStartTime, LocalDateTime reservationEndTime) {
