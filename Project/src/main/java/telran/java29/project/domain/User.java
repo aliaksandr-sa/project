@@ -28,6 +28,7 @@ public class User {
 	String email;
 	@Setter
 	String password;
+	@Setter
 	String phone;
 	LocalDate registration_date;
 	Set<Comment> comments;
