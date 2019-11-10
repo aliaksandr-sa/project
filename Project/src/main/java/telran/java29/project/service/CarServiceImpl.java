@@ -12,9 +12,12 @@ import org.springframework.stereotype.Service;
 import telran.java29.project.convertor.Convertor;
 import telran.java29.project.dao.CarRepository;
 import telran.java29.project.dao.UserRepository;
+import telran.java29.project.domain.BookedPeriod;
 import telran.java29.project.domain.Car;
 import telran.java29.project.domain.User;
+import telran.java29.project.dto.BookedPeriodDtoSimple;
 import telran.java29.project.dto.CarDto;
+import telran.java29.project.dto.CarDtoSimple;
 import telran.java29.project.dto.NewCarDto;
 import telran.java29.project.dto.UpdateCarDto;
 import telran.java29.project.exceptions.ConflictException;
@@ -80,15 +83,44 @@ public class CarServiceImpl implements CarService {
 	}
 
 	@Override
-	public Iterable<CarDto> get3BestBookedCars() {
+	public Iterable<CarDtoSimple> get3BestBookedCars() {
 		List<Car> cars = carRepository.findAll();
 		Collections.sort(cars, new Comparator<Car>() {
 			public int compare(Car c1, Car c2) {
 				return c2.getBooked_periods().size() - c1.getBooked_periods().size();
 			}
 		});
-		return cars.stream().filter(x -> cars.indexOf(x) <= 2).map(x -> convertor.convertToCarDto(x))
+		return cars.stream().filter(x -> cars.indexOf(x) <= 2).map(x -> convertToCarDtoSimple(x))
 				.collect(Collectors.toList());
 	}
-
+	public CarDtoSimple convertToCarDtoSimple(Car car) {
+		return CarDtoSimple.builder().serial_number(car.getSerial_number())
+				.make(car.getMake())
+				.model(car.getModel())
+				.year(car.getYear())
+				.engine(car.getEngine())
+				.fuel(car.getFuel())
+				.gear(car.getGear())
+				.wheels_drive(car.getWheels_drive())
+				.doors(car.getDoors())
+				.seats(car.getSeats())
+				.fuel_consumption(car.getFuel_consumption())
+				.features(car.getFeatures())
+				.car_class(car.getCar_class())
+				.price_per_day(car.getPrice_per_day())
+				.distance_included(car.getDistance_included())
+				.about(car.getAbout())
+				.pick_up_place(convertor.convertToPickupPlaceDto(car.getPick_up_place()))
+				.image_url(car.getImage_url())
+				.owner(convertor.convertToOwnerDto(car.getOwner()))
+				.booked_periods(car.getBooked_periods().stream().map(this::convertToSimpleBookedPeriodDto).collect(Collectors.toSet()))
+				.build();
+	}
+	BookedPeriodDtoSimple convertToSimpleBookedPeriodDto(BookedPeriod bookedPeriod) {
+		return BookedPeriodDtoSimple.builder()
+		.start_date_time(bookedPeriod.getStart_date_time())
+		.end_date_time(bookedPeriod.getEnd_date_time())
+		.build();
+		
+	}
 }

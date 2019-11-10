@@ -1,6 +1,7 @@
 package telran.java29.project.service;
 
 import telran.java29.project.dto.CarDto;
+import telran.java29.project.dto.CarDtoSimple;
 import telran.java29.project.dto.NewCarDto;
 import telran.java29.project.dto.UpdateCarDto;
 //m
@@ -22,7 +23,7 @@ public interface CarService {
 //
 //	void makeAReservation(ConfirmPaymentDto confirmPaymentDto);
 //
-	Iterable<CarDto> get3BestBookedCars();
+	Iterable<CarDtoSimple> get3BestBookedCars();
 
 //	Set<CommentDto> getLatestComments();
 //
