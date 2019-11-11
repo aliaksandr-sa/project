@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import telran.java29.project.dto.BookedPeriodDto;
 import telran.java29.project.dto.CarDto;
+import telran.java29.project.dto.CarDtoSimple;
 import telran.java29.project.dto.CommentDto;
 import telran.java29.project.dto.ConfirmPaymentDto;
 import telran.java29.project.dto.NewCarDto;
@@ -118,7 +119,7 @@ public class Controller {
 	}
 	
 	@GetMapping("/car/best")
-	public Iterable<CarDto> get3BestBookedCars(){
+	public Iterable<CarDtoSimple> get3BestBookedCars(){
 		return carService.get3BestBookedCars();
 	}
 	
