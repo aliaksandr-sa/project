@@ -1,6 +1,8 @@
 package telran.java29.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +23,6 @@ import telran.java29.project.dto.NewUserDto;
 import telran.java29.project.dto.OwnCarDto;
 import telran.java29.project.dto.ReservationDto;
 import telran.java29.project.dto.ReservationResponseDto;
-import telran.java29.project.dto.UpdateCarDto;
 import telran.java29.project.dto.UpdateUserDto;
 import telran.java29.project.dto.UserDto;
 import telran.java29.project.service.CarService;
@@ -50,13 +51,14 @@ public class Controller {
 	}
 
 	@GetMapping("/user/{login}")
+	@PreAuthorize("#login == authentication.name")
 	public UserDto LoginUser(@PathVariable String login) {
 		return userService.userLogin(login);
 	}
 
 	@PutMapping("/user/{id}")
-	public UserDto UpdateUser(@RequestBody UpdateUserDto updateUser, @PathVariable String id, @RequestHeader("X-New-Password") String password) {
-		return userService.userUpdate(updateUser, id, password);
+	public UserDto UpdateUser(@RequestBody UpdateUserDto updateUser, Authentication authentication, @RequestHeader("X-Password") String password) {
+		return userService.userUpdate(updateUser, authentication.getName(), password);
 	}
 
 	@DeleteMapping("/user/{id}")

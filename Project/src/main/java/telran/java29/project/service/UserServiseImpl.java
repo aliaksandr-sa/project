@@ -1,7 +1,7 @@
 package telran.java29.project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import telran.java29.project.convertor.Convertor;
@@ -20,8 +20,8 @@ public class UserServiseImpl implements UserService {
 	UserRepository userRepository;
 	@Autowired
 	CarRepository carRepository;
-//	@Autowired
-//	PasswordEncoder passwordEncoder;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	@Autowired
 	Convertor convertor;
 	
@@ -30,8 +30,8 @@ public class UserServiseImpl implements UserService {
 		if (userRepository.existsById(newUser.getEmail())) {
 			throw new ConflictException();
 		}
-//		String hashPassword = passwordEncoder.encode(newUser.getPassword());
-		User user = new User(newUser.getFirst_name(), newUser.getSecond_name(), newUser.getEmail(), newUser.getPassword());
+		String hashPassword = passwordEncoder.encode(newUser.getPassword());
+		User user = new User(newUser.getFirst_name(), newUser.getSecond_name(), newUser.getEmail(), hashPassword);
 		user = userRepository.save(user);
 		return convertor.convertToUserDto(user);
 	}
