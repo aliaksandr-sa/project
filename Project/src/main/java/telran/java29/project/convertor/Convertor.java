@@ -12,7 +12,9 @@ import telran.java29.project.domain.PickUpPlace;
 import telran.java29.project.domain.User;
 import telran.java29.project.dto.BookedCarDto;
 import telran.java29.project.dto.BookedPeriodDto;
+import telran.java29.project.dto.BookedPeriodDtoSimple;
 import telran.java29.project.dto.CarDto;
+import telran.java29.project.dto.CarDtoSimple;
 import telran.java29.project.dto.CommentDto;
 import telran.java29.project.dto.OwnCarDto;
 import telran.java29.project.dto.OwnerDto;
@@ -128,5 +130,35 @@ public class Convertor {
 
 	public User convertToUser(UserWhoBookedDto person_who_booked) {
 		return null;
+	}
+	public CarDtoSimple convertToCarDtoSimple(Car car) {
+		return CarDtoSimple.builder().serial_number(car.getSerial_number())
+				.make(car.getMake())
+				.model(car.getModel())
+				.year(car.getYear())
+				.engine(car.getEngine())
+				.fuel(car.getFuel())
+				.gear(car.getGear())
+				.wheels_drive(car.getWheels_drive())
+				.doors(car.getDoors())
+				.seats(car.getSeats())
+				.fuel_consumption(car.getFuel_consumption())
+				.features(car.getFeatures())
+				.car_class(car.getCar_class())
+				.price_per_day(car.getPrice_per_day())
+				.distance_included(car.getDistance_included())
+				.about(car.getAbout())
+				.pick_up_place(convertToPickupPlaceDto(car.getPick_up_place()))
+				.image_url(car.getImage_url())
+				.owner(convertToOwnerDto(car.getOwner()))
+				.booked_periods(car.getBooked_periods().stream().map(this::convertToSimpleBookedPeriodDto).collect(Collectors.toSet()))
+				.build();
+	}
+	BookedPeriodDtoSimple convertToSimpleBookedPeriodDto(BookedPeriod bookedPeriod) {
+		return BookedPeriodDtoSimple.builder()
+		.start_date_time(bookedPeriod.getStart_date_time())
+		.end_date_time(bookedPeriod.getEnd_date_time())
+		.build();
+		
 	}
 }
