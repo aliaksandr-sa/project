@@ -41,7 +41,7 @@ public class Car {
     Set<String> image_url;
     User owner;
     Set<BookedPeriod> booked_periods;
-    
+    int counterBooked;
 	public Car(String serial_number, String make, String model, int year, String engine, String fuel, String gear,
 			String wheels_drive, int doors, int seats, Double fuel_consumption, Set<String> features, String car_class,
 			Double price_per_day, Double distance_included, String about, PickUpPlace pick_up_place,
@@ -88,6 +88,9 @@ public class Car {
 			return true;
 		}
 		return false;
-		
+	}
+	
+	public void counterBooked() {
+		this.counterBooked++;
 	}
 }

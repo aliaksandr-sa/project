@@ -139,6 +139,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 				BookedPeriod bookedPeriodPaid = bookedPeriod;
 				bookedPeriodPaid.setPaid(true);
+				car.counterBooked();
 				car.updateBookPeriod(bookedPeriod, bookedPeriodPaid);
 			}
 			carRepository.save(car);
