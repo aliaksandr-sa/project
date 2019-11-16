@@ -69,7 +69,7 @@ public class Controller {
 	}
 
 	@PutMapping("/car/{serial_number}")
-	public CarDto updateCar(@RequestBody UpdateCarDto updateCar, @PathVariable String serial_number) {
+	public CarDto updateCar(@RequestBody NewCarDto updateCar, @PathVariable String serial_number) {
 		return carService.updateCar(updateCar, serial_number);
 	}
 
