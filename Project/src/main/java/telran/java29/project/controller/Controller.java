@@ -1,7 +1,6 @@
 package telran.java29.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,10 +49,10 @@ public class Controller {
 		return userService.addNewUser(newUser);
 	}
 
-	@GetMapping("/user/{login}")
-	@PreAuthorize("#login == authentication.name")
-	public UserDto LoginUser(@PathVariable String login) {
-		return userService.userLogin(login);
+	@GetMapping("/user")
+//	@PreAuthorize("#login == authentication.name")
+	public UserDto LoginUser(Authentication authentication) {
+		return userService.userLogin(authentication.getName());
 	}
 
 	@PutMapping("/user/{id}")

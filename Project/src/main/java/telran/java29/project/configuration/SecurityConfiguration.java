@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.httpBasic();
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/{login}").authenticated();
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/user").permitAll();
 	}
 	
 	@Bean
