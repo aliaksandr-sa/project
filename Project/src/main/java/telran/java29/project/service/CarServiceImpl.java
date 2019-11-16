@@ -1,5 +1,6 @@
 package telran.java29.project.service;
 
+import java.lang.reflect.Field;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -54,7 +55,7 @@ public class CarServiceImpl implements CarService {
 			String email = null;
 			car = copyPropertiesAndDeleteExistCar(car, updateCar, email);
 			return convertor.convertToCarDto(car);
-		}
+		}		
 		if (updateCar.getMake()!=null) {
 			car.setMake(updateCar.getMake());
 		}
@@ -65,6 +66,28 @@ public class CarServiceImpl implements CarService {
 			car.setYear(updateCar.getYear());
 		}else if(updateCar.getYear()<=0){
 			throw new ConflictException();
+		}
+		if (updateCar.getEngine()!=null) {
+			car.setEngine(updateCar.getEngine());
+		}
+		if (updateCar.getFuel()!=null) {
+			car.setFuel(updateCar.getFuel());
+		}
+		if (updateCar.getWheels_drive()!=null) {
+			car.setWheels_drive(updateCar.getWheels_drive());
+		}
+		if (updateCar.getDoors()!=0) {
+			car.setDoors(updateCar.getDoors());
+		}else if(updateCar.getDoors()<=0){
+			throw new ConflictException();
+		}
+		if (updateCar.getSeats()!=0) {
+			car.setSeats(updateCar.getSeats());
+		}else if(updateCar.getSeats()<=0){
+			throw new ConflictException();
+		}
+		if (updateCar.getFuel_consumption() != null) {
+			car.setFuel_consumption(updateCar.getFuel_consumption());
 		}
 		if (updateCar.getFeatures() != null) {
 			car.setFeatures(updateCar.getFeatures());
@@ -81,9 +104,11 @@ public class CarServiceImpl implements CarService {
 		if (updateCar.getPick_up_place() != null) {
 			car.setPick_up_place(convertor.convertToPickupPlace(updateCar.getPick_up_place()));
 		}
-		Set<String> image_url = updateCar.getImage_url();
-		if (image_url != null) {
-			image_url.forEach(car::addImageUrl);
+		if (updateCar.getAbout() != null) {
+			car.setAbout(updateCar.getAbout());
+		}
+		if (updateCar.getImage_url() != null) {
+			car.setImage_url(updateCar.getImage_url());
 		}
 		carRepository.save(car);
 		return convertor.convertToCarDto(car);
