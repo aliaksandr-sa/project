@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import telran.java29.project.dao.UserRepository;
-
+//S
 @Service
 public class UserDetailsServiceImpls implements UserDetailsService{
 	@Autowired
