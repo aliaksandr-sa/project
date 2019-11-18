@@ -30,7 +30,6 @@ public class Comment {
 		this.second_name = second_name;
 		this.post = post;
 		post_date = LocalDateTime.now();
-		System.out.println(post + '2');
 	}
 	
 }

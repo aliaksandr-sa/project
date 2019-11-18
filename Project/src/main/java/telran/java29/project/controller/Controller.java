@@ -49,10 +49,10 @@ public class Controller {
 		return userService.addNewUser(newUser);
 	}
 
-	@GetMapping("/user")
+	@GetMapping("/user/login/{login}")
 //	@PreAuthorize("#login == authentication.name")
-	public UserDto LoginUser(Authentication authentication) {
-		return userService.userLogin(authentication.getName());
+	public UserDto LoginUser(@PathVariable String login) {
+		return userService.userLogin(login);
 	}
 
 	@PutMapping("/user/{id}")

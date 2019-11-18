@@ -7,12 +7,15 @@ import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @EqualsAndHashCode(of = {"email"})
 @Document(collection = "users")
@@ -33,6 +36,9 @@ public class User {
 	Set<Car> own_cars;
 	Set<BookedCar> booked_cars;
 	Set<BookedCar> history;
+	@Singular
+	Set<String> roles;
+	
 	
 	public User(String first_name, String second_name, String email, String password) {
 		this.first_name = first_name;
@@ -45,6 +51,8 @@ public class User {
 		own_cars = new HashSet<>();
 		booked_cars = new HashSet<>();
 		history = new HashSet<>();
+		roles = new HashSet<>();
+		roles.add("ROLE_USER");
 	}
 	
 	public boolean addComment(Comment comment) {
