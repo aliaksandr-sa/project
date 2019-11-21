@@ -49,32 +49,33 @@ public class Controller {
 		return userService.addNewUser(newUser);
 	}
 
-	@GetMapping("/user/login/{login}")
-//	@PreAuthorize("#login == authentication.name")
-	public UserDto LoginUser(@PathVariable String login) {
-		return userService.userLogin(login);
+	@GetMapping("/user/login")
+	public UserDto LoginUser(Authentication authentication) {
+		return userService.userLogin(authentication.getName());
 	}
 
-	@PutMapping("/user/{id}")
+	@PutMapping("/user")
 	public UserDto UpdateUser(@RequestBody UpdateUserDto updateUser, Authentication authentication, @RequestHeader("X-Password") String password) {
 		return userService.userUpdate(updateUser, authentication.getName(), password);
 	}
 
-	@DeleteMapping("/user/{id}")
-	public void DeleteUser(@PathVariable String id) {
-		userService.userDelete(id);
+	@DeleteMapping("/user")
+	public void DeleteUser(Authentication authentication) {
+		userService.userDelete(authentication.getName());
 	}
-	@PostMapping("/car/{email}")
-	public CarDto addCar(@RequestBody NewCarDto newCar, @PathVariable String email) {
-		return carService.addCar(newCar, email);
+	@PostMapping("/car")
+	public CarDto addCar(@RequestBody NewCarDto newCar, Authentication authentication) {
+		return carService.addCar(newCar, authentication.getName());
 	}
 
 	@PutMapping("/car/{serial_number}")
+	//proverit', 4to izmeniaet car imenno vladelec cara
 	public CarDto updateCar(@RequestBody NewCarDto updateCar, @PathVariable String serial_number) {
 		return carService.updateCar(updateCar, serial_number);
 	}
 
 	@DeleteMapping("/car/{serial_number}")
+	//proverit', 4to udaliaet car imenno vladelec cara
 	public void deleteCar(@PathVariable String serial_number) {
 		carService.deleteCar(serial_number);
 	}

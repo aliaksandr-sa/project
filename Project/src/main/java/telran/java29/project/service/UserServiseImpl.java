@@ -53,8 +53,8 @@ public class UserServiseImpl implements UserService {
 			user.setSecond_name(updateUser.getSecond_name());
 		}
 		if (password != null) {
-//			String hashPassword = passwordEncoder.encode(password);
-			user.setPassword(password);
+			String hashPassword = passwordEncoder.encode(password);
+			user.setPassword(hashPassword);
 		}
 		userRepository.save(user);
 		return convertor.convertToUserDto(user);

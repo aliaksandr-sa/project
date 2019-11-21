@@ -23,7 +23,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(HttpMethod.GET, "/car/{serial_number}");
 		web.ignoring().antMatchers(HttpMethod.GET, "/car/best");
 		web.ignoring().antMatchers(HttpMethod.GET, "/comment");
-//		web.ignoring().antMatchers(HttpMethod.GET, "/user/login");
 //		Get filters
 //		Search by filters
 //		search cars by coordinates
@@ -35,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.httpBasic();
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/login/{login}").hasRole("USER");
+//		http.authorizeRequests().antMatchers(HttpMethod.GET, "/user/login").hasRole("USER");
 	}
 	
 	@Bean
