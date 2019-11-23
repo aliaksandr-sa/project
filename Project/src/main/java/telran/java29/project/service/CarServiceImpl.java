@@ -40,9 +40,10 @@ public class CarServiceImpl implements CarService {
 				carDto.getPrice_per_day(), carDto.getDistance_included(), carDto.getAbout(),
 				convertor.convertToPickUpPlace(carDto.getPick_up_place()), carDto.getImage_url());
 		car.setOwner(user);
-//		user.addOwnCar(car);
-//		userRepository.save(user);
 		car = carRepository.save(car);
+		user = userRepository.findById(email).get();
+		user.addOwnCar(car);
+		userRepository.save(user);
 		return convertor.convertToCarDto(car);
 	}
 
