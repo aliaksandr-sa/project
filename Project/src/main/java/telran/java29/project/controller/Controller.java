@@ -71,14 +71,14 @@ public class Controller {
 
 	@PutMapping("/car/{serial_number}")
 	//proverit', 4to izmeniaet car imenno vladelec cara
-	public CarDto updateCar(@RequestBody NewCarDto updateCar, @PathVariable String serial_number) {
-		return carService.updateCar(updateCar, serial_number);
+	public CarDto updateCar(@RequestBody NewCarDto updateCar, @PathVariable String serial_number, Authentication authentication) {
+		return carService.updateCar(updateCar, serial_number, authentication.getName());
 	}
 
 	@DeleteMapping("/car/{serial_number}")
 	//proverit', 4to udaliaet car imenno vladelec cara
-	public void deleteCar(@PathVariable String serial_number) {
-		carService.deleteCar(serial_number);
+	public void deleteCar(@PathVariable String serial_number, Authentication authentication) {
+		carService.deleteCar(serial_number, authentication.getName());
 	}
 
 	@GetMapping("/car/{serial_number}")
