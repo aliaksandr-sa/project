@@ -1,9 +1,7 @@
 package telran.java29.project.service;
 
-import java.lang.reflect.Field;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,6 @@ public class CarServiceImpl implements CarService {
 	UserRepository userRepository;
 
 	@Override
-	// FIXME
 	public CarDto addCar(NewCarDto carDto, String email) {
 		if (carRepository.existsById(carDto.getSerial_number())) {
 			throw new ConflictException();
@@ -46,15 +43,17 @@ public class CarServiceImpl implements CarService {
 		return convertor.convertToCarDto(car);
 	}
 
-//TODO UPDATE CAR!!!
 	@Override
-	public CarDto updateCar(NewCarDto updateCar, String serial_number) {
+	public CarDto updateCar(NewCarDto updateCar, String serial_number, String email) {
 		Car car = carRepository.findById(serial_number).get();
+		if (!car.getOwner().getEmail().equals(email)) {
+			throw new ConflictException();
+		}
 		if (updateCar.getSerial_number()!=null) {
-			     //FIXME
-			String email = null;
-			car = copyPropertiesAndDeleteExistCar(car, updateCar, email);
-			return convertor.convertToCarDto(car);
+			if (car.getSerial_number()==updateCar.getSerial_number()) {
+				throw new ConflictException();
+			}
+			car.setSerial_number(updateCar.getSerial_number());
 		}		
 		if (updateCar.getMake()!=null) {
 			car.setMake(updateCar.getMake());
@@ -62,7 +61,7 @@ public class CarServiceImpl implements CarService {
 		if (updateCar.getModel() != null ) {
 			car.setModel(updateCar.getModel());
 		}
-		if (updateCar.getYear()!=0) {
+		if (updateCar.getYear()<=0) {
 			car.setYear(updateCar.getYear());
 		}else if(updateCar.getYear()<=0){
 			throw new ConflictException();
@@ -76,12 +75,12 @@ public class CarServiceImpl implements CarService {
 		if (updateCar.getWheels_drive()!=null) {
 			car.setWheels_drive(updateCar.getWheels_drive());
 		}
-		if (updateCar.getDoors()!=0) {
+		if (updateCar.getDoors()<=0) {
 			car.setDoors(updateCar.getDoors());
 		}else if(updateCar.getDoors()<=0){
 			throw new ConflictException();
 		}
-		if (updateCar.getSeats()!=0) {
+		if (updateCar.getSeats()<=0) {
 			car.setSeats(updateCar.getSeats());
 		}else if(updateCar.getSeats()<=0){
 			throw new ConflictException();
@@ -114,15 +113,15 @@ public class CarServiceImpl implements CarService {
 		return convertor.convertToCarDto(car);
 	}
 
-	private Car copyPropertiesAndDeleteExistCar(Car car, NewCarDto updateCar, String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
-	public void deleteCar(String serial_number) {
+	public void deleteCar(String serial_number, String email) {
 		Car car = carRepository.findById(serial_number).get();
-		carRepository.delete(car);
+		if (!car.getOwner().getEmail().equals(email)) {
+			throw new ConflictException();
+		}
+		else {
+			carRepository.delete(car);	
+		}
 	}
 
 	@Override

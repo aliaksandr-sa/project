@@ -8,24 +8,11 @@ public interface CarService {
 
 	CarDto addCar(NewCarDto carDto, String email);
 
-	CarDto updateCar(NewCarDto updateCar, String serial_number);
+	CarDto updateCar(NewCarDto updateCar, String serial_number, String email);
 
-//	CarDto findCarById(String serial_number);
+	void deleteCar(String serial_number, String email);
 
-	void deleteCar(String serial_number);
-
-//	CarDto findOwnerCarById(String serial_number);
-
-//	List<BookedPeriod> findOwnerBookedPeriodsByCarId(String serial_number);
-//
-//	ReservationResponseDto makeAReservation(ReservationDto reservationDto);
-//
-//	void makeAReservation(ConfirmPaymentDto confirmPaymentDto);
-//
 	Iterable<CarDtoSimple> get3BestBookedCars();
 
-//	Set<CommentDto> getLatestComments();
-//
-//	void addAComment();
 
 }
