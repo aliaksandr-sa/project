@@ -6,7 +6,7 @@ import telran.java29.project.dto.UserDto;
 //S
 public interface UserService {
 
-	UserDto addNewUser(NewUserDto newUser);
+	UserDto addNewUser(NewUserDto newUser, String token);
 
 	UserDto userLogin(String login);
 

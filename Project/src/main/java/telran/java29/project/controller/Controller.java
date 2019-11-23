@@ -45,9 +45,10 @@ public class Controller {
 	CommentService commentService;
 
 	@PostMapping("/registration")
-	public UserDto RegisterNewUser(@RequestBody NewUserDto newUser) {
-		return userService.addNewUser(newUser);
+	public UserDto RegisterNewUser(@RequestBody NewUserDto newUser, @RequestHeader("Authorization")String token) {
+		return userService.addNewUser(newUser, token);
 	}
+
 
 	@GetMapping("/user/login")
 	public UserDto LoginUser(Authentication authentication) {

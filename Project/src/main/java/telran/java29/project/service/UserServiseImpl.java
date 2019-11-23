@@ -1,5 +1,7 @@
 package telran.java29.project.service;
 
+import java.util.Base64;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import telran.java29.project.dto.NewUserDto;
 import telran.java29.project.dto.UpdateUserDto;
 import telran.java29.project.dto.UserDto;
 import telran.java29.project.exceptions.ConflictException;
+import telran.java29.project.exceptions.EmptyFieldException;
 //S
 @Service
 public class UserServiseImpl implements UserService {
@@ -26,16 +29,30 @@ public class UserServiseImpl implements UserService {
 	Convertor convertor;
 	
 	@Override
-	public UserDto addNewUser(NewUserDto newUser) {
-		if (userRepository.existsById(newUser.getEmail())) {
+	public UserDto addNewUser(NewUserDto newUser, String token) {
+		String[] credential = decodeToken(token);
+		String login = credential[0];
+		String password = credential[1];
+		if (login == null || password == null) {
+			throw new EmptyFieldException();
+		}
+		if (userRepository.existsById(login)) {
 			throw new ConflictException();
 		}
-		String hashPassword = passwordEncoder.encode(newUser.getPassword());
-		User user = new User(newUser.getFirst_name(), newUser.getSecond_name(), newUser.getEmail(), hashPassword);
+		String hashPassword = passwordEncoder.encode(password);
+		User user = new User(newUser.getFirst_name(), newUser.getSecond_name(), login, hashPassword);
 		user = userRepository.save(user);
 		return convertor.convertToUserDto(user);
 	}
-	
+
+	private String[] decodeToken(String token) {
+		int pos = token.indexOf(" ");
+		String newToken = token.substring(pos + 1);
+		byte[] decodeBytes = Base64.getDecoder().decode(newToken);
+		String credential = new String(decodeBytes);
+		String[] credentials = credential.split(":");
+		return credentials;
+	}
 
 	@Override
 	public UserDto userLogin(String login) {
