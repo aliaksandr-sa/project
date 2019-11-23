@@ -54,7 +54,7 @@ public class CarServiceImpl implements CarService {
 		}
 		Car updatedCar = car;
 		if (updateCar.getSerial_number()!=null) {
-			if (updateCar.getSerial_number()==updateCar.getSerial_number()) {
+			if (updatedCar.getSerial_number()==updateCar.getSerial_number()) {
 				throw new ConflictException();
 			}
 			updatedCar.setSerial_number(updateCar.getSerial_number());
