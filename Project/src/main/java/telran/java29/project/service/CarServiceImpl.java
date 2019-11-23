@@ -52,16 +52,14 @@ public class CarServiceImpl implements CarService {
 		if (!car.getOwner().getEmail().equals(email)) {
 			throw new ConflictException();
 		}
-		Car updatedCar = new Car();
-		updatedCar = car;
 		if (updateCar.getSerial_number() != null) {
-			if (updatedCar.getSerial_number() == updateCar.getSerial_number()) {
+			if (car.getSerial_number() == updateCar.getSerial_number()) {
 				throw new ConflictException();
 			}
+			Car updatedCar = car;
 			carRepository.delete(car);
 			updatedCar.setSerial_number(updateCar.getSerial_number());
 			updatedCar = updateCar(updatedCar, updateCar);
-			
 			carRepository.save(updatedCar);
 			return convertor.convertToCarDto(updatedCar);
 		} else {
