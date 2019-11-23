@@ -128,8 +128,11 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public void deleteCar(String serial_number, String email) {
-		Car car = carRepository.findById(serial_number).get();
 		
+		Car car = carRepository.findById(serial_number).get();
+		if (car==null) {
+			throw new ConflictException();
+		}
 		if (!car.getOwner().getEmail().equals(email)) {
 			throw new ConflictException();
 		}
