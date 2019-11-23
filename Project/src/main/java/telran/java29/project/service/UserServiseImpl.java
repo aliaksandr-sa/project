@@ -14,8 +14,7 @@ import telran.java29.project.dto.NewUserDto;
 import telran.java29.project.dto.UpdateUserDto;
 import telran.java29.project.dto.UserDto;
 import telran.java29.project.exceptions.ConflictException;
-import telran.java29.project.exceptions.EmptyFieldException;
-//S
+
 @Service
 public class UserServiseImpl implements UserService {
 //S
@@ -34,7 +33,7 @@ public class UserServiseImpl implements UserService {
 		String login = credential[0];
 		String password = credential[1];
 		if (login == null || password == null) {
-			throw new EmptyFieldException();
+			throw new ConflictException();
 		}
 		if (userRepository.existsById(login)) {
 			throw new ConflictException();

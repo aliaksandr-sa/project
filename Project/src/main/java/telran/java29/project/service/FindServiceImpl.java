@@ -14,6 +14,7 @@ import telran.java29.project.domain.Car;
 import telran.java29.project.dto.BookedPeriodDto;
 import telran.java29.project.dto.CarDto;
 import telran.java29.project.dto.OwnCarDto;
+import telran.java29.project.exceptions.NotFoundException;
 //S
 @Service
 public class FindServiceImpl implements FindService {
@@ -31,14 +32,17 @@ public class FindServiceImpl implements FindService {
 	}
 
 	@Override
-	public Iterable<OwnCarDto> ownerGetCars(String id) {
-		Set<Car> cars = userRepository.findById(id).get().getOwn_cars();
+	public Iterable<OwnCarDto> ownerGetCars(String login) {
+		Set<Car> cars = userRepository.findById(login).get().getOwn_cars();
 		return cars.stream().map(c -> convertor.convertToOwnCarDto(c)).collect(Collectors.toSet());
 	}
 
 	@Override
-	public OwnCarDto ownerGetCarById(String serial_number) {
+	public OwnCarDto ownerGetCarById(String serial_number, String login) {
 		Car car = carRepository.findById(serial_number).get();
+		if (!car.getOwner().getEmail().equals(login)) {
+			throw new NotFoundException();
+		}
 		return convertor.convertToOwnCarDto(car);
 	}
 

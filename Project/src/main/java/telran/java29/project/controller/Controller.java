@@ -88,12 +88,12 @@ public class Controller {
 	}
 
 	@GetMapping("/user/cars")
-	public Iterable<OwnCarDto>ownerGetCars(@PathVariable String id){
-		return findService.ownerGetCars(id);
+	public Iterable<OwnCarDto>ownerGetCars(Authentication authentication){
+		return findService.ownerGetCars(authentication.getName());
 	}
 	@GetMapping("/user/cars/{serial_number}")
-	public OwnCarDto ownerGetCarById(@PathVariable String serial_number) {
-		return findService.ownerGetCarById(serial_number);
+	public OwnCarDto ownerGetCarById(@PathVariable String serial_number, Authentication authentication) {
+		return findService.ownerGetCarById(serial_number, authentication.getName());
 	}
 
 	@GetMapping("/user/cars/{serial_number}/periods")
