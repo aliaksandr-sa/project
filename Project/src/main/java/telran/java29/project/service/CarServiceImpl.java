@@ -46,6 +46,9 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public CarDto updateCar(NewCarDto updateCar, String serial_number, String email) {
 		Car car = carRepository.findById(serial_number).get();
+		if (car==null) {
+			throw new ConflictException();
+		}
 		if (!car.getOwner().getEmail().equals(email)) {
 			throw new ConflictException();
 		}
