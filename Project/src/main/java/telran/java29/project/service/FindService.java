@@ -13,6 +13,6 @@ public interface FindService {
 
 	OwnCarDto ownerGetCarById(String serial_number, String login);
 
-	Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(String serial_number);
+	Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(String serial_number, String login);
 
 }

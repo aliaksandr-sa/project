@@ -47,7 +47,11 @@ public class FindServiceImpl implements FindService {
 	}
 
 	@Override
-	public Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(String serial_number) {
+	public Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(String serial_number, String login) {
+		Car car = carRepository.findById(serial_number).get();
+		if (!car.getOwner().getEmail().equals(login)) {
+			throw new NotFoundException();
+		}
 		Set<BookedPeriod> bookedPeriods = carRepository.findById(serial_number).get().getBooked_periods();
 		return bookedPeriods.stream().map(bp -> convertor.convertToBookedPeriodDto(bp)).collect(Collectors.toSet());
 	}
