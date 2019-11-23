@@ -101,7 +101,6 @@ public class Controller {
 		return findService.ownerGetBookedPeriodsByCarId(serial_number);
 	}
 	
-
 //	@GetMapping("/search?country=string&city=string&start_date="YYYY-MM-dd HH:mm"&end_date="YYYY-MM-dd HH:mm"&ascending=true&min_amount=20.5&max_amount=35.5")
 //	public List<CarDto> search car by place and start/end dates(???){
 //		return carService.searchWithoutFilters(???);
