@@ -46,7 +46,7 @@ public class CarServiceImpl implements CarService {
 	@Override
 	public CarDto updateCar(NewCarDto updateCar, String serial_number, String email) {
 		Car car = carRepository.findById(serial_number).get();
-		if (car==null) {
+		if (car == null) {
 			throw new ConflictException();
 		}
 		if (!car.getOwner().getEmail().equals(email)) {
@@ -54,8 +54,8 @@ public class CarServiceImpl implements CarService {
 		}
 		Car updatedCar = new Car();
 		updatedCar = car;
-		if (updateCar.getSerial_number()!=null) {
-			if (updatedCar.getSerial_number()==updateCar.getSerial_number()) {
+		if (updateCar.getSerial_number() != null) {
+			if (updatedCar.getSerial_number() == updateCar.getSerial_number()) {
 				throw new ConflictException();
 			}
 			updatedCar.setSerial_number(updateCar.getSerial_number());
@@ -63,41 +63,43 @@ public class CarServiceImpl implements CarService {
 			carRepository.delete(car);
 			carRepository.save(updatedCar);
 			return convertor.convertToCarDto(updatedCar);
+		} else {
+			car = updateCar(car, updateCar);
+			carRepository.save(car);
+			return convertor.convertToCarDto(car);
 		}
-		car = updateCar(car, updateCar);
-		carRepository.save(car);
-		return convertor.convertToCarDto(car);
+		
 	}
 
 	private Car updateCar(Car car, NewCarDto updateCar) {
-		if (updateCar.getMake()!=null) {
+		if (updateCar.getMake() != null) {
 			car.setMake(updateCar.getMake());
 		}
-		if (updateCar.getModel() != null ) {
+		if (updateCar.getModel() != null) {
 			car.setModel(updateCar.getModel());
 		}
-		if (updateCar.getYear()<=0) {
+		if (updateCar.getYear() <= 0) {
 			car.setYear(updateCar.getYear());
-		}else if(updateCar.getYear()<=0){
+		} else if (updateCar.getYear() <= 0) {
 			throw new ConflictException();
 		}
-		if (updateCar.getEngine()!=null) {
+		if (updateCar.getEngine() != null) {
 			car.setEngine(updateCar.getEngine());
 		}
-		if (updateCar.getFuel()!=null) {
+		if (updateCar.getFuel() != null) {
 			car.setFuel(updateCar.getFuel());
 		}
-		if (updateCar.getWheels_drive()!=null) {
+		if (updateCar.getWheels_drive() != null) {
 			car.setWheels_drive(updateCar.getWheels_drive());
 		}
-		if (updateCar.getDoors()<=0) {
+		if (updateCar.getDoors() <= 0) {
 			car.setDoors(updateCar.getDoors());
-		}else if(updateCar.getDoors()<=0){
+		} else if (updateCar.getDoors() <= 0) {
 			throw new ConflictException();
 		}
-		if (updateCar.getSeats()<=0) {
+		if (updateCar.getSeats() <= 0) {
 			car.setSeats(updateCar.getSeats());
-		}else if(updateCar.getSeats()<=0){
+		} else if (updateCar.getSeats() <= 0) {
 			throw new ConflictException();
 		}
 		if (updateCar.getFuel_consumption() != null) {
@@ -129,16 +131,15 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public void deleteCar(String serial_number, String email) {
-		
+
 		Car car = carRepository.findById(serial_number).get();
-		if (car==null) {
+		if (car == null) {
 			throw new ConflictException();
 		}
 		if (!car.getOwner().getEmail().equals(email)) {
 			throw new ConflictException();
-		}
-		else {
-			carRepository.delete(car);	
+		} else {
+			carRepository.delete(car);
 		}
 	}
 
