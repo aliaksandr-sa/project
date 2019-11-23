@@ -9,10 +9,10 @@ public interface FindService {
 
 	CarDto getCarById(String serial_number);
 
-	Iterable<OwnCarDto> ownerGetCars(String id);
+	Iterable<OwnCarDto> ownerGetCars(String login);
 
-	OwnCarDto ownerGetCarById(String serial_number);
+	OwnCarDto ownerGetCarById(String serial_number, String login);
 
-	Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(String serial_number);
+	Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(String serial_number, String login);
 
 }

@@ -88,20 +88,19 @@ public class Controller {
 	}
 
 	@GetMapping("/user/cars")
-	public Iterable<OwnCarDto>ownerGetCars(@PathVariable String id){
-		return findService.ownerGetCars(id);
+	public Iterable<OwnCarDto>ownerGetCars(Authentication authentication){
+		return findService.ownerGetCars(authentication.getName());
 	}
 	@GetMapping("/user/cars/{serial_number}")
-	public OwnCarDto ownerGetCarById(@PathVariable String serial_number) {
-		return findService.ownerGetCarById(serial_number);
+	public OwnCarDto ownerGetCarById(@PathVariable String serial_number, Authentication authentication) {
+		return findService.ownerGetCarById(serial_number, authentication.getName());
 	}
 
 	@GetMapping("/user/cars/{serial_number}/periods")
-	public Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(@PathVariable String serial_number) {
-		return findService.ownerGetBookedPeriodsByCarId(serial_number);
+	public Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(@PathVariable String serial_number, Authentication authentication) {
+		return findService.ownerGetBookedPeriodsByCarId(serial_number, authentication.getName());
 	}
 	
-
 //	@GetMapping("/search?country=string&city=string&start_date="YYYY-MM-dd HH:mm"&end_date="YYYY-MM-dd HH:mm"&ascending=true&min_amount=20.5&max_amount=35.5")
 //	public List<CarDto> search car by place and start/end dates(???){
 //		return carService.searchWithoutFilters(???);
