@@ -53,7 +53,8 @@ public class CarServiceImpl implements CarService {
 			throw new ConflictException();
 		}
 		if (updateCar.getSerial_number() != null) {
-			if (car.getSerial_number() == updateCar.getSerial_number()) {
+			if (car.getSerial_number() == updateCar.getSerial_number()||
+					carRepository.existsById(updateCar.getSerial_number())) {
 				throw new ConflictException();
 			}
 			Car updatedCar = car;
