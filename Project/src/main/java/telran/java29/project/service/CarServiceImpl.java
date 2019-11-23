@@ -49,12 +49,23 @@ public class CarServiceImpl implements CarService {
 		if (!car.getOwner().getEmail().equals(email)) {
 			throw new ConflictException();
 		}
+		Car updatedCar = car;
 		if (updateCar.getSerial_number()!=null) {
-			if (car.getSerial_number()==updateCar.getSerial_number()) {
+			if (updateCar.getSerial_number()==updateCar.getSerial_number()) {
 				throw new ConflictException();
 			}
-			car.setSerial_number(updateCar.getSerial_number());
-		}		
+			updatedCar.setSerial_number(updateCar.getSerial_number());
+			updatedCar = updateCar(updatedCar, updateCar);
+			carRepository.delete(car);
+			carRepository.save(updatedCar);
+			return convertor.convertToCarDto(updatedCar);
+		}
+		car = updateCar(car, updateCar);
+		carRepository.save(car);
+		return convertor.convertToCarDto(car);
+	}
+
+	private Car updateCar(Car car, NewCarDto updateCar) {
 		if (updateCar.getMake()!=null) {
 			car.setMake(updateCar.getMake());
 		}
@@ -109,13 +120,13 @@ public class CarServiceImpl implements CarService {
 		if (updateCar.getImage_url() != null) {
 			car.setImage_url(updateCar.getImage_url());
 		}
-		carRepository.save(car);
-		return convertor.convertToCarDto(car);
+		return car;
 	}
 
 	@Override
 	public void deleteCar(String serial_number, String email) {
 		Car car = carRepository.findById(serial_number).get();
+		
 		if (!car.getOwner().getEmail().equals(email)) {
 			throw new ConflictException();
 		}
