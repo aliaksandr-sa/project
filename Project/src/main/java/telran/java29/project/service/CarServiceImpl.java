@@ -15,6 +15,7 @@ import telran.java29.project.domain.User;
 import telran.java29.project.dto.CarDto;
 import telran.java29.project.dto.CarDtoSimple;
 import telran.java29.project.dto.NewCarDto;
+import telran.java29.project.exceptions.BarRequestException;
 import telran.java29.project.exceptions.ConflictException;
 
 @Service
@@ -45,30 +46,31 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public CarDto updateCar(NewCarDto updateCar, String serial_number, String email) {
-		Car car = carRepository.findById(serial_number).get();
-		if (car == null) {
-			throw new ConflictException();
-		}
-		if (!car.getOwner().getEmail().equals(email)) {
-			throw new ConflictException();
-		}
-		if (updateCar.getSerial_number() != null) {
-			if (car.getSerial_number() == updateCar.getSerial_number()||
-					carRepository.existsById(updateCar.getSerial_number())) {
+		try {
+			Car car = carRepository.findById(serial_number).get();
+			if (!car.getOwner().getEmail().equals(email)) {
 				throw new ConflictException();
 			}
-			Car updatedCar = car;
-			carRepository.delete(car);
-			updatedCar.setSerial_number(updateCar.getSerial_number());
-			updatedCar = updateCar(updatedCar, updateCar);
-			carRepository.save(updatedCar);
-			return convertor.convertToCarDto(updatedCar);
-		} else {
-			car = updateCar(car, updateCar);
-			carRepository.save(car);
-			return convertor.convertToCarDto(car);
+			if (updateCar.getSerial_number() != null) {
+				if (car.getSerial_number() == updateCar.getSerial_number()
+						|| carRepository.existsById(updateCar.getSerial_number())) {
+					throw new ConflictException();
+				}
+				Car updatedCar = car;
+				carRepository.delete(car);
+				updatedCar.setSerial_number(updateCar.getSerial_number());
+				updatedCar = updateCar(updatedCar, updateCar);
+				carRepository.save(updatedCar);
+				return convertor.convertToCarDto(updatedCar);
+			} else {
+				car = updateCar(car, updateCar);
+				carRepository.save(car);
+				return convertor.convertToCarDto(car);
+			}
+		} catch (Exception e) {
+			throw new BarRequestException();
 		}
-		
+
 	}
 
 	private Car updateCar(Car car, NewCarDto updateCar) {
