@@ -15,7 +15,7 @@ import telran.java29.project.domain.User;
 import telran.java29.project.dto.CarDto;
 import telran.java29.project.dto.CarDtoSimple;
 import telran.java29.project.dto.NewCarDto;
-import telran.java29.project.exceptions.BarRequestException;
+import telran.java29.project.exceptions.BadRequestException;
 import telran.java29.project.exceptions.ConflictException;
 
 @Service
@@ -46,8 +46,13 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public CarDto updateCar(NewCarDto updateCar, String serial_number, String email) {
+		Car car = new Car();
 		try {
-			Car car = carRepository.findById(serial_number).get();
+			car = carRepository.findById(serial_number).get();
+		} catch (Exception e) {
+			throw new BadRequestException();
+		}
+			
 			if (!car.getOwner().getEmail().equals(email)) {
 				throw new ConflictException();
 			}
@@ -67,10 +72,7 @@ public class CarServiceImpl implements CarService {
 				carRepository.save(car);
 				return convertor.convertToCarDto(car);
 			}
-		} catch (Exception e) {
-			throw new BarRequestException();
-		}
-
+	
 	}
 
 	private Car updateCar(Car car, NewCarDto updateCar) {
@@ -133,10 +135,11 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public void deleteCar(String serial_number, String email) {
-
-		Car car = carRepository.findById(serial_number).get();
-		if (car == null) {
-			throw new ConflictException();
+		Car car = new Car();
+		try {
+			car = carRepository.findById(serial_number).get();
+		} catch (Exception e) {
+			throw new BadRequestException();
 		}
 		if (!car.getOwner().getEmail().equals(email)) {
 			throw new ConflictException();
