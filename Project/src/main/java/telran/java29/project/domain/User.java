@@ -58,4 +58,7 @@ public class User {
 	public boolean addComment(Comment comment) {
 		return comments.add(comment);
 	}
+	public void addOwnCar(Car car) {
+		own_cars.add(car);
+	}
 }
