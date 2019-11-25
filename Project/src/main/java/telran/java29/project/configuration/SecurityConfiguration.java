@@ -22,7 +22,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(HttpMethod.POST, "/car/{serial_number}/reservation");
 		web.ignoring().antMatchers(HttpMethod.GET, "/car/{serial_number}");
 		web.ignoring().antMatchers(HttpMethod.GET, "/car/best");
-		web.ignoring().antMatchers(HttpMethod.GET, "/comment");
+		web.ignoring().antMatchers(HttpMethod.GET, "/comments");
 //		Get filters
 //		Search by filters
 //		search cars by coordinates

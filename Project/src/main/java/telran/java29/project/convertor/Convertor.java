@@ -117,7 +117,7 @@ public class Convertor {
 				.first_name(comment.getFirst_name())
 				.second_name(comment.getSecond_name())
 				.post(comment.getPost())
-				.post_date(comment.getPost_date())
+				.post_date(comment.getPostdate().toLocalDate())
 				.build();
 	}
 	public PickUpPlace convertToPickupPlace(PickUpPlaceDto pick_up_place) {

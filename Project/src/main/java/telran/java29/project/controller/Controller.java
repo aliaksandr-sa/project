@@ -125,14 +125,14 @@ public class Controller {
 		return carService.get3BestBookedCars();
 	}
 	
-	@GetMapping("/comment")
+	@GetMapping("/comments")
 	public Iterable<CommentDto> getLatestComments(){
 		return commentService.getLatestComments();
 	}
 	
 	@PostMapping("/comment/{serial_number}")
-	public void AddAComment(@PathVariable String serial_number, @RequestBody NewCommentDto post) {
-		commentService.addAComment(serial_number, post);
+	public void AddAComment(@PathVariable String serial_number, @RequestBody NewCommentDto post, Authentication authentication) {
+		commentService.addAComment(serial_number, post, authentication.getName());
 	}
 	
 	//@GetMapping("/filters")

@@ -55,10 +55,18 @@ public class User {
 		roles.add("ROLE_USER");
 	}
 	
-	public boolean addComment(Comment comment) {
-		return comments.add(comment);
+	public void addComment(Comment comment) {
+		comments.add(comment);
 	}
+	
 	public void addOwnCar(Car car) {
 		own_cars.add(car);
+	}
+	
+	public void addBookedCar(BookedCar bookedCar) {
+		booked_cars.add(bookedCar);
+	}
+	public void addToHistory(BookedCar bookedCar) {
+		history.add(bookedCar);
 	}
 }

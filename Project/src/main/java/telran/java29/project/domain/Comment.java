@@ -13,7 +13,7 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @Getter
-@EqualsAndHashCode(of = {"first_name", "second_name", "post_date"})
+@EqualsAndHashCode(of = {"postdate"})
 @Document(collection = "comments")
 @ToString
 //S
@@ -21,15 +21,15 @@ public class Comment {
 	String first_name;
 	String second_name;
 	String post;
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	LocalDateTime post_date;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	LocalDateTime postdate;
 	
 	
 	public Comment(String first_name, String second_name, String post) {
 		this.first_name = first_name;
 		this.second_name = second_name;
 		this.post = post;
-		post_date = LocalDateTime.now();
+		postdate = LocalDateTime.now();
 	}
 	
 }
