@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import telran.java29.project.configuration.Test;
 import telran.java29.project.convertor.Convertor;
 import telran.java29.project.dao.CarRepository;
 import telran.java29.project.dao.UserRepository;
@@ -27,6 +28,8 @@ public class CarServiceImpl implements CarService {
 	Convertor convertor;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	Test mongoDBConfig;
 
 	@Override
 	public CarDto addCar(NewCarDto carDto, String email) {
@@ -153,6 +156,9 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public Iterable<CarDtoSimple> get3BestBookedCars() {
+		mongoDBConfig.name();
+		
+										//FIXME
 		List<Car> cars = carRepository.findAll();
 //		Collections.sort(cars, new Comparator<Car>() {
 //			public int compare(Car c1, Car c2) {
