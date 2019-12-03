@@ -76,21 +76,19 @@ public class Controller {
 		return carService.addCar(newCar, authentication.getName());
 	}
 
-	@PutMapping("/car/{serial_number}")
-	// proverit', 4to izmeniaet car imenno vladelec cara
-	public CarDto updateCar(@RequestBody NewCarDto updateCar, @PathVariable String serial_number,
+	@PutMapping("/car")
+	public CarDto updateCar(@RequestBody NewCarDto updateCar, @RequestParam(value = "number") String serial_number,
 			Authentication authentication) {
 		return carService.updateCar(updateCar, serial_number, authentication.getName());
 	}
 
-	@DeleteMapping("/car/{serial_number}")
-	// proverit', 4to udaliaet car imenno vladelec cara
-	public void deleteCar(@PathVariable String serial_number, Authentication authentication) {
+	@DeleteMapping("/car")
+	public void deleteCar(@RequestParam(value = "number") String serial_number, Authentication authentication) {
 		carService.deleteCar(serial_number, authentication.getName());
 	}
 
-	@GetMapping("/car/{serial_number}")
-	public CarDto getCarById(@PathVariable String serial_number) {
+	@GetMapping("/car")
+	public CarDto getCarById(@RequestParam(value = "number") String serial_number) {
 		return findService.getCarById(serial_number);
 		// TODO in implementation not to give full view of bookedPeriodDto!
 	}
@@ -100,13 +98,13 @@ public class Controller {
 		return findService.ownerGetCars(authentication.getName());
 	}
 
-	@GetMapping("/user/cars/{serial_number}")
-	public OwnCarDto ownerGetCarById(@PathVariable String serial_number, Authentication authentication) {
+	@GetMapping("/user/cars")
+	public OwnCarDto ownerGetCarById(@RequestParam(value = "number") String serial_number, Authentication authentication) {
 		return findService.ownerGetCarById(serial_number, authentication.getName());
 	}
 
-	@GetMapping("/user/cars/{serial_number}/periods")
-	public Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(@PathVariable String serial_number,
+	@GetMapping("/user/cars/periods")
+	public Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(@RequestParam(value = "number") String serial_number,
 			Authentication authentication) {
 		return findService.ownerGetBookedPeriodsByCarId(serial_number, authentication.getName());
 	}
@@ -117,7 +115,7 @@ public class Controller {
 //	}
 
 	@GetMapping("/search/geo")
-	public Iterable<SearchResultDto> searchCarsByCoordinates(@RequestParam Double latitude, @RequestParam Double longitude,
+	public Iterable<SearchResultDto> searchCarsByCoordinates(@RequestParam(value = "latitude") Double latitude, @RequestParam Double longitude,
 			@RequestParam Double radius, @RequestParam int items_on_page, @RequestParam int current_page) {
 		return searchService.searchCarsByCoordinates(latitude, longitude, radius, items_on_page, current_page);
 
@@ -146,7 +144,7 @@ public class Controller {
 
 	@PostMapping("/comment")
 	@ResponseBody
-	public void AddAComment(@RequestParam(value = "serial_number", required = true) String serial_number, @RequestBody NewCommentDto post,
+	public void AddAComment(@RequestParam(value ="number") String serial_number, @RequestBody NewCommentDto post,
 			Authentication authentication) {
 		commentService.addAComment(serial_number, post, authentication.getName());
 	}

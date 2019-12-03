@@ -25,6 +25,7 @@ public class SearchServiceImpl implements SearchService {
 			int items_on_page, int current_page) {
 		Pageable pageable = PageRequest.of(current_page, items_on_page);
 		return carRepository.findByLocationNear(new Point(latitude, longitude), new Distance(radius), pageable);
+//	return null;
 	}
 
 
