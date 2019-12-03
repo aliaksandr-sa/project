@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import telran.java29.project.dto.BookedPeriodDto;
@@ -22,12 +24,14 @@ import telran.java29.project.dto.NewUserDto;
 import telran.java29.project.dto.OwnCarDto;
 import telran.java29.project.dto.ReservationDto;
 import telran.java29.project.dto.ReservationResponseDto;
+import telran.java29.project.dto.SearchResultDto;
 import telran.java29.project.dto.UpdateUserDto;
 import telran.java29.project.dto.UserDto;
 import telran.java29.project.service.CarService;
 import telran.java29.project.service.CommentService;
 import telran.java29.project.service.FindService;
 import telran.java29.project.service.ReservationService;
+import telran.java29.project.service.SearchService;
 import telran.java29.project.service.UserService;
 
 @RestController
@@ -43,12 +47,13 @@ public class Controller {
 	ReservationService reservationService;
 	@Autowired
 	CommentService commentService;
+	@Autowired
+	SearchService searchService;
 
 	@PostMapping("/registration")
-	public UserDto RegisterNewUser(@RequestBody NewUserDto newUser, @RequestHeader("Authorization")String token) {
+	public UserDto RegisterNewUser(@RequestBody NewUserDto newUser, @RequestHeader("Authorization") String token) {
 		return userService.addNewUser(newUser, token);
 	}
-
 
 	@GetMapping("/user/login")
 	public UserDto LoginUser(Authentication authentication) {
@@ -56,7 +61,8 @@ public class Controller {
 	}
 
 	@PutMapping("/user")
-	public UserDto UpdateUser(@RequestBody UpdateUserDto updateUser, Authentication authentication, @RequestHeader("X-Password") String password) {
+	public UserDto UpdateUser(@RequestBody UpdateUserDto updateUser, Authentication authentication,
+			@RequestHeader("X-Password") String password) {
 		return userService.userUpdate(updateUser, authentication.getName(), password);
 	}
 
@@ -64,19 +70,21 @@ public class Controller {
 	public void DeleteUser(Authentication authentication) {
 		userService.userDelete(authentication.getName());
 	}
+
 	@PostMapping("/car")
 	public CarDto addCar(@RequestBody NewCarDto newCar, Authentication authentication) {
 		return carService.addCar(newCar, authentication.getName());
 	}
 
 	@PutMapping("/car/{serial_number}")
-	//proverit', 4to izmeniaet car imenno vladelec cara
-	public CarDto updateCar(@RequestBody NewCarDto updateCar, @PathVariable String serial_number, Authentication authentication) {
+	// proverit', 4to izmeniaet car imenno vladelec cara
+	public CarDto updateCar(@RequestBody NewCarDto updateCar, @PathVariable String serial_number,
+			Authentication authentication) {
 		return carService.updateCar(updateCar, serial_number, authentication.getName());
 	}
 
 	@DeleteMapping("/car/{serial_number}")
-	//proverit', 4to udaliaet car imenno vladelec cara
+	// proverit', 4to udaliaet car imenno vladelec cara
 	public void deleteCar(@PathVariable String serial_number, Authentication authentication) {
 		carService.deleteCar(serial_number, authentication.getName());
 	}
@@ -88,53 +96,61 @@ public class Controller {
 	}
 
 	@GetMapping("/user/cars")
-	public Iterable<OwnCarDto>ownerGetCars(Authentication authentication){
+	public Iterable<OwnCarDto> ownerGetCars(Authentication authentication) {
 		return findService.ownerGetCars(authentication.getName());
 	}
+
 	@GetMapping("/user/cars/{serial_number}")
 	public OwnCarDto ownerGetCarById(@PathVariable String serial_number, Authentication authentication) {
 		return findService.ownerGetCarById(serial_number, authentication.getName());
 	}
 
 	@GetMapping("/user/cars/{serial_number}/periods")
-	public Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(@PathVariable String serial_number, Authentication authentication) {
+	public Iterable<BookedPeriodDto> ownerGetBookedPeriodsByCarId(@PathVariable String serial_number,
+			Authentication authentication) {
 		return findService.ownerGetBookedPeriodsByCarId(serial_number, authentication.getName());
 	}
-	
+
 //	@GetMapping("/search?country=string&city=string&start_date="YYYY-MM-dd HH:mm"&end_date="YYYY-MM-dd HH:mm"&ascending=true&min_amount=20.5&max_amount=35.5")
 //	public List<CarDto> search car by place and start/end dates(???){
 //		return carService.searchWithoutFilters(???);
 //	}
-	
-//	@PostMapping("/search?country=string&city=string&start_date="YYYY-MM-dd HH:mm"&end_date="YYYY-MM-dd HH:mm"&ascending=true&min_amount=20.5&max_amount=35.5")
-//	public List<CarDto> search car by place and start/end dates(???){
-//		return carService.searctWithFilters(???);
-	
-	@PostMapping("/car/{serial_number}/reservation")
-	public ReservationResponseDto makeAReservation(@RequestBody ReservationDto reservationDto, @PathVariable String serial_number) {
+
+	@GetMapping("/search/geo")
+	public Iterable<SearchResultDto> searchCarsByCoordinates(@RequestParam Double latitude, @RequestParam Double longitude,
+			@RequestParam Double radius, @RequestParam int items_on_page, @RequestParam int current_page) {
+		return searchService.searchCarsByCoordinates(latitude, longitude, radius, items_on_page, current_page);
+
+	}
+
+	@PostMapping("/car/reservation/{serial_number}")
+	public ReservationResponseDto makeAReservation(@RequestBody ReservationDto reservationDto,
+			@PathVariable String serial_number) {
 		return reservationService.makeAReservation(reservationDto, serial_number);
 	}
-	
+
 	@PostMapping("/reservation/confirm")
 	public void makeAReservation(@RequestBody ConfirmPaymentDto confirmPaymentDto) {
 		reservationService.makeAReservation(confirmPaymentDto);
 	}
-	
+
 	@GetMapping("/car/best")
-	public Iterable<CarDtoSimple> get3BestBookedCars(){
+	public Iterable<CarDtoSimple> get3BestBookedCars() {
 		return carService.get3BestBookedCars();
 	}
-	
+
 	@GetMapping("/comments")
-	public Iterable<CommentDto> getLatestComments(){
+	public Iterable<CommentDto> getLatestComments() {
 		return commentService.getLatestComments();
 	}
-	
-	@PostMapping("/comment/{serial_number}")
-	public void AddAComment(@PathVariable String serial_number, @RequestBody NewCommentDto post, Authentication authentication) {
+
+	@PostMapping("/comment")
+	@ResponseBody
+	public void AddAComment(@RequestParam(value = "serial_number", required = true) String serial_number, @RequestBody NewCommentDto post,
+			Authentication authentication) {
 		commentService.addAComment(serial_number, post, authentication.getName());
 	}
-	
-	//@GetMapping("/filters")
-	//ya ebu cho tut pisat'
+
+	// @GetMapping("/filters")
+	// ya ebu cho tut pisat'
 }
