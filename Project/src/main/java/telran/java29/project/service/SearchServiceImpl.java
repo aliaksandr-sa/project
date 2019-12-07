@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.Metric;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +22,12 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public Iterable<SearchResultDto> searchCarsByCoordinates(Double latitude, Double longitude, Double radius,
 			int items_on_page, int current_page) {
-		Pageable pageable = PageRequest.of(current_page, items_on_page);
-		return carRepository.findByLocationNear(new Point(latitude, longitude), new Distance(radius), pageable);
-//	return null;
+//		Point point = new Point(latitude, longitude);
+//		Distance distance = new Distance(radius);
+//		Pageable pageable = PageRequest.of(current_page, items_on_page);
+//		return carRepository.findByLocationNear(point, distance).str
+//				;
+	return null;
 	}
 
 

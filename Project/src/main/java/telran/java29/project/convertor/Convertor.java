@@ -19,6 +19,7 @@ import telran.java29.project.dto.CommentDto;
 import telran.java29.project.dto.OwnCarDto;
 import telran.java29.project.dto.OwnerDto;
 import telran.java29.project.dto.PickUpPlaceDto;
+import telran.java29.project.dto.SearchResultDto;
 import telran.java29.project.dto.UserDto;
 import telran.java29.project.dto.UserWhoBookedDto;
 //S
@@ -160,5 +161,10 @@ public class Convertor {
 		.end_date_time(bookedPeriod.getEnd_date_time())
 		.build();
 		
+	}
+
+	public SearchResultDto convertToSearchResultDto(Car car) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
