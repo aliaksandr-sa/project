@@ -72,7 +72,7 @@ public class Test {
 //		  List<Car> result = mongoTemplate.aggregate(aggregation, "cars", Car.class).getMappedResults();
 		  
 		 for (Car car : output) {
-			System.out.println(car.getModel());
+			System.out.println(car.getMake());
 		}
 	   }   
 	   }
