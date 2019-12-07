@@ -114,12 +114,12 @@ public class Controller {
 //		return carService.searchWithoutFilters(???);
 //	}
 
-	@GetMapping("/search/geo")
-	public Iterable<SearchResultDto> searchCarsByCoordinates(@RequestParam(value = "latitude") Double latitude, @RequestParam Double longitude,
-			@RequestParam Double radius, @RequestParam int items_on_page, @RequestParam int current_page) {
-		return searchService.searchCarsByCoordinates(latitude, longitude, radius, items_on_page, current_page);
-
-	}
+//	@GetMapping("/search/geo")
+//	public Iterable<SearchResultDto> searchCarsByCoordinates(@RequestParam(value = "latitude") Double latitude, @RequestParam Double longitude,
+//			@RequestParam Double radius, @RequestParam int items_on_page, @RequestParam int current_page) {
+//		return searchService.searchCarsByCoordinates(latitude, longitude, radius, items_on_page, current_page);
+//
+//	}
 
 	@PostMapping("/car/reservation/{serial_number}")
 	public ReservationResponseDto makeAReservation(@RequestBody ReservationDto reservationDto,

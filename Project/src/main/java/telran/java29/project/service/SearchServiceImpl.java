@@ -19,16 +19,16 @@ public class SearchServiceImpl implements SearchService {
 	@Autowired
 	Convertor convertor;
 	
-	@Override
-	public Iterable<SearchResultDto> searchCarsByCoordinates(Double latitude, Double longitude, Double radius,
-			int items_on_page, int current_page) {
+//	@Override
+//	public Iterable<SearchResultDto> searchCarsByCoordinates(Double latitude, Double longitude, Double radius,
+//			int items_on_page, int current_page) {
 //		Point point = new Point(latitude, longitude);
 //		Distance distance = new Distance(radius);
 //		Pageable pageable = PageRequest.of(current_page, items_on_page);
 //		return carRepository.findByLocationNear(point, distance).str
 //				;
-	return null;
-	}
+//	return null;
+//	}
 
 
 }
