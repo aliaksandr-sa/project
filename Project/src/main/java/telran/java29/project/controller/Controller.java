@@ -98,7 +98,7 @@ public class Controller {
 		return findService.ownerGetCars(authentication.getName());
 	}
 
-	@GetMapping("/user/cars")
+	@GetMapping("/user/cars/number")
 	public OwnCarDto ownerGetCarById(@RequestParam(value = "number") String serial_number, Authentication authentication) {
 		return findService.ownerGetCarById(serial_number, authentication.getName());
 	}
