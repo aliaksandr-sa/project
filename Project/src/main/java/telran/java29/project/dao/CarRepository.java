@@ -10,6 +10,6 @@ import telran.java29.project.dto.SearchResultDto;
 
 public interface CarRepository extends MongoRepository<Car, String> {
 
-	Iterable<SearchResultDto> findByLocationNear(Point point, Distance distance, Pageable pageable);
+//	Iterable<SearchResultDto> findByLocationNear(Point point, Distance distance, Pageable pageable);
 	
 }
