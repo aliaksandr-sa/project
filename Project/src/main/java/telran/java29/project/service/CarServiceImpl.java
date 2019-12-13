@@ -29,7 +29,7 @@ public class CarServiceImpl implements CarService {
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
-	Test mongoDBConfig;
+	Test test;
 
 	@Override
 	public CarDto addCar(NewCarDto carDto, String email) {
@@ -156,7 +156,8 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public Iterable<CarDtoSimple> get3BestBookedCars() {
-		mongoDBConfig.name();
+		
+		test.name(null, "A6", null, null, null, null, null, null);
 		
 										//FIXME
 		List<Car> cars = carRepository.findAll();
