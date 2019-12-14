@@ -27,7 +27,7 @@ public class SearchServiceImpl implements SearchService {
 	public SearchResultDto searchCarsByCoordinates(Double latitude, Double longitude, Double radius) {
 		Point point = new Point(latitude, longitude);
 		Distance distance = new Distance(radius);
-		List<CarDto> cars = carRepository.findByPickUpPlaceNear(point, distance)
+		List<CarDto> cars = carRepository.findByPickUpPlaceLocationNear(point, distance)
 				.stream()
 				.map(c->convertor.convertToCarDto(c))
 				.collect(Collectors.toList());
