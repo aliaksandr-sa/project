@@ -1,10 +1,14 @@
 package telran.java29.project.service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import telran.java29.project.convertor.Convertor;
@@ -27,6 +31,8 @@ public class CarServiceImpl implements CarService {
 	Convertor convertor;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	MongoTemplate mongoTemplate;
 
 	@Override
 	public CarDto addCar(NewCarDto carDto, String email) {
@@ -153,18 +159,34 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public Iterable<CarDtoSimple> get3BestBookedCars() {
+		TypedAggregation<Car> filtersAggregation = Aggregation.newAggregation(Car.class, 
+				Aggregation.match(Criteria.where("counterBooked").gt(0)),
+				Aggregation.sort(Sort.by(Sort.Direction.DESC, "counterBooked")),
+				Aggregation.limit(3),
+				Aggregation.out("BestCars"));
+		mongoTemplate.aggregate(filtersAggregation, Car.class);
+		List<Car> cars = mongoTemplate.findAll(Car.class,"BestCars");
+		return cars.stream().map(x->convertor.convertToCarDtoSimple(x)).collect(Collectors.toList());
 		
-										//FIXME
+		//FIXME convertor PROBLEMS!!!!
 		
-		List<Car> cars = carRepository.findAll();
-//		Collections.sort(cars, new Comparator<Car>() {
-//			public int compare(Car c1, Car c2) {
-//				return c2.getBooked_periods().size() - c1.getBooked_periods().size();
-//			}
-//		});
-		Comparator<Car> reverseSortedByOrders = (car1, car2) -> car2.getCounterBooked() - car1.getCounterBooked();
-		return cars.stream().filter(x -> x.getCounterBooked() >= 1).sorted(reverseSortedByOrders)
-				.filter(x -> cars.indexOf(x) <= 2).map(x -> convertor.convertToCarDtoSimple(x))
-				.collect(Collectors.toList());
+		
+
+		
+		
+		
+		
+		
+//										
+//		List<Car> cars = carRepository.findAll();
+////		Collections.sort(cars, new Comparator<Car>() {
+////			public int compare(Car c1, Car c2) {
+////				return c2.getBooked_periods().size() - c1.getBooked_periods().size();
+////			}
+////		});
+//		Comparator<Car> reverseSortedByOrders = (car1, car2) -> car2.getCounterBooked() - car1.getCounterBooked();
+//		return cars.stream().filter(x -> x.getCounterBooked() >= 1).sorted(reverseSortedByOrders)
+//				.filter(x -> cars.indexOf(x) <= 2).map(x -> convertor.convertToCarDtoSimple(x))
+//				.collect(Collectors.toList());
 	}
 }
