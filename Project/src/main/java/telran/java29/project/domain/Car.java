@@ -37,7 +37,7 @@ public class Car {
     Double price_per_day;
     Double distance_included;
     String about;
-    PickUpPlace pick_up_place;
+    PickUpPlace place;
     Set<String> image_url;
     User owner;
     Set<BookedPeriod> booked_periods;
@@ -62,7 +62,7 @@ public class Car {
 		this.price_per_day = price_per_day;
 		this.distance_included = distance_included;
 		this.about = about;
-		this.pick_up_place = pick_up_place;
+		this.place = pick_up_place;
 		this.image_url = image_url;
 		this.owner = null;
 		this.booked_periods = new HashSet<>();

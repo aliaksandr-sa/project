@@ -125,7 +125,7 @@ public class CarServiceImpl implements CarService {
 			car.setDistance_included(updateCar.getDistance_included());
 		}
 		if (updateCar.getPick_up_place() != null) {
-			car.setPick_up_place(convertor.convertToPickUpPlace(updateCar.getPick_up_place()));
+			car.setPlace(convertor.convertToPickUpPlace(updateCar.getPick_up_place()));
 		}
 		if (updateCar.getAbout() != null) {
 			car.setAbout(updateCar.getAbout());

@@ -26,11 +26,52 @@ public class FilterServiceImpl implements FilterService {
 		return mongoTemplate.findAll(FilterDto.class, "filters");
 	}
 	
+	
+	
 	public void updateFilters() {
 		TypedAggregation<Car> filtersAggregation = 
 				Aggregation.newAggregation(Car.class,
 						
-						Aggregation.group("$make", "$model", "$year","$engine").addToSet("fuel").as("fuels"),
+
+						Aggregation.group("$make", "$model", "$year","$engine","$fuel","$gear","wheels_drive").addToSet("fuel_consumption").as("fuel_consumptions"),
+						
+						Aggregation.group("$make", "$model", "$year","$engine","fuel","$gear").addToSet(new BasicDBObject(){
+							/**
+							 * 
+							 */
+							private static final long serialVersionUID = 1L;
+
+							{
+								put("wheels_drive","$_id.wheels_drive");
+								put("fuel_consumptions", "$fuel_consumptions");
+							}
+						}).as("wheels_drives"),
+						Aggregation.group("$make", "$model", "$year","$engine","fuel").addToSet(new BasicDBObject(){
+							/**
+							 * 
+							 */
+							private static final long serialVersionUID = 1L;
+
+							{
+								put("gear","$_id.gear");
+								put("wheels_drives", "$wheels_drives");
+							}
+						}).as("gears"),
+						
+						Aggregation.group("$make", "$model", "$year","$engine").addToSet(new BasicDBObject(){
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
+					{
+						put("fuel","$_id.fuel");
+						put("gears", "$gears");
+					}
+				}).as("fuels"),
+						
+						
+						
 						Aggregation.group("$make", "$model", "$year").addToSet(new BasicDBObject(){
 					/**
 					 * 
@@ -39,11 +80,10 @@ public class FilterServiceImpl implements FilterService {
 
 					{
 						put("engine","$_id.engine");
-						put("fuels", "fuels");
+						put("fuels", "$fuels");
 					}
 				}).as("engines"),
 						
-//						Aggregation.group("$make", "$model", "$year").addToSet("$engine").as("engines"),
 						Aggregation.group("$make", "$model").addToSet(new BasicDBObject() {
 							/**
 							 * 

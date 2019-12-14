@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 //m
 @EqualsAndHashCode (of = {"fuel_consumption"})
 public class FuelConsumptions {
-String fuel_consumption;
+Double fuel_consumption;
 }
