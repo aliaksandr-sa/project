@@ -1,5 +1,6 @@
 package telran.java29.project.convertor;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -72,11 +73,11 @@ public class Convertor {
 				.build();
 	}
 
-	public PickUpPlaceDto convertToPickUpPlaceDto(PickUpPlace pick_up_place) {
-		return null;
+//	public PickUpPlaceDto convertToPickUpPlaceDto(PickUpPlace pick_up_place) {
+//		return null;
 //		return PickUpPlaceDto.builder().place_id(pick_up_place.getPlace_id()).latitude(pick_up_place.getLocation().getLatitude())
 //				.longitude(pick_up_place.getLocation().getLatitude()).build();
-	}
+//	}
 
 //	public PickUpPlace convertToPickUpPlace(PickUpPlaceDto pick_up_place) {
 //		
@@ -111,10 +112,10 @@ public class Convertor {
 
 	}
 
-//	public PickUpPlaceDto convertToPickUpPlaceDto(PickUpPlace pickUpPlace) {
-//		return PickUpPlaceDto.builder().place_id(pickUpPlace.getPlace_id()).latitude(pickUpPlace.getLatitude())
-//				.longitude(pickUpPlace.getLongitude()).build();
-//	}
+	public PickUpPlaceDto convertToPickUpPlaceDto(PickUpPlace pickUpPlace) {
+		return PickUpPlaceDto.builder().place_id(pickUpPlace.getPlace_id()).latitude(pickUpPlace.getLocation().getY())
+				.longitude(pickUpPlace.getLocation().getX()).build();
+	}
 
 	public CommentDto convertToCommentDto(Comment comment) {
 		return CommentDto.builder()
@@ -162,8 +163,9 @@ public class Convertor {
 		
 	}
 
-	public SearchResultDto convertToSearchResultDto(Car car) {
-		// TODO Auto-generated method stub
-		return null;
+	public SearchResultDto convertToSearchResultDto(List<CarDto> cars) {
+		return SearchResultDto.builder()
+				.cars(cars)
+				.build();
 	}
 }

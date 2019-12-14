@@ -1,5 +1,7 @@
 package telran.java29.project.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 public class SearchResultDto {
-	 Integer current_page;
-	 Integer items_on_page;
-	 Integer items_total;
-	 CarDto[] cars;
+	int current_page;
+	 int items_on_page;
+	 int items_total;
+	 List<CarDto> cars;
 
 }
