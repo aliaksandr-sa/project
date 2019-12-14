@@ -12,12 +12,6 @@ import lombok.NoArgsConstructor;
 //S
 public class PickUpPlaceDto {
 	String place_id;
-//	String country;
-//	String region;
-//	String city;
-//	String street;
-//	int apartment;
-//	long zip;
 	double latitude;
 	double longitude;
 }

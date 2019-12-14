@@ -2,6 +2,7 @@ package telran.java29.project.convertor;
 
 import java.util.stream.Collectors;
 
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Component;
 
 import telran.java29.project.domain.BookedCar;
@@ -42,7 +43,7 @@ public class Convertor {
 				.price_per_day(car.getPrice_per_day())
 				.distance_included(car.getDistance_included())
 				.about(car.getAbout())
-				.pick_up_place(convertToPickupPlaceDto(car.getPick_up_place()))
+				.pick_up_place(convertToPickUpPlaceDto(car.getPick_up_place()))
 				.image_url(car.getImage_url())
 				.owner(convertToOwnerDto(car.getOwner()))
 				.booked_periods(car.getBooked_periods().stream().map(this::convertToBookedPeriodDto).collect(Collectors.toSet()))
@@ -71,14 +72,16 @@ public class Convertor {
 				.build();
 	}
 
-	public PickUpPlaceDto convertToPickupPlaceDto(PickUpPlace pick_up_place) {
-		return PickUpPlaceDto.builder().place_id(pick_up_place.getPlace_id()).latitude(pick_up_place.getLatitude())
-				.longitude(pick_up_place.getLatitude()).build();
+	public PickUpPlaceDto convertToPickUpPlaceDto(PickUpPlace pick_up_place) {
+		return null;
+//		return PickUpPlaceDto.builder().place_id(pick_up_place.getPlace_id()).latitude(pick_up_place.getLocation().getLatitude())
+//				.longitude(pick_up_place.getLocation().getLatitude()).build();
 	}
 
-	public PickUpPlace convertToPickUpPlace(PickUpPlaceDto pick_up_place) {
-		return new PickUpPlace(pick_up_place.getPlace_id(), pick_up_place.getLatitude(), pick_up_place.getLongitude());
-	}
+//	public PickUpPlace convertToPickUpPlace(PickUpPlaceDto pick_up_place) {
+//		
+//		return Pick
+//	}
 
 	public UserDto convertToUserDto(User user) {
 		return UserDto.builder().first_name(user.getFirst_name()).second_name(user.getSecond_name())
@@ -108,10 +111,10 @@ public class Convertor {
 
 	}
 
-	public PickUpPlaceDto convertToPickUpPlaceDto(PickUpPlace pickUpPlace) {
-		return PickUpPlaceDto.builder().place_id(pickUpPlace.getPlace_id()).latitude(pickUpPlace.getLatitude())
-				.longitude(pickUpPlace.getLongitude()).build();
-	}
+//	public PickUpPlaceDto convertToPickUpPlaceDto(PickUpPlace pickUpPlace) {
+//		return PickUpPlaceDto.builder().place_id(pickUpPlace.getPlace_id()).latitude(pickUpPlace.getLatitude())
+//				.longitude(pickUpPlace.getLongitude()).build();
+//	}
 
 	public CommentDto convertToCommentDto(Comment comment) {
 		return CommentDto.builder()
@@ -121,12 +124,8 @@ public class Convertor {
 				.post_date(comment.getPostdate().toLocalDate())
 				.build();
 	}
-	public PickUpPlace convertToPickupPlace(PickUpPlaceDto pick_up_place) {
-		return PickUpPlace.builder()
-				.place_id(pick_up_place.getPlace_id())
-				.latitude(pick_up_place.getLatitude())
-				.longitude(pick_up_place.getLongitude())
-				.build();
+	public PickUpPlace convertToPickUpPlace(PickUpPlaceDto pick_up_place) {
+		return new PickUpPlace(pick_up_place.getPlace_id(), new GeoJsonPoint(pick_up_place.getLongitude(), pick_up_place.getLatitude()));
 	}
 
 	public User convertToUser(UserWhoBookedDto person_who_booked) {
@@ -149,7 +148,7 @@ public class Convertor {
 				.price_per_day(car.getPrice_per_day())
 				.distance_included(car.getDistance_included())
 				.about(car.getAbout())
-				.pick_up_place(convertToPickupPlaceDto(car.getPick_up_place()))
+				.pick_up_place(convertToPickUpPlaceDto(car.getPick_up_place()))
 				.image_url(car.getImage_url())
 				.owner(convertToOwnerDto(car.getOwner()))
 				.booked_periods(car.getBooked_periods().stream().map(this::convertToSimpleBookedPeriodDto).collect(Collectors.toSet()))

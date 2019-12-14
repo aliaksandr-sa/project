@@ -27,8 +27,10 @@ import telran.java29.project.dto.ReservationResponseDto;
 import telran.java29.project.dto.SearchResultDto;
 import telran.java29.project.dto.UpdateUserDto;
 import telran.java29.project.dto.UserDto;
+import telran.java29.project.dto.filters.FilterDto;
 import telran.java29.project.service.CarService;
 import telran.java29.project.service.CommentService;
+import telran.java29.project.service.FilterService;
 import telran.java29.project.service.FindService;
 import telran.java29.project.service.ReservationService;
 import telran.java29.project.service.SearchService;
@@ -49,6 +51,8 @@ public class Controller {
 	CommentService commentService;
 	@Autowired
 	SearchService searchService;
+	@Autowired
+	FilterService filterService;
 
 	@PostMapping("/registration")
 	public UserDto RegisterNewUser(@RequestBody NewUserDto newUser, @RequestHeader("Authorization") String token) {
@@ -143,12 +147,13 @@ public class Controller {
 	}
 
 	@PostMapping("/comment")
-	@ResponseBody
 	public void AddAComment(@RequestParam(value ="number") String serial_number, @RequestBody NewCommentDto post,
 			Authentication authentication) {
 		commentService.addAComment(serial_number, post, authentication.getName());
 	}
 
-	// @GetMapping("/filters")
-	// ya ebu cho tut pisat'
+	 @GetMapping("/filters")
+	 public Iterable<FilterDto> getFilters(){
+		 return filterService.getFilters();
+	 }
 }
