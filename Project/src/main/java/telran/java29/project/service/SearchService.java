@@ -4,6 +4,6 @@ import telran.java29.project.dto.SearchResultDto;
 //S
 public interface SearchService {
 
-	Iterable<SearchResultDto> searchCarsByCoordinates(Double latitude, Double longitude, Double radius);
+	SearchResultDto searchCarsByCoordinates(Double latitude, Double longitude, Double radius);
 
 }

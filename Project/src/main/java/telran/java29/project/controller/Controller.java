@@ -119,7 +119,7 @@ public class Controller {
 //	}
 
 	@GetMapping("/search/geo/{longitude}/{latitude}/{radius}")
-	public Iterable<SearchResultDto> searchCarsByCoordinates(@PathVariable Double latitude, @PathVariable Double longitude, @PathVariable Double radius) {
+	public SearchResultDto searchCarsByCoordinates(@PathVariable Double latitude, @PathVariable Double longitude, @PathVariable Double radius) {
 		return searchService.searchCarsByCoordinates(latitude, longitude, radius);
 
 	}

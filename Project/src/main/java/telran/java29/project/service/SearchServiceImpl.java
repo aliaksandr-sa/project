@@ -24,7 +24,7 @@ public class SearchServiceImpl implements SearchService {
 	Convertor convertor;
 	
 	@Override
-	public Iterable<SearchResultDto> searchCarsByCoordinates(Double latitude, Double longitude, Double radius) {
+	public SearchResultDto searchCarsByCoordinates(Double latitude, Double longitude, Double radius) {
 		Point point = new Point(latitude, longitude);
 		Distance distance = new Distance(radius);
 		List<CarDto> cars = carRepository.findByPickUpPlaceNear(point, distance)
