@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.mongodb.BasicDBObject;
 
 import telran.java29.project.domain.Car;
+import telran.java29.project.dto.NewCarDto;
 import telran.java29.project.dto.filters.FilterDto;
 @Service
 public class FilterServiceImpl implements FilterService {
@@ -28,7 +29,21 @@ public class FilterServiceImpl implements FilterService {
 	public void updateFilters() {
 		TypedAggregation<Car> filtersAggregation = 
 				Aggregation.newAggregation(Car.class,
-						Aggregation.group("$make", "$model", "$year").addToSet("$engine").as("engines"),
+						
+						Aggregation.group("$make", "$model", "$year","$engine").addToSet("fuel").as("fuels"),
+						Aggregation.group("$make", "$model", "$year").addToSet(new BasicDBObject(){
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
+					{
+						put("engine","$_id.engine");
+						put("fuels", "fuels");
+					}
+				}).as("engines"),
+						
+//						Aggregation.group("$make", "$model", "$year").addToSet("$engine").as("engines"),
 						Aggregation.group("$make", "$model").addToSet(new BasicDBObject() {
 							/**
 							 * 

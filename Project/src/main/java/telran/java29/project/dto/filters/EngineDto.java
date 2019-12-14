@@ -17,5 +17,5 @@ import lombok.NoArgsConstructor;
 
 public class EngineDto {
 	String engine;
-//	Set<FuelsDto>fuels;
+	Set<FuelsDto>fuels;
 }

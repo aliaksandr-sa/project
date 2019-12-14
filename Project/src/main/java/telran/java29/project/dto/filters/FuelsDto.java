@@ -16,5 +16,5 @@ import lombok.NoArgsConstructor;
 public class FuelsDto {
 
 String fuel;
-Set<GearsDto>gears;
+//Set<GearsDto>gears;
 }
