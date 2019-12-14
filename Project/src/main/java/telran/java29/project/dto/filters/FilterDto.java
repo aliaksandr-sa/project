@@ -2,6 +2,8 @@ package telran.java29.project.dto.filters;
 
 import java.util.Set;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -14,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Builder
 //m
 @EqualsAndHashCode (of = {"make"})
-public class MakesDto {
+public class FilterDto {
+	@Id
 	String make;
 	Set<ModelsDto> models;
 }
