@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 @Builder
 //m
 @EqualsAndHashCode (of = {"engine"})
-public class EnginesDto {
+
+public class EngineDto {
 	String engine;
-	Set<FuelsDto>fuels;
+//	Set<FuelsDto>fuels;
 }

@@ -16,5 +16,5 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(of= {"year"})
 public class YearsDto {
 String year;
-Set<EnginesDto>engines;
+Set<EngineDto>engines;
 }
