@@ -118,8 +118,8 @@ public class Controller {
 //		return carService.searchWithoutFilters(???);
 //	}
 
-	@GetMapping("/search/geo/{longitude}/{latitude}/{radius}")
-	public SearchResultDto searchCarsByCoordinates(@PathVariable Double latitude, @PathVariable Double longitude, @PathVariable Double radius) {
+	@GetMapping("/search/geo")
+	public SearchResultDto searchCarsByCoordinates(@RequestParam Double latitude, @RequestParam Double longitude, @RequestParam Double radius) {
 		return searchService.searchCarsByCoordinates(latitude, longitude, radius);
 
 	}
