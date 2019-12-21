@@ -1,7 +1,9 @@
 package telran.java29.project.service;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.mongodb.BasicDBObject;
 
+import telran.java29.project.convertor.Convertor;
 import telran.java29.project.domain.Car;
 import telran.java29.project.dto.filters.FilterDto;
 import telran.java29.project.dto.filters.SearchByFiltersDto;
@@ -20,6 +23,8 @@ import telran.java29.project.dto.filters.SearchByFiltersDto;
 public class FilterServiceImpl implements FilterService {
 	@Autowired
 	MongoTemplate mongoTemplate;
+	@Autowired
+	Convertor conventor;
 
 	
 	
@@ -135,9 +140,9 @@ public class FilterServiceImpl implements FilterService {
 			if (entry.getValue() != null) {
 				query.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
 			}
-		Iterable<Car> cars = mongoTemplate.find(query, Car.class, "cars");
-		
-		return SearchByFiltersDto.builder().cars(cars).filters(getFilters()).build();
+		List<Car> cars = mongoTemplate.find(query, Car.class, "cars");
+	
+		return SearchByFiltersDto.builder().cars(cars.stream().map(car->conventor.convertToCarDtoSimple(car)).collect(Collectors.toList())).filter(getFilters()).build();
 	}
 
 }
