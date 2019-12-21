@@ -27,6 +27,7 @@ import telran.java29.project.dto.SearchResultDto;
 import telran.java29.project.dto.UpdateUserDto;
 import telran.java29.project.dto.UserDto;
 import telran.java29.project.dto.filters.FilterDto;
+import telran.java29.project.dto.filters.SearchByFiltersDto;
 import telran.java29.project.service.CarService;
 import telran.java29.project.service.CommentService;
 import telran.java29.project.service.FilterService;
@@ -102,7 +103,8 @@ public class Controller {
 	}
 
 	@GetMapping("/user/cars/number")
-	public OwnCarDto ownerGetCarById(@RequestParam(value = "number") String serial_number, Authentication authentication) {
+	public OwnCarDto ownerGetCarById(@RequestParam(value = "number") String serial_number,
+			Authentication authentication) {
 		return findService.ownerGetCarById(serial_number, authentication.getName());
 	}
 
@@ -118,9 +120,18 @@ public class Controller {
 //	}
 
 	@GetMapping("/search/geo")
-	public SearchResultDto searchCarsByCoordinates(@RequestParam Double latitude, @RequestParam Double longitude, @RequestParam Double radius, @RequestParam int items_on_page, @RequestParam int current_page) {
+	public SearchResultDto searchCarsByCoordinates(@RequestParam Double latitude, @RequestParam Double longitude,
+			@RequestParam Double radius, @RequestParam int items_on_page, @RequestParam int current_page) {
 		return searchService.searchCarsByCoordinates(latitude, longitude, radius, items_on_page, current_page);
 
+	}
+
+	@GetMapping("/search/filters")
+	public SearchByFiltersDto SearchByFilters(@RequestParam(required = false) String make,
+			@RequestParam(required = false) String model, @RequestParam(required = false) String year, @RequestParam(required = false) String engine,
+			@RequestParam(required = false) String fuel, @RequestParam(required = false) String gear,
+			@RequestParam(required = false) String wheels_drive) {
+				return filterService.searchByFilters(make, model, year, engine, fuel, gear, wheels_drive);
 	}
 
 	@PostMapping("/car/reservation/{serial_number}")
@@ -145,13 +156,13 @@ public class Controller {
 	}
 
 	@PostMapping("/comment")
-	public void AddAComment(@RequestParam(value ="number") String serial_number, @RequestBody NewCommentDto post,
+	public void AddAComment(@RequestParam(value = "number") String serial_number, @RequestBody NewCommentDto post,
 			Authentication authentication) {
 		commentService.addAComment(serial_number, post, authentication.getName());
 	}
 
-	 @GetMapping("/filters")
-	 public Iterable<FilterDto> getFilters(){
-		 return filterService.getFilters();
-	 }
+	@GetMapping("/filters")
+	public Iterable<FilterDto> getFilters() {
+		return filterService.getFilters();
+	}
 }
