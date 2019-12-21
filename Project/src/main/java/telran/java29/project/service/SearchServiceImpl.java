@@ -1,5 +1,6 @@
 package telran.java29.project.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,13 @@ public class SearchServiceImpl implements SearchService {
 				.map(c->convertor.convertToCarDto(c))
 				.collect(Collectors.toList());
 		return convertor.convertToSearchResultDto(cars, paging);
+	}
+
+	@Override
+	public SearchResultDto searchCars(String city, LocalDateTime start_date, LocalDateTime end_date, Double min_amount,
+			Double max_amount, boolean ascending, int items_on_page, int current_page) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

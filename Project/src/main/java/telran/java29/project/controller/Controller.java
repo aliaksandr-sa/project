@@ -1,5 +1,7 @@
 package telran.java29.project.controller;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -114,10 +116,14 @@ public class Controller {
 		return findService.ownerGetBookedPeriodsByCarId(serial_number, authentication.getName());
 	}
 
-//	@GetMapping("/search?country=string&city=string&start_date="YYYY-MM-dd HH:mm"&end_date="YYYY-MM-dd HH:mm"&ascending=true&min_amount=20.5&max_amount=35.5")
-//	public List<CarDto> search car by place and start/end dates(???){
-//		return carService.searchWithoutFilters(???);
-//	}
+	@GetMapping("/search")
+	public SearchResultDto searchCar(@RequestParam(required = false) String city,
+			@RequestParam(required = false) LocalDateTime start_date,
+			@RequestParam(required = false) LocalDateTime end_date, @RequestParam(required = false) Double min_amount,
+			@RequestParam(required = false) Double max_amount, @RequestParam(required = false) boolean ascending,
+			@RequestParam int items_on_page, @RequestParam int current_page) {
+		return searchService.searchCars(city, start_date, end_date, min_amount, max_amount, ascending, items_on_page, current_page);
+	}
 
 	@GetMapping("/search/geo")
 	public SearchResultDto searchCarsByCoordinates(@RequestParam Double latitude, @RequestParam Double longitude,
@@ -128,10 +134,12 @@ public class Controller {
 
 	@GetMapping("/search/filters")
 	public SearchByFiltersDto SearchByFilters(@RequestParam(required = false) String make,
-			@RequestParam(required = false) String model, @RequestParam(required = false) String year, @RequestParam(required = false) String engine,
-			@RequestParam(required = false) String fuel, @RequestParam(required = false) String gear,
-			@RequestParam(required = false) String wheels_drive) {
-				return filterService.searchByFilters(make, model, year, engine, fuel, gear, wheels_drive);
+			@RequestParam(required = false) String model, @RequestParam(required = false) String year,
+			@RequestParam(required = false) String engine, @RequestParam(required = false) String fuel,
+			@RequestParam(required = false) String gear, @RequestParam(required = false) String wheels_drive,
+			@RequestParam int items_on_page, @RequestParam int current_page) {
+		return filterService.searchByFilters(make, model, year, engine, fuel, gear, wheels_drive, items_on_page,
+				current_page);
 	}
 
 	@PostMapping("/car/reservation/{serial_number}")
