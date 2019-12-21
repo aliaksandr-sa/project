@@ -11,6 +11,7 @@ import telran.java29.project.domain.BookedCar;
 import telran.java29.project.domain.BookedPeriod;
 import telran.java29.project.domain.Car;
 import telran.java29.project.domain.Comment;
+import telran.java29.project.domain.PersonWhoBooked;
 import telran.java29.project.domain.PickUpPlace;
 import telran.java29.project.domain.User;
 import telran.java29.project.dto.BookedCarDto;
@@ -25,30 +26,19 @@ import telran.java29.project.dto.PickUpPlaceDto;
 import telran.java29.project.dto.SearchResultDto;
 import telran.java29.project.dto.UserDto;
 import telran.java29.project.dto.UserWhoBookedDto;
+
 //S
 @Component
 public class Convertor {
 	public CarDto convertToCarDto(Car car) {
-		return CarDto.builder().serial_number(car.getSerial_number())
-				.make(car.getMake())
-				.model(car.getModel())
-				.year(car.getYear())
-				.engine(car.getEngine())
-				.fuel(car.getFuel())
-				.gear(car.getGear())
-				.wheels_drive(car.getWheels_drive())
-				.doors(car.getDoors())
-				.seats(car.getSeats())
-				.fuel_consumption(car.getFuel_consumption())
-				.features(car.getFeatures())
-				.car_class(car.getCar_class())
-				.price_per_day(car.getPrice_per_day())
-				.distance_included(car.getDistance_included())
-				.about(car.getAbout())
-				.pick_up_place(convertToPickUpPlaceDto(car.getPlace()))
-				.image_url(car.getImage_url())
-				.owner(convertToOwnerDto(car.getOwner()))
-				.booked_periods(car.getBooked_periods().stream().map(this::convertToBookedPeriodDto).collect(Collectors.toSet()))
+		return CarDto.builder().serial_number(car.getSerial_number()).make(car.getMake()).model(car.getModel())
+				.year(car.getYear()).engine(car.getEngine()).fuel(car.getFuel()).gear(car.getGear())
+				.wheels_drive(car.getWheels_drive()).doors(car.getDoors()).seats(car.getSeats())
+				.fuel_consumption(car.getFuel_consumption()).features(car.getFeatures()).car_class(car.getCar_class())
+				.price_per_day(car.getPrice_per_day()).distance_included(car.getDistance_included())
+				.about(car.getAbout()).pick_up_place(convertToPickUpPlaceDto(car.getPlace()))
+				.image_url(car.getImage_url()).owner(convertToOwnerDto(car.getOwner())).booked_periods(car
+						.getBooked_periods().stream().map(this::convertToBookedPeriodDto).collect(Collectors.toSet()))
 				.build();
 	}
 
@@ -60,18 +50,21 @@ public class Convertor {
 				.person_who_booked(convertToUserWhoBookedDto(booked_period.getPerson_who_booked())).build();
 	}
 
-	public UserWhoBookedDto convertToUserWhoBookedDto(User person_who_booked) {
-		return UserWhoBookedDto.builder().email(person_who_booked.getEmail())
-				.first_name(person_who_booked.getFirst_name()).second_name(person_who_booked.getSecond_name())
-				.phone(person_who_booked.getPhone()).build();
+	public UserWhoBookedDto convertToUserWhoBookedDto(PersonWhoBooked personWhoBooked) {
+		return UserWhoBookedDto.builder().email(personWhoBooked.getEmail())
+				.first_name(personWhoBooked.getFirst_name()).second_name(personWhoBooked.getSecond_name())
+				.phone(personWhoBooked.getPhone()).build();
+	}
+	
+	public PersonWhoBooked convertToUserWhoBookedDto(UserWhoBookedDto userWhoBookedDto) {
+		return PersonWhoBooked.builder().email(userWhoBookedDto.getEmail())
+				.first_name(userWhoBookedDto.getFirst_name()).second_name(userWhoBookedDto.getSecond_name())
+				.phone(userWhoBookedDto.getPhone()).build();
 	}
 
 	public OwnerDto convertToOwnerDto(User owner) {
-		return OwnerDto.builder()
-				.first_name(owner.getFirst_name())
-				.second_name(owner.getSecond_name())
-				.registration_date(owner.getRegistration_date())
-				.build();
+		return OwnerDto.builder().first_name(owner.getFirst_name()).second_name(owner.getSecond_name())
+				.registration_date(owner.getRegistration_date()).build();
 	}
 
 //	public PickUpPlaceDto convertToPickUpPlaceDto(PickUpPlace pick_up_place) {
@@ -106,70 +99,53 @@ public class Convertor {
 				.wheels_drive(car.getWheels_drive()).doors(car.getDoors()).seats(car.getSeats())
 				.fuel_consumption(car.getFuel_consumption()).features(car.getFeatures()).car_class(car.getCar_class())
 				.price_per_day(car.getPrice_per_day()).distance_included(car.getDistance_included())
-				.pick_up_place(convertToPickUpPlaceDto(car.getPlace())).image_url(car.getImage_url())
-				.booked_periods(car.getBooked_periods().stream().map(this::convertToBookedPeriodDto)
-						.collect(Collectors.toSet()))
+				.pick_up_place(convertToPickUpPlaceDto(car.getPlace())).image_url(car.getImage_url()).booked_periods(car
+						.getBooked_periods().stream().map(this::convertToBookedPeriodDto).collect(Collectors.toSet()))
 				.build();
 
 	}
 
 	public PickUpPlaceDto convertToPickUpPlaceDto(PickUpPlace pickUpPlace) {
-		return PickUpPlaceDto.builder().place_id(pickUpPlace.getPlace_id()).latitude(pickUpPlace.getLocation().getY())
-				.longitude(pickUpPlace.getLocation().getX()).build();
+		return new PickUpPlaceDto(pickUpPlace.getPlace_id(), pickUpPlace.getLocation().getY(),
+				pickUpPlace.getLocation().getX());
+
 	}
 
 	public CommentDto convertToCommentDto(Comment comment) {
-		return CommentDto.builder()
-				.first_name(comment.getFirst_name())
-				.second_name(comment.getSecond_name())
-				.post(comment.getPost())
-				.post_date(comment.getPostdate().toLocalDate())
-				.build();
+		return CommentDto.builder().first_name(comment.getFirst_name()).second_name(comment.getSecond_name())
+				.post(comment.getPost()).post_date(comment.getPostdate().toLocalDate()).build();
 	}
+
 	public PickUpPlace convertToPickUpPlace(PickUpPlaceDto pick_up_place) {
-		return new PickUpPlace(pick_up_place.getPlace_id(), new GeoJsonPoint(pick_up_place.getLongitude(), pick_up_place.getLatitude()));
+		return new PickUpPlace(pick_up_place.getPlace_id(),
+				new GeoJsonPoint(pick_up_place.getLongitude(), pick_up_place.getLatitude()));
 	}
 
 	public User convertToUser(UserWhoBookedDto person_who_booked) {
 		return null;
 	}
+
 	public CarDtoSimple convertToCarDtoSimple(Car car) {
-		return CarDtoSimple.builder().serial_number(car.getSerial_number())
-				.make(car.getMake())
-				.model(car.getModel())
-				.year(car.getYear())
-				.engine(car.getEngine())
-				.fuel(car.getFuel())
-				.gear(car.getGear())
-				.wheels_drive(car.getWheels_drive())
-				.doors(car.getDoors())
-				.seats(car.getSeats())
-				.fuel_consumption(car.getFuel_consumption())
-				.features(car.getFeatures())
-				.car_class(car.getCar_class())
-				.price_per_day(car.getPrice_per_day())
-				.distance_included(car.getDistance_included())
-				.about(car.getAbout())
-				.pick_up_place(convertToPickUpPlaceDto(car.getPlace()))
-				.image_url(car.getImage_url())
-				.owner(convertToOwnerDto(car.getOwner()))
-				.booked_periods(car.getBooked_periods().stream().map(this::convertToSimpleBookedPeriodDto).collect(Collectors.toSet()))
+		return CarDtoSimple.builder().serial_number(car.getSerial_number()).make(car.getMake()).model(car.getModel())
+				.year(car.getYear()).engine(car.getEngine()).fuel(car.getFuel()).gear(car.getGear())
+				.wheels_drive(car.getWheels_drive()).doors(car.getDoors()).seats(car.getSeats())
+				.fuel_consumption(car.getFuel_consumption()).features(car.getFeatures()).car_class(car.getCar_class())
+				.price_per_day(car.getPrice_per_day()).distance_included(car.getDistance_included())
+				.about(car.getAbout()).pick_up_place(convertToPickUpPlaceDto(car.getPlace()))
+				.image_url(car.getImage_url()).owner(convertToOwnerDto(car.getOwner()))
+				.booked_periods(car.getBooked_periods().stream().map(this::convertToSimpleBookedPeriodDto)
+						.collect(Collectors.toSet()))
 				.build();
 	}
+
 	BookedPeriodDtoSimple convertToSimpleBookedPeriodDto(BookedPeriod bookedPeriod) {
-		return BookedPeriodDtoSimple.builder()
-		.start_date_time(bookedPeriod.getStart_date_time())
-		.end_date_time(bookedPeriod.getEnd_date_time())
-		.build();
-		
+		return BookedPeriodDtoSimple.builder().start_date_time(bookedPeriod.getStart_date_time())
+				.end_date_time(bookedPeriod.getEnd_date_time()).build();
+
 	}
 
 	public SearchResultDto convertToSearchResultDto(List<CarDtoSimple> cars, Pageable paging) {
-		return SearchResultDto.builder()
-				.cars(cars)
-				.current_page(paging.getPageNumber())
-				.items_on_page(paging.getPageSize())
-				.items_total(cars.size())
-				.build();
+		return SearchResultDto.builder().cars(cars).current_page(paging.getPageNumber())
+				.items_on_page(paging.getPageSize()).items_total(cars.size()).build();
 	}
 }

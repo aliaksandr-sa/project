@@ -1,7 +1,5 @@
 package telran.java29.project.controller;
 
-import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -118,9 +116,9 @@ public class Controller {
 
 	@GetMapping("/search")
 	public SearchResultDto searchCar(@RequestParam(required = false) String city,
-			@RequestParam(required = false) LocalDateTime start_date,
-			@RequestParam(required = false) LocalDateTime end_date, @RequestParam(required = false) Double min_amount,
-			@RequestParam(required = false) Double max_amount, @RequestParam(required = false) boolean ascending,
+			@RequestParam(required = false) String start_date,
+			@RequestParam(required = false) String end_date, @RequestParam(required = false) String min_amount,
+			@RequestParam(required = false) String max_amount, @RequestParam(required = false) boolean ascending,
 			@RequestParam int items_on_page, @RequestParam int current_page) {
 		return searchService.searchCars(city, start_date, end_date, min_amount, max_amount, ascending, items_on_page, current_page);
 	}

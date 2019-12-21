@@ -29,5 +29,5 @@ public class BookedPeriod {
     Double amount;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     LocalDateTime booking_date;
-    User person_who_booked;
+    PersonWhoBooked person_who_booked;
 }

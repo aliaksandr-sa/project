@@ -61,18 +61,14 @@ public class ReservationServiceImpl implements ReservationService {
 
 		BookedPeriod bookedPeriod = new BookedPeriod(reservationResponseDto.getOrder_number(), reservationStartTime,
 				reservationEndTime, false, reservationResponseDto.getAmount(), reservationResponseDto.getBooking_date(),
-				convertToUser(reservationDto.getPerson_who_booked()));
+				convertor.convertToUserWhoBookedDto(reservationDto.getPerson_who_booked()));
 		car.addBookedPeriod(bookedPeriod);
 		carRepository.save(car);
 
 		return reservationResponseDto;
 	}
 
-	private User convertToUser(UserWhoBookedDto person_who_booked) {
-		User user = userRepository.findById(person_who_booked.getEmail()).get();
-		user.setPhone(person_who_booked.getPhone());
-		return user;
-	}
+	
 
 	private int getDaysBetween(LocalDateTime reservationStartTime, LocalDateTime reservationEndTime) {
 		long seconds = ChronoUnit.SECONDS.between(reservationStartTime, reservationEndTime);

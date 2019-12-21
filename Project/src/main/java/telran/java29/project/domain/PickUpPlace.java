@@ -15,14 +15,27 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter
 @Builder
 @EqualsAndHashCode(of = {"place_id"})
 //S
 public class PickUpPlace {
 	@Id
 	String place_id;
+	String city;
 	@GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
 	GeoJsonPoint location;
+	
+	public PickUpPlace(String place_id, GeoJsonPoint location) {
+		super();
+		this.place_id = place_id;
+		this.location = location;
+		this.city = getCityByCoordinates(location.getX(), location.getY());
+	}
+
+
+	private String getCityByCoordinates(double x, double y) {
+		// TODO Auto-generated method stub
+		return "London";
+	}
 	
 }
