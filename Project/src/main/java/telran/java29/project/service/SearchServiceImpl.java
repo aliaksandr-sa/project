@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
@@ -22,14 +25,16 @@ public class SearchServiceImpl implements SearchService {
 	Convertor convertor;
 	
 	@Override
-	public SearchResultDto searchCarsByCoordinates(Double latitude, Double longitude, Double radius) {
+	public SearchResultDto searchCarsByCoordinates(Double latitude, Double longitude, Double radius, int items_on_page,
+			int current_page) {
 		Point point = new Point(latitude, longitude);
 		Distance distance = new Distance(radius);
-		List<CarDto> cars = carRepository.findByPlaceLocationNear(point, distance)
+		Pageable paging = PageRequest.of(current_page, items_on_page);
+		List<CarDto> cars = carRepository.findByPlaceLocationNear(point, distance, paging)
 				.stream()
 				.map(c->convertor.convertToCarDto(c))
 				.collect(Collectors.toList());
-		return convertor.convertToSearchResultDto(cars);
+		return convertor.convertToSearchResultDto(cars, paging);
 	}
 
 

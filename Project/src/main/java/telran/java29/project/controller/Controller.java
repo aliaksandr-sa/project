@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import telran.java29.project.dto.BookedPeriodDto;
@@ -119,8 +118,8 @@ public class Controller {
 //	}
 
 	@GetMapping("/search/geo")
-	public SearchResultDto searchCarsByCoordinates(@RequestParam Double latitude, @RequestParam Double longitude, @RequestParam Double radius) {
-		return searchService.searchCarsByCoordinates(latitude, longitude, radius);
+	public SearchResultDto searchCarsByCoordinates(@RequestParam Double latitude, @RequestParam Double longitude, @RequestParam Double radius, @RequestParam int items_on_page, @RequestParam int current_page) {
+		return searchService.searchCarsByCoordinates(latitude, longitude, radius, items_on_page, current_page);
 
 	}
 

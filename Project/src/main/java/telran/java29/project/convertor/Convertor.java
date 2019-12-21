@@ -3,6 +3,7 @@ package telran.java29.project.convertor;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Component;
 
@@ -163,9 +164,12 @@ public class Convertor {
 		
 	}
 
-	public SearchResultDto convertToSearchResultDto(List<CarDto> cars) {
+	public SearchResultDto convertToSearchResultDto(List<CarDto> cars, Pageable paging) {
 		return SearchResultDto.builder()
 				.cars(cars)
+				.current_page(paging.getPageNumber())
+				.items_on_page(paging.getPageSize())
+				.items_total(cars.size())
 				.build();
 	}
 }
