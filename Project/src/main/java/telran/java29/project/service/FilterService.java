@@ -7,5 +7,6 @@ import telran.java29.project.dto.filters.SearchByFiltersDto;
 public interface FilterService {
 
 	Iterable<FilterDto> getFilters();
-	SearchByFiltersDto searchByFilters(String make, String model, String year, String engine, String fuel, String gear, String wheels_drive);
+	SearchByFiltersDto searchByFilters(String make, String model, String year, String engine, String fuel, String gear, String wheels_drive
+			,int items_on_page, int	current_page);
 }
