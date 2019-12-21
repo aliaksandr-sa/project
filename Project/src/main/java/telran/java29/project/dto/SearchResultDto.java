@@ -16,6 +16,6 @@ public class SearchResultDto {
 	int current_page;
 	 int items_on_page;
 	 int items_total;
-	 List<CarDto> cars;
+	 List<CarDtoSimple> cars;
 
 }

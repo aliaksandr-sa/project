@@ -164,7 +164,7 @@ public class Convertor {
 		
 	}
 
-	public SearchResultDto convertToSearchResultDto(List<CarDto> cars, Pageable paging) {
+	public SearchResultDto convertToSearchResultDto(List<CarDtoSimple> cars, Pageable paging) {
 		return SearchResultDto.builder()
 				.cars(cars)
 				.current_page(paging.getPageNumber())
