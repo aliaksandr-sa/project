@@ -1,18 +1,16 @@
 package telran.java29.project.dto.filters;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import telran.java29.project.dto.CarDtoSimple;
+import telran.java29.project.dto.SearchResultDto;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Builder
 //m
 public class SearchByFiltersDto {
-	List<CarDtoSimple> cars;
+	SearchResultDto searchResultDto;
 	Iterable<FilterDto> filter;
 }

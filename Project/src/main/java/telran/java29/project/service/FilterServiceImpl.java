@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
@@ -17,6 +19,7 @@ import com.mongodb.BasicDBObject;
 
 import telran.java29.project.convertor.Convertor;
 import telran.java29.project.domain.Car;
+import telran.java29.project.dto.SearchResultDto;
 import telran.java29.project.dto.filters.FilterDto;
 import telran.java29.project.dto.filters.SearchByFiltersDto;
 @Service
@@ -123,7 +126,8 @@ public class FilterServiceImpl implements FilterService {
 
 	@Override
 	public SearchByFiltersDto searchByFilters(String make, String model, String year, String engine,
-			String fuel, String gear, String wheels_drive, int items_on_page,int current_page) {	
+			String fuel, String gear, String wheels_drive, int items_on_page,int current_page) {
+		Pageable paging = PageRequest.of(current_page, items_on_page);
 		//Search cars**********************************
 		Map<String, String> filter = new LinkedHashMap<String, String>();
 		filter.put("make", make);
@@ -138,10 +142,15 @@ public class FilterServiceImpl implements FilterService {
 		for (Map.Entry<String, String> entry : filter.entrySet())
 			if (entry.getValue() != null) {
 				query.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
+				query.with(paging);
 			}
 		List<Car> cars = mongoTemplate.find(query, Car.class, "cars");
 	
-		return SearchByFiltersDto.builder().cars(cars.stream().map(car->conventor.convertToCarDtoSimple(car)).collect(Collectors.toList())).filter(getFilters()).build();
+		SearchResultDto searchResultDto = SearchResultDto.builder()
+		.cars(cars.stream().map(car->conventor.convertToCarDtoSimple(car)).collect(Collectors.toList()))
+		.current_page(paging.getPageNumber()).items_on_page(paging.getPageSize()).items_total(cars.size())
+		.build();
+		return SearchByFiltersDto.builder().searchResultDto(searchResultDto).filter(getFilters()).build();
 	}
 
 }
