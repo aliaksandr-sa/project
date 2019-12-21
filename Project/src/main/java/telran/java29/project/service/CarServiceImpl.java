@@ -33,6 +33,8 @@ public class CarServiceImpl implements CarService {
 	UserRepository userRepository;
 	@Autowired
 	MongoTemplate mongoTemplate;
+	@Autowired
+	FilterServiceImpl filters;
 
 	@Override
 	public CarDto addCar(NewCarDto carDto, String email) {
@@ -50,6 +52,7 @@ public class CarServiceImpl implements CarService {
 		user = userRepository.findById(email).get();
 		user.addOwnCar(car);
 		userRepository.save(user);
+		filters.updateFilters();
 		return convertor.convertToCarDto(car);
 	}
 
@@ -167,16 +170,6 @@ public class CarServiceImpl implements CarService {
 		mongoTemplate.aggregate(filtersAggregation, Car.class);
 		List<Car> cars = mongoTemplate.findAll(Car.class,"BestCars");
 		return cars.stream().map(x->convertor.convertToCarDtoSimple(x)).collect(Collectors.toList());
-		
-		//FIXME convertor PROBLEMS!!!!
-		
-		
-
-		
-		
-		
-		
-		
 //										
 //		List<Car> cars = carRepository.findAll();
 ////		Collections.sort(cars, new Comparator<Car>() {

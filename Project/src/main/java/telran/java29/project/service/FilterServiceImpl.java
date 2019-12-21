@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.mongodb.BasicDBObject;
 
 import telran.java29.project.domain.Car;
-import telran.java29.project.dto.NewCarDto;
 import telran.java29.project.dto.filters.FilterDto;
 @Service
 public class FilterServiceImpl implements FilterService {
@@ -22,7 +21,6 @@ public class FilterServiceImpl implements FilterService {
 	
 	@Override
 	public List<FilterDto> getFilters() {
-		updateFilters();
 		return mongoTemplate.findAll(FilterDto.class, "filters");
 	}
 	
