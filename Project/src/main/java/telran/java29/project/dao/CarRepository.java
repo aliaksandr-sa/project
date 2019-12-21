@@ -12,6 +12,4 @@ import telran.java29.project.domain.Car;
 public interface CarRepository extends MongoRepository<Car, String> {
 
 	List<Car> findByPlaceLocationNear(Point point, Distance distance, Pageable paging);
-
-	
 }

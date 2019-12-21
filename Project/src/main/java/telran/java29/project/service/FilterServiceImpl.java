@@ -1,17 +1,21 @@
 package telran.java29.project.service;
 
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.mongodb.BasicDBObject;
 
 import telran.java29.project.domain.Car;
 import telran.java29.project.dto.filters.FilterDto;
+import telran.java29.project.dto.filters.SearchByFiltersDto;
 @Service
 public class FilterServiceImpl implements FilterService {
 	@Autowired
@@ -20,7 +24,7 @@ public class FilterServiceImpl implements FilterService {
 	
 	
 	@Override
-	public List<FilterDto> getFilters() {
+	public Iterable<FilterDto> getFilters() {
 		return mongoTemplate.findAll(FilterDto.class, "filters");
 	}
 	
@@ -108,6 +112,32 @@ public class FilterServiceImpl implements FilterService {
 						);
 		
 		mongoTemplate.aggregate(filtersAggregation, FilterDto.class);
+	}
+
+
+
+	@Override
+	public SearchByFiltersDto searchByFilters(String make, String model, String year, String engine,
+			String fuel, String gear, String wheels_drive) {
+		
+		//Search cars**********************************
+		Map<String, String> filter = new LinkedHashMap<String, String>();
+		filter.put("make", make);
+		filter.put("model", model);
+		filter.put("year", year);
+		filter.put("engine", engine);
+		filter.put("fuel", fuel);
+		filter.put("gear", gear);
+		filter.put("wheels_drive", wheels_drive);
+		Query query = new Query();
+		// dobavlyau iz mapi v criteria, proverayu na null znacheniya
+		for (Map.Entry<String, String> entry : filter.entrySet())
+			if (entry.getValue() != null) {
+				query.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
+			}
+		Iterable<Car> cars = mongoTemplate.find(query, Car.class, "cars");
+		
+		return SearchByFiltersDto.builder().cars(cars).filters(getFilters()).build();
 	}
 
 }
