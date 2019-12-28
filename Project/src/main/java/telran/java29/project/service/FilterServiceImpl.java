@@ -139,13 +139,14 @@ public class FilterServiceImpl implements FilterService {
 		filter.put("wheels_drive", wheels_drive);
 		Query query = new Query();
 		// dobavlyau iz mapi v criteria, proverayu na null znacheniya
-		for (Map.Entry<String, String> entry : filter.entrySet())
+		for (Map.Entry<String, String> entry : filter.entrySet()) {
 			if (entry.getValue() != null) {
 				query.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
 				query.with(paging);
 			}
+		}
 		List<Car> cars = mongoTemplate.find(query, Car.class, "cars");
-	
+	  
 		SearchResultDto searchResultDto = SearchResultDto.builder()
 		.cars(cars.stream().map(car->conventor.convertToCarDtoSimple(car)).collect(Collectors.toList()))
 		.current_page(paging.getPageNumber()).items_on_page(paging.getPageSize()).items_total(cars.size())
