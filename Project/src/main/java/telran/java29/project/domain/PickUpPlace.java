@@ -10,14 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.mongodb.util.JSON;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import telran.java29.project.dto.CityDto;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -39,14 +37,6 @@ public class PickUpPlace {
 		this.city = getCityByCoordinates(location.getX(), location.getY());
 	}
 
-	class CityDto {
-		String longName;
-
-		public String getLongName() {
-			return longName;
-		}
-
-	}
 
 	private String getCityByCoordinates(double x, double y) {
 		RestTemplate restTemplate = new RestTemplate();
@@ -54,6 +44,7 @@ public class PickUpPlace {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
 		builder.queryParam("key", "AIzaSyC1otfoDDHbdnSoCdXiYtjdZ-JhNY7jGKE");
 		RequestEntity<String> requestEntity = new RequestEntity<>(HttpMethod.GET,builder.build().toUri());
+		System.out.println(requestEntity.toString());
 		ResponseEntity<CityDto> responseEntity = restTemplate.exchange(requestEntity,CityDto.class);
 		System.out.println(responseEntity.getBody().getLongName());
 		return responseEntity.getBody().getLongName();
