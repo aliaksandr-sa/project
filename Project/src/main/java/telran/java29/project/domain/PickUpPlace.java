@@ -46,8 +46,8 @@ public class PickUpPlace {
 		RequestEntity<String> requestEntity = new RequestEntity<>(HttpMethod.GET,builder.build().toUri());
 		System.out.println(requestEntity.toString());
 		ResponseEntity<CityDto> responseEntity = restTemplate.exchange(requestEntity,CityDto.class);
-		System.out.println(responseEntity.getBody().getLongName());
-		return responseEntity.getBody().getLongName();
+		System.out.println(responseEntity.getBody().getResults().get(0).getAddress_components().get(0).getLong_name());
+		return responseEntity.getBody().getResults().get(0).getAddress_components().get(0).getLong_name();
 	}
 
 }

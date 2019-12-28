@@ -5,6 +5,6 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class CityDto {
-	List<ResultsDto> results;
+public class ResultsDto {
+	List<AddressComponentsDto>address_components;
 }
