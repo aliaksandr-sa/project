@@ -40,9 +40,9 @@ public class PickUpPlace {
 
 	private String getCityByCoordinates(double x, double y) {
 		RestTemplate restTemplate = new RestTemplate();
-		String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+x+","+y;
+		String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+y+","+x;
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
-		builder.queryParam("key", "AIzaSyC1otfoDDHbdnSoCdXiYtjdZ-JhNY7jGKE");
+		builder.queryParam("key", "AIzaSyCZ9DyANaDuYPRMLvQ8sAujPxXH0yBB68w");
 		RequestEntity<String> requestEntity = new RequestEntity<>(HttpMethod.GET,builder.build().toUri());
 		System.out.println(requestEntity.toString());
 		ResponseEntity<CityDto> responseEntity = restTemplate.exchange(requestEntity,CityDto.class);
